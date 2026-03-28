@@ -714,7 +714,7 @@
                 <span>Pedra Bruta</span>
                 <span>A Revelação</span>
             </div>
-            <input type="range" id="escultura-slider" min="0" max="100" value="0">
+            <input type="range" id="escultura-slider" min="0" max="1" step="0.001" value="0">
         </div>
         <p id="escultura-quote">&ldquo;O Maçom trabalha a sua pedra bruta &mdash; a si mesmo &mdash; com a mesma dedicação que o escultor revela a forma oculta no mármore.&rdquo;</p>
     </div>
@@ -982,164 +982,146 @@
         const W = escWrap.offsetWidth || 800;
         const H = escWrap.offsetHeight || 480;
 
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x05070a, 0.002);
+
+        const camera = new THREE.PerspectiveCamera(60, W / H, 0.1, 1000);
+        camera.position.z = 250;
+
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.setSize(W, H);
+        renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setClearColor(0x05070a, 1);
         escWrap.appendChild(renderer.domElement);
 
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(60, W / H, 0.1, 1000);
-        camera.position.set(0, 0, 30);
+        let particleSystem;
+        let particleCount = 0;
+        let positionsRock, positionsBust, currentPositions;
+        let targetMorphValue = 0;
+        let currentMorphValue = 0;
 
-        const COUNT = 6000;
-        const positions = new Float32Array(COUNT * 3);
-        const colors    = new Float32Array(COUNT * 3);
-        const targetPos = new Float32Array(COUNT * 3);
-        const targetCol = new Float32Array(COUNT * 3);
+        function createParticlesFromImage(img) {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
 
-        /* stone: random grey sphere */
-        const seed = (n) => { let x = Math.sin(n + 1) * 43758.5453; return x - Math.floor(x); };
-        for (let i = 0; i < COUNT; i++) {
-            const theta = seed(i * 3)     * Math.PI * 2;
-            const phi   = Math.acos(2 * seed(i * 3 + 1) - 1);
-            const r     = 6 + seed(i * 3 + 2) * 4;
-            positions[i * 3]     = r * Math.sin(phi) * Math.cos(theta);
-            positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta) * 0.7;
-            positions[i * 3 + 2] = r * Math.cos(phi);
-            const g = 0.35 + seed(i) * 0.25;
-            colors[i * 3] = g; colors[i * 3 + 1] = g; colors[i * 3 + 2] = g;
-        }
+            const maxSize = 250;
+            let w = img.width;
+            let h = img.height;
+            const scale = Math.min(maxSize / w, maxSize / h);
+            w = Math.floor(w * scale);
+            h = Math.floor(h * scale);
 
-        const geo = new THREE.BufferGeometry();
-        geo.setAttribute('position', new THREE.BufferAttribute(positions.slice(), 3));
-        geo.setAttribute('color',    new THREE.BufferAttribute(colors.slice(), 3));
+            canvas.width = w;
+            canvas.height = h;
+            ctx.drawImage(img, 0, 0, w, h);
 
-        const mat = new THREE.PointsMaterial({
-            size: 0.13,
-            vertexColors: true,
-            transparent: true,
-            opacity: 0.88,
-            sizeAttenuation: true,
-        });
-
-        const points = new THREE.Points(geo, mat);
-        scene.add(points);
-
-        let progress = 0;
-        let targetProgress = 0;
-        const curPos = positions.slice();
-        const curCol = colors.slice();
-
-        function lerp(a, b, t) { return a + (b - a) * t; }
-
-        let animStarted = false;
-        function startAnimation() {
-            if (animStarted) return;
-            animStarted = true;
-            (function animate() {
-                requestAnimationFrame(animate);
-                progress += (targetProgress - progress) * 0.04;
-
-                for (let i = 0; i < COUNT; i++) {
-                    curPos[i*3]   = lerp(positions[i*3],   targetPos[i*3],   progress);
-                    curPos[i*3+1] = lerp(positions[i*3+1], targetPos[i*3+1], progress);
-                    curPos[i*3+2] = lerp(positions[i*3+2], targetPos[i*3+2], progress);
-                    curCol[i*3]   = lerp(colors[i*3],   targetCol[i*3],   progress);
-                    curCol[i*3+1] = lerp(colors[i*3+1], targetCol[i*3+1], progress);
-                    curCol[i*3+2] = lerp(colors[i*3+2], targetCol[i*3+2], progress);
-                }
-                geo.attributes.position.array.set(curPos);
-                geo.attributes.color.array.set(curCol);
-                geo.attributes.position.needsUpdate = true;
-                geo.attributes.color.needsUpdate = true;
-
-                points.rotation.y += 0.003;
-                points.rotation.x = Math.sin(Date.now() * 0.0003) * 0.12;
-                camera.position.z = 30 - progress * 12;
-
-                renderer.render(scene, camera);
-            })();
-        }
-
-        escSlider.addEventListener('input', () => {
-            targetProgress = escSlider.value / 100;
-        });
-
-        /* load Imgur image → extract pixel targets */
-        const IMG_URL = 'https://i.imgur.com/4ckqgma.png';
-        function buildTargetFromPixels(img) {
-            const offscreen = document.createElement('canvas');
-            const SAMPLE_W = 160, SAMPLE_H = 120;
-            offscreen.width  = SAMPLE_W;
-            offscreen.height = SAMPLE_H;
-            const ctx = offscreen.getContext('2d');
-            ctx.drawImage(img, 0, 0, SAMPLE_W, SAMPLE_H);
-            const data = ctx.getImageData(0, 0, SAMPLE_W, SAMPLE_H).data;
-
-            /* collect valid pixels */
+            const imgData = ctx.getImageData(0, 0, w, h);
             const validPixels = [];
-            for (let py = 0; py < SAMPLE_H; py++) {
-                for (let px = 0; px < SAMPLE_W; px++) {
-                    const idx = (py * SAMPLE_W + px) * 4;
-                    const r = data[idx], g = data[idx+1], b = data[idx+2], a = data[idx+3];
-                    if (a > 30 && (r + g + b) > 30) {
-                        validPixels.push({ px, py, r: r / 255, g: g / 255, b: b / 255 });
+
+            for (let y = 0; y < h; y++) {
+                for (let x = 0; x < w; x++) {
+                    const i = (y * w + x) * 4;
+                    const r = imgData.data[i];
+                    const g = imgData.data[i + 1];
+                    const b = imgData.data[i + 2];
+                    const a = imgData.data[i + 3];
+
+                    const isNotBlack = (r > 15 || g > 15 || b > 15);
+
+                    if (a > 0 && isNotBlack) {
+                        const pX = x - w / 2;
+                        const pY = -(y - h / 2);
+
+                        const brightness = (r + g + b) / 3;
+                        const pZ = (brightness / 255) * 20 + (Math.random() - 0.5) * 5;
+
+                        validPixels.push({
+                            x: pX, y: pY, z: pZ,
+                            r: r/255, g: g/255, b: b/255
+                        });
                     }
                 }
             }
 
-            if (validPixels.length === 0) return false;
+            particleCount = validPixels.length;
 
-            /* map pixels → 3D */
-            const SCALE = 14;
-            for (let i = 0; i < COUNT; i++) {
-                const pix = validPixels[i % validPixels.length];
-                const jitter = seed(i * 11 + 3) * 0.3;
-                targetPos[i * 3]     = ((pix.px / SAMPLE_W) - 0.5) * SCALE + (seed(i*5)-.5)*jitter;
-                targetPos[i * 3 + 1] = -((pix.py / SAMPLE_H) - 0.5) * SCALE * (SAMPLE_H/SAMPLE_W) + (seed(i*5+1)-.5)*jitter;
-                targetPos[i * 3 + 2] = (seed(i * 13) - 0.5) * 2;
-                targetCol[i * 3]     = pix.r;
-                targetCol[i * 3 + 1] = pix.g;
-                targetCol[i * 3 + 2] = pix.b;
+            positionsRock = new Float32Array(particleCount * 3);
+            positionsBust = new Float32Array(particleCount * 3);
+            currentPositions = new Float32Array(particleCount * 3);
+            const colors = new Float32Array(particleCount * 3);
+
+            for (let i = 0; i < particleCount; i++) {
+                const i3 = i * 3;
+
+                positionsBust[i3]     = validPixels[i].x;
+                positionsBust[i3 + 1] = validPixels[i].y;
+                positionsBust[i3 + 2] = validPixels[i].z;
+
+                colors[i3]     = validPixels[i].r;
+                colors[i3 + 1] = validPixels[i].g;
+                colors[i3 + 2] = validPixels[i].b;
+
+                const radius = Math.cbrt(Math.random()) * 80;
+                const theta = Math.random() * 2 * Math.PI;
+                const phi = Math.acos(2 * Math.random() - 1);
+
+                positionsRock[i3]     = radius * Math.sin(phi) * Math.cos(theta);
+                positionsRock[i3 + 1] = radius * Math.cos(phi) - 20;
+                positionsRock[i3 + 2] = radius * Math.sin(phi) * Math.sin(theta);
+
+                currentPositions[i3]     = positionsRock[i3];
+                currentPositions[i3 + 1] = positionsRock[i3 + 1];
+                currentPositions[i3 + 2] = positionsRock[i3 + 2];
             }
-            return true;
+
+            const particlesGeometry = new THREE.BufferGeometry();
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(currentPositions, 3));
+            particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 1.5,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.9,
+                blending: THREE.AdditiveBlending
+            });
+
+            particleSystem = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particleSystem);
         }
 
-        function buildTargetFallback() {
-            /* torus-knot fallback (gold palette) */
-            const goldHues = [[0.706,0.592,0.353],[0.831,0.722,0.478],[0.545,0.439,0.251],[1.0,0.878,0.6]];
-            for (let i = 0; i < COUNT; i++) {
-                const t = (i / COUNT) * Math.PI * 2 * 5;
-                const p = 2, q = 3, r1 = 5, r2 = 2;
-                const tx = Math.cos(p*t) * (r1 + r2*Math.cos(q*t));
-                const ty = Math.sin(p*t) * (r1 + r2*Math.cos(q*t));
-                const tz = r2 * Math.sin(q*t);
-                const idx = i % goldHues.length;
-                targetPos[i*3]   = tx + (seed(i*7)-.5)*.8;
-                targetPos[i*3+1] = ty + (seed(i*7+1)-.5)*.8;
-                targetPos[i*3+2] = tz + (seed(i*7+2)-.5)*.8;
-                targetCol[i*3]   = goldHues[idx][0];
-                targetCol[i*3+1] = goldHues[idx][1];
-                targetCol[i*3+2] = goldHues[idx][2];
+        function animate() {
+            requestAnimationFrame(animate);
+            if (particleSystem) {
+                currentMorphValue += (targetMorphValue - currentMorphValue) * 0.05;
+                const positions = particleSystem.geometry.attributes.position.array;
+
+                for (let i = 0; i < particleCount * 3; i++) {
+                    positions[i] = positionsRock[i] * (1 - currentMorphValue) + positionsBust[i] * currentMorphValue;
+                }
+                particleSystem.geometry.attributes.position.needsUpdate = true;
+
+                particleSystem.rotation.y = Math.sin(Date.now() * 0.0005) * 0.5;
+                particleSystem.rotation.x = Math.sin(Date.now() * 0.0003) * 0.1;
+
+                camera.position.z = 250 - (currentMorphValue * 50);
             }
+            renderer.render(scene, camera);
         }
+        animate();
 
-        /* start render immediately */
-        startAnimation();
+        escSlider.addEventListener('input', (e) => {
+            targetMorphValue = parseFloat(e.target.value);
+        });
 
-        /* load image; fallback if CORS/network fails */
+        const imgUrl = 'https://i.imgur.com/4ckqgma.png';
         const img = new Image();
-        img.crossOrigin = 'anonymous';
-        img.onload = () => {
-            if (!buildTargetFromPixels(img)) buildTargetFallback();
+        img.crossOrigin = 'Anonymous';
+        img.onload = function() {
+            createParticlesFromImage(img);
         };
-        img.onerror = () => {
-            buildTargetFallback();
-        };
-        img.src = IMG_URL;
+        img.src = imgUrl;
 
-        /* resize */
         new ResizeObserver(() => {
             const nw = escWrap.offsetWidth;
             const nh = escWrap.offsetHeight;
