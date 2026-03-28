@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grande Loja Alquimista - O Umbral</title>
+    <!-- Fontes: Cinzel para títulos e EB Garamond para corpo -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #050505;
+            --stone-grey: #1a1a1a;
+            --crimson: #8B0000;
+            --gold: #C5A059;
+            --gold-bright: #e7c582;
+            --text-color: #d1d1d1;
+            --transition-slow: 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none; /* Mantemos o cursor customizado global para elegância */
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'EB Garamond', serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* --- Custom Cursor (Global) --- */
+        #custom-cursor {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: var(--gold);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease-out, background 0.3s, box-shadow 0.3s;
+            box-shadow: 0 0 15px var(--gold);
+        }
+
+        /* --- Layout --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 30px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            letter-spacing: 4px;
+            color: var(--gold);
+            text-decoration: none;
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        nav a {
+            font-family: 'Cinzel', serif;
+            color: var(--text-color);
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--gold);
+        }
+
+        /* --- Hero Section & Spotlight --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            background-image: 
+                linear-gradient(to bottom, rgba(5,5,5,0.4), rgba(5,5,5,0.9)),
+                url('https://images.unsplash.com/photo-1533071708362-719027041849?q=80&w=2069&auto=format&fit=crop'); 
+            background-size: cover;
+            background-position: center;
+            overflow: hidden; /* Importante para conter a lanterna */
+        }
+
+        /* Lanterna restrita ao Hero */
+        #spotlight {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+            background: radial-gradient(
+                circle 200px at var(--hero-mouse-x, 50%) var(--hero-mouse-y, 50%),
+                transparent 0%,
+                rgba(0, 0, 0, 0.98) 100%
+            );
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2; /* Fica abaixo da lanterna para ser "revelado" */
+        }
+
+        .masonic-symbol {
+            width: 120px;
+            margin-bottom: 40px;
+            fill: var(--gold);
+            filter: drop-shadow(0 0 10px rgba(197, 160, 89, 0.3));
+            animation: pulse 4s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        .hero h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            letter-spacing: 12px;
+            color: var(--gold);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .hero p {
+            font-style: italic;
+            max-width: 600px;
+            color: #aaa;
+            font-size: 1.2rem;
+            margin: 0 auto;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Cinzel', serif;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            color: var(--gold);
+            animation: bounce 2s infinite;
+            z-index: 10;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
+            40% {transform: translateX(-50%) translateY(-10px);}
+            60% {transform: translateX(-50%) translateY(-5px);}
+        }
+
+        /* --- Sections --- */
+        section:not(.hero) {
+            padding: 150px 10%;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: var(--transition-slow);
+            background: var(--bg-color);
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-content {
+            max-width: 500px;
+        }
+
+        .section-content h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            color: var(--gold);
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .section-content h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 50px;
+            height: 2px;
+            background: var(--crimson);
+        }
+
+        .section-image {
+            width: 45%;
+            height: 500px;
+            background-color: var(--stone-grey);
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        .section-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(1) contrast(1.1) brightness(0.7);
+            transition: 1s filter ease;
+        }
+
+        .section-image:hover img {
+            filter: grayscale(0.3) contrast(1) brightness(0.9);
+        }
+
+        /* --- Footer --- */
+        footer {
+            padding: 100px 50px;
+            background: #000;
+            text-align: center;
+            border-top: 1px solid rgba(197, 160, 89, 0.1);
+        }
+
+        .footer-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        /* --- Loading Overlay --- */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-color);
+            z-index: 10001;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease;
+        }
+
+        .triangle-loader {
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            border-bottom: 52px solid var(--crimson);
+            animation: rotateTriangle 2s infinite ease-in-out;
+        }
+
+        @keyframes rotateTriangle {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); opacity: 0.5; }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; letter-spacing: 6px; }
+            section:not(.hero) { flex-direction: column; text-align: center; padding: 80px 5%; }
+            .section-content, .section-image { width: 100%; max-width: 100%; }
+            .section-image { margin-top: 50px; height: 300px; }
+            #spotlight { display: none; } /* Mobile geralmente não usa lanterna */
+            #custom-cursor { display: none; }
+            * { cursor: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Overlay de Carregamento -->
+    <div id="loader">
+        <div class="triangle-loader"></div>
+    </div>
+
+    <!-- Cursor Customizado (Global) -->
+    <div id="custom-cursor"></div>
+
+    <header>
+        <a href="#" class="logo">A.'.R.'.L.'.S.'.</a>
+        <nav>
+            <a href="#historia">O Mistério</a>
+            <a href="#pilares">Os Pilares</a>
+            <a href="#contato">O Chamado</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- HERO SECTION com LANTERNA -->
+        <section class="hero visible">
+            <div id="spotlight"></div>
+            
+            <div class="hero-content">
+                <!-- Ícone Maçônico SVG -->
+                <svg class="masonic-symbol" viewBox="0 0 100 100">
+                    <path d="M50 5 L10 90 L90 90 Z" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <circle cx="50" cy="65" r="15" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M30 30 L50 10 L70 30" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <path d="M20 70 L80 70" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <h1>Sapiência e Virtude</h1>
+                <p>"O que fazemos em vida, ecoa na eternidade. O cinzel lapida a alma."</p>
+            </div>
+
+            <div class="scroll-indicator">Role para Descobrir</div>
+        </section>
+
+        <!-- SOBRE / HISTÓRIA (Sem Lanterna) -->
+        <section id="historia">
+            <div class="section-content">
+                <h2>O Segredo da Pedra</h2>
+                <p>Nascida do silêncio e da tradição secular, nossa Augusta e Respeitável Loja busca a perfeição moral através do simbolismo da construção. Aqui, o homem bruto torna-se polido.</p>
+                <p style="margin-top: 20px; color: var(--gold); font-family: 'Cinzel';">V . I . T . R . I . O . L .</p>
+            </div>
+            <div class="section-image">
+                <img src="https://images.unsplash.com/photo-1516146483970-bbdf001402a7?q=80&w=1974&auto=format&fit=crop" alt="Catedral antiga">
+            </div>
+        </section>
+
+        <!-- OS PILARES -->
+        <section id="pilares" style="flex-direction: row-reverse;">
+            <div class="section-content">
+                <h2>As Três Colunas</h2>
+                <p>Sabedoria para inventar, Força para sustentar e Beleza para adornar. Nossa estrutura não é feita de pedra e cal, mas de fraternidade e busca incessante pela Verdade.</p>
+            </div>
+            <div class="section-image">
+                <img src="https://images.unsplash.com/photo-1543831821-665fe001712a?q=80&w=1935&auto=format&fit=crop" alt="Colunas Clássicas">
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-logo">A.'.R.'.L.'.S.'. Lux in Tenebris</div>
+        <p style="font-size: 0.8rem; color: #555;">Sub Umbra Alarum Tuarum</p>
+    </footer>
+
+    <script>
+        const cursor = document.getElementById('custom-cursor');
+        const hero = document.querySelector('.hero');
+        const spotlight = document.getElementById('spotlight');
+
+        window.addEventListener('mousemove', (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+            
+            // Cursor Customizado (Sempre segue o mouse)
+            cursor.style.left = x + 'px';
+            cursor.style.top = y + 'px';
+
+            // Lógica da Lanterna (Apenas se o mouse estiver sobre o Hero)
+            const heroRect = hero.getBoundingClientRect();
+            if (y >= heroRect.top && y <= heroRect.bottom) {
+                // Calculamos a posição relativa ao Hero para o gradiente
+                const relativeX = x - heroRect.left;
+                const relativeY = y - heroRect.top;
+                
+                hero.style.setProperty('--hero-mouse-x', relativeX + 'px');
+                hero.style.setProperty('--hero-mouse-y', relativeY + 'px');
+                spotlight.style.opacity = '1';
+            } else {
+                spotlight.style.opacity = '0';
+            }
+        });
+
+        // --- Loader Logic ---
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                setTimeout(() => { loader.style.display = 'none'; }, 1000);
+            }, 1000);
+        });
+
+        // --- Reveal on Scroll ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // --- Interações de Clique ---
+        window.addEventListener('mousedown', () => {
+            cursor.style.transform = 'translate(-50%, -50%) scale(2.5)';
+            cursor.style.background = 'var(--crimson)';
+        });
+
+        window.addEventListener('mouseup', () => {
+            cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+            cursor.style.background = 'var(--gold)';
+        });
+    </script>
+</body>
+</html>
