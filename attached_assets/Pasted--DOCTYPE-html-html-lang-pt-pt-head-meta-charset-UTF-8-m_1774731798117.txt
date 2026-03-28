@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Escultura de Partículas</title>
+    <!-- Fontes Clássicas -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        body { 
+            margin: 0; 
+            overflow: hidden; 
+            background-color: #05070a; /* Fundo escuro elegante */
+            font-family: 'Montserrat', sans-serif;
+            user-select: none;
+        }
+
+        #canvas-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+        }
+
+        .font-cinzel { font-family: 'Cinzel', serif; }
+
+        /* --- Interface do Utilizador (UI) --- */
+        #ui-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Permite cliques no 3D onde não houver UI */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 40px;
+            box-sizing: border-box;
+            background: radial-gradient(circle at center, transparent 30%, rgba(5, 7, 10, 0.8) 100%);
+            z-index: 10;
+        }
+
+        .header-text {
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 2s 1s forwards;
+        }
+
+        .slider-container {
+            pointer-events: auto; /* Reativa interação para o slider */
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 2s 2s forwards;
+        }
+
+        /* --- Estilização do Slider (O Cinzel) --- */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+            outline: none;
+            margin: 15px 0;
+        }
+        
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 2px;
+            background: rgba(180, 151, 90, 0.3);
+            border-radius: 2px;
+        }
+        
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            background: #b4975a;
+            cursor: pointer;
+            margin-top: -11px;
+            box-shadow: 0 0 15px rgba(180, 151, 90, 0.8);
+            transition: transform 0.2s;
+        }
+
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            background: #d4b77a;
+        }
+
+        /* --- Animações --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Onde a magia 3D acontece -->
+    <div id="canvas-container"></div>
+
+    <!-- Camada de Texto e Interação -->
+    <div id="ui-layer">
+        <div class="header-text">
+            <p class="text-[10px] uppercase tracking-[0.5em] text-[#b4975a] mb-2 font-medium">O Trabalho do Maçom</p>
+            <h1 class="font-cinzel text-4xl md:text-5xl text-white tracking-widest drop-shadow-lg">A Arte de Esculpir a Alma</h1>
+        </div>
+
+        <div class="slider-container">
+            <p class="font-cinzel text-sm text-[#b4975a] uppercase tracking-[0.2em] mb-4">Utilize o Cinzel</p>
+            
+            <div class="flex items-center justify-between w-full text-[9px] uppercase tracking-[0.3em] text-slate-400">
+                <span>Pedra Bruta</span>
+                <span>A Revelação</span>
+            </div>
+            
+            <input type="range" min="0" max="1" step="0.001" value="0" id="morph-slider">
+            
+            <p class="text-[10px] text-slate-500 italic mt-6 font-light max-w-sm mx-auto">
+                "Desbastar as asperezas da ignorância para revelar a forma perfeita da sabedoria interior."
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // --- Configuração da Cena 3D ---
+        const container = document.getElementById('canvas-container');
+        const slider = document.getElementById('morph-slider');
+
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x05070a, 0.002);
+
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 250;
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        container.appendChild(renderer.domElement);
+
+        let particleSystem; 
+        let particleCount = 0;
+        let positionsRock, positionsBust, currentPositions;
+        let targetMorphValue = 0;
+        let currentMorphValue = 0;
+
+        // --- Carregamento Automático da Imagem do Imgur ---
+        const imgUrl = 'https://i.imgur.com/4ckqgma.png';
+        const img = new Image();
+        img.crossOrigin = "Anonymous"; // Crucial para não bloquear leitura
+        
+        img.onload = function() {
+            createParticlesFromImage(img);
+        };
+        img.src = imgUrl;
+
+        // --- Geração de Partículas ---
+        function createParticlesFromImage(img) {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Otimização: Reduzir a imagem para um tamanho ideal de partículas
+            const maxSize = 250; 
+            let w = img.width;
+            let h = img.height;
+            const scale = Math.min(maxSize / w, maxSize / h);
+            w = Math.floor(w * scale);
+            h = Math.floor(h * scale);
+
+            canvas.width = w;
+            canvas.height = h;
+            ctx.drawImage(img, 0, 0, w, h);
+
+            const imgData = ctx.getImageData(0, 0, w, h);
+            const validPixels = [];
+
+            // Analisar cada pixel da imagem
+            for (let y = 0; y < h; y++) {
+                for (let x = 0; x < w; x++) {
+                    const i = (y * w + x) * 4;
+                    const r = imgData.data[i];
+                    const g = imgData.data[i + 1];
+                    const b = imgData.data[i + 2];
+                    const a = imgData.data[i + 3];
+
+                    const isNotBlack = (r > 15 || g > 15 || b > 15);
+
+                    if (a > 0 && isNotBlack) {
+                        const pX = x - w / 2;
+                        const pY = -(y - h / 2); // Inverter Y
+                        
+                        const brightness = (r + g + b) / 3;
+                        const pZ = (brightness / 255) * 20 + (Math.random() - 0.5) * 5;
+
+                        validPixels.push({
+                            x: pX, y: pY, z: pZ,
+                            r: r/255, g: g/255, b: b/255
+                        });
+                    }
+                }
+            }
+
+            particleCount = validPixels.length;
+            
+            positionsRock = new Float32Array(particleCount * 3);
+            positionsBust = new Float32Array(particleCount * 3);
+            currentPositions = new Float32Array(particleCount * 3);
+            const colors = new Float32Array(particleCount * 3);
+
+            // Preencher os arrays
+            for (let i = 0; i < particleCount; i++) {
+                const i3 = i * 3;
+                
+                // Forma Alvo (A Escultura da Imagem)
+                positionsBust[i3] = validPixels[i].x;
+                positionsBust[i3 + 1] = validPixels[i].y;
+                positionsBust[i3 + 2] = validPixels[i].z;
+
+                // Cores reais da Escultura
+                colors[i3] = validPixels[i].r;
+                colors[i3 + 1] = validPixels[i].g;
+                colors[i3 + 2] = validPixels[i].b;
+
+                // Forma Inicial (A Pedra Bruta - Cluster aleatório caótico)
+                // Utilizamos um raio esférico para dar formato de rocha bruta
+                const radius = Math.cbrt(Math.random()) * 80;
+                const theta = Math.random() * 2 * Math.PI;
+                const phi = Math.acos(2 * Math.random() - 1);
+                
+                positionsRock[i3] = radius * Math.sin(phi) * Math.cos(theta);
+                positionsRock[i3 + 1] = radius * Math.cos(phi) - 20; // Um pouco mais abaixo
+                positionsRock[i3 + 2] = radius * Math.sin(phi) * Math.sin(theta);
+
+                // Inicia as partículas no estado "Pedra Bruta" (valor = 0)
+                currentPositions[i3] = positionsRock[i3];
+                currentPositions[i3 + 1] = positionsRock[i3 + 1];
+                currentPositions[i3 + 2] = positionsRock[i3 + 2];
+            }
+
+            const particlesGeometry = new THREE.BufferGeometry();
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(currentPositions, 3));
+            particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 1.5,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.9,
+                blending: THREE.AdditiveBlending 
+            });
+
+            particleSystem = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particleSystem);
+        }
+
+        // --- Loop de Animação ---
+        function animate() {
+            requestAnimationFrame(animate);
+            if (particleSystem) {
+                // Suavização do Morphing
+                currentMorphValue += (targetMorphValue - currentMorphValue) * 0.05;
+                const positions = particleSystem.geometry.attributes.position.array;
+
+                for (let i = 0; i < particleCount * 3; i++) {
+                    // Interpolação linear entre a rocha bruta e a escultura final
+                    positions[i] = positionsRock[i] * (1 - currentMorphValue) + positionsBust[i] * currentMorphValue;
+                }
+                particleSystem.geometry.attributes.position.needsUpdate = true;
+
+                // Rotação suave constante
+                particleSystem.rotation.y = Math.sin(Date.now() * 0.0005) * 0.5;
+                particleSystem.rotation.x = Math.sin(Date.now() * 0.0003) * 0.1;
+                
+                // Câmara aproxima-se levemente à medida que a forma se revela
+                camera.position.z = 250 - (currentMorphValue * 50);
+            }
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // --- Eventos da Interface ---
+        slider.addEventListener('input', (e) => {
+            targetMorphValue = parseFloat(e.target.value);
+        });
+
+        // --- Responsividade ---
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>
