@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLOMAM — Grande Loja Maçônica do Amazonas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ══ RESET & VARIABLES ══ */
+        :root {
+            --bg:#f0ede8; --slate:#1a2332; --slate-mid:#2c3e50;
+            --gold:#b4975a; --gold-light:#d4b87a; --gold-dark:#8a7040;
+            --ice:#edf2f7; --white:#ffffff;
+            --ease:cubic-bezier(0.19,1,0.22,1);
+            --nav-h:68px;
+        }
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+        body{background:var(--bg);color:var(--slate);font-family:'Montserrat',sans-serif;overflow-x:hidden}
+        img,svg{display:block;max-width:100%}
+
+        /* ══ CURSOR (desktop) ══ */
+        @media(pointer:fine){body{cursor:none}#cursor-dot,#cursor-ring{display:block}}
+        #cursor-dot{display:none;position:fixed;width:8px;height:8px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%)}
+        #cursor-ring{display:none;position:fixed;width:36px;height:36px;border:1.5px solid rgba(180,151,90,.5);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:width .35s var(--ease),height .35s var(--ease),background .35s,border-color .35s}
+        #cursor-ring.hover{width:60px;height:60px;background:rgba(180,151,90,.06);border-color:var(--gold)}
+        #cursor-ring.click{transform:translate(-50%,-50%) scale(.7)}
+
+        /* ══ LOADER ══ */
+        #loader{position:fixed;inset:0;background:var(--slate);z-index:100000;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:20px;transition:opacity .8s var(--ease)}
+        #loader.fade{opacity:0;pointer-events:none}
+        .loader-symbol{width:52px;height:52px;animation:loaderSpin 2s linear infinite}
+        .loader-symbol circle{stroke:var(--gold);stroke-width:1;fill:none;stroke-dasharray:180 20;animation:loaderDash 2s ease-in-out infinite}
+        @keyframes loaderSpin{to{transform:rotate(360deg)}}
+        @keyframes loaderDash{0%{stroke-dashoffset:200}50%{stroke-dashoffset:0}100%{stroke-dashoffset:-200}}
+        .loader-text{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.6em;color:rgba(180,151,90,.7);animation:loaderPulse 1.5s ease-in-out infinite}
+        @keyframes loaderPulse{50%{opacity:.3}}
+
+        /* ══ PROGRESS BAR ══ */
+        #progress-bar{position:fixed;top:0;left:0;width:0;height:2px;background:linear-gradient(90deg,var(--gold-dark),var(--gold),var(--gold-light));z-index:9999;transition:width .1s linear}
+
+        /* ══ HEADER ══ */
+        header{position:fixed;top:0;width:100%;z-index:1000;background:rgba(240,237,232,.88);backdrop-filter:blur(20px) saturate(1.5);border-bottom:1px solid rgba(180,151,90,.12);transition:background .4s}
+        header.shrunk{background:rgba(240,237,232,.97)}
+        .nav-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:var(--nav-h);padding:0 clamp(16px,4vw,40px)}
+        .logo{font-family:'Cinzel',serif;font-size:clamp(.9rem,2.2vw,1.1rem);font-weight:700;letter-spacing:.3em;color:var(--slate);text-decoration:none;line-height:1;flex-shrink:0}
+        .logo small{display:block;font-size:.4rem;letter-spacing:.2em;opacity:.38;font-weight:400;margin-top:3px}
+        .nav-links{display:flex;gap:clamp(14px,2.5vw,36px);align-items:center}
+        .nav-links a{font-size:.58rem;letter-spacing:.24em;text-transform:uppercase;color:var(--slate-mid);text-decoration:none;font-weight:500;position:relative;padding-bottom:3px;white-space:nowrap;transition:color .3s}
+        .nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gold);transition:width .4s var(--ease)}
+        .nav-links a:hover{color:var(--gold)}
+        .nav-links a:hover::after{width:100%}
+        .nav-cta{padding:7px 18px!important;border:1px solid var(--gold)!important;color:var(--gold)!important;font-family:'Cinzel',serif;transition:background .3s,color .3s!important}
+        .nav-cta:hover{background:var(--gold)!important;color:var(--white)!important}
+        .nav-cta::after{display:none!important}
+
+        /* Hamburger */
+        .nav-burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;background:none;border:none;cursor:pointer;padding:4px;z-index:1100}
+        .nav-burger span{display:block;height:1.5px;background:var(--slate);transition:transform .4s var(--ease),opacity .3s,width .3s;transform-origin:center}
+        .nav-burger span:nth-child(1){width:100%}
+        .nav-burger span:nth-child(2){width:68%}
+        .nav-burger span:nth-child(3){width:84%}
+        .nav-burger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg);width:100%}
+        .nav-burger.open span:nth-child(2){opacity:0}
+        .nav-burger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);width:100%}
+
+        /* Drawer */
+        .nav-drawer{display:none;position:fixed;top:var(--nav-h);left:0;right:0;background:rgba(240,237,232,.98);backdrop-filter:blur(24px);border-bottom:1px solid rgba(180,151,90,.14);flex-direction:column;z-index:999;transform:translateY(-8px);opacity:0;transition:transform .4s var(--ease),opacity .4s;pointer-events:none}
+        .nav-drawer.open{opacity:1;transform:translateY(0);pointer-events:all}
+        .nav-drawer a{font-family:'Cinzel',serif;font-size:.73rem;letter-spacing:.2em;text-transform:uppercase;color:var(--slate);text-decoration:none;padding:17px clamp(16px,5vw,40px);border-bottom:1px solid rgba(44,62,80,.06);display:block;transition:color .3s,padding-left .3s}
+        .nav-drawer a:hover{color:var(--gold);padding-left:calc(clamp(16px,5vw,40px) + 10px)}
+        .nav-drawer a:last-child{border-bottom:none}
+
+        /* ══ SECTION UTILS ══ */
+        section{padding:clamp(56px,10vw,120px) 0;position:relative}
+        .section-inner{max-width:1280px;margin:0 auto;padding:0 clamp(16px,5vw,40px)}
+        .section-label{font-size:.55rem;letter-spacing:.44em;text-transform:uppercase;color:var(--gold);font-weight:600;display:flex;align-items:center;gap:12px;margin-bottom:14px}
+        .section-label::before{content:'';width:22px;height:1px;background:var(--gold);flex-shrink:0}
+        h2{font-family:'Cinzel',serif;font-size:clamp(1.5rem,3.5vw,2.8rem);line-height:1.15;color:var(--slate)}
+        .divider{width:36px;height:1px;background:var(--gold);margin-top:16px}
+
+        /* Reveal */
+        .reveal{opacity:0;transform:translateY(38px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+        .reveal.active{opacity:1;transform:translateY(0)}
+        .reveal-d1{transition-delay:.12s}
+        .reveal-d2{transition-delay:.24s}
+        .reveal-d3{transition-delay:.36s}
+        @keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+        /* ══ HERO ══ */
+        #inicio{min-height:100svh;display:flex;align-items:center;position:relative;overflow:hidden;padding-top:var(--nav-h)}
+        .hero-bg-grid{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(44,62,80,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(44,62,80,.04) 1px,transparent 1px);background-size:48px 48px}
+        .hero-bg-orb{position:absolute;top:-80px;right:-80px;width:clamp(240px,48vw,600px);height:clamp(240px,48vw,600px);background:radial-gradient(circle,rgba(180,151,90,.09) 0%,transparent 70%);border-radius:50%;pointer-events:none;animation:orbFloat 8s ease-in-out infinite alternate}
+        @keyframes orbFloat{to{transform:translate(22px,22px)}}
+        .hero-inner{max-width:1280px;margin:0 auto;padding:clamp(32px,5vw,60px) clamp(16px,5vw,40px);display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,60px);align-items:center;width:100%}
+        .hero-tag{font-size:clamp(.48rem,1.4vw,.58rem);letter-spacing:.4em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:16px;display:flex;align-items:center;gap:10px;opacity:0;animation:fadeUp .8s var(--ease) 1.4s forwards}
+        .hero-tag::before{content:'';display:inline-block;width:22px;height:1px;background:var(--gold);flex-shrink:0}
+        h1{font-family:'Cinzel',serif;font-size:clamp(2rem,5.5vw,5.2rem);line-height:1.06;color:var(--slate);margin-bottom:22px;opacity:0;animation:fadeUp .9s var(--ease) 1.6s forwards}
+        h1 .gold{color:var(--gold)}
+        h1 .italic{font-family:'Cormorant Garamond',serif;font-style:italic}
+        .hero-desc{font-family:'Cormorant Garamond',serif;font-size:clamp(.95rem,1.8vw,1.2rem);font-weight:300;color:var(--slate-mid);line-height:1.8;max-width:480px;margin-bottom:34px;opacity:0;animation:fadeUp .9s var(--ease) 1.8s forwards}
+        .hero-btns{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:fadeUp .9s var(--ease) 2s forwards}
+        .btn-primary{padding:clamp(11px,2vw,14px) clamp(22px,3.5vw,36px);background:var(--slate);color:var(--white);font-family:'Cinzel',serif;font-size:clamp(.53rem,1.2vw,.62rem);letter-spacing:.2em;text-transform:uppercase;text-decoration:none;border:none;position:relative;overflow:hidden;transition:transform .3s var(--ease),box-shadow .3s;display:inline-block}
+        .btn-primary::before{content:'';position:absolute;inset:0;background:var(--gold);transform:scaleX(0);transform-origin:right;transition:transform .5s var(--ease)}
+        .btn-primary:hover::before{transform:scaleX(1);transform-origin:left}
+        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.12)}
+        .btn-primary span{position:relative;z-index:1}
+        .btn-outline{padding:clamp(11px,2vw,14px) clamp(22px,3.5vw,36px);border:1px solid rgba(44,62,80,.24);color:var(--slate);font-family:'Cinzel',serif;font-size:clamp(.53rem,1.2vw,.62rem);letter-spacing:.2em;text-transform:uppercase;text-decoration:none;display:inline-block;transition:border-color .3s,color .3s,transform .3s var(--ease)}
+        .btn-outline:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
+        .hero-stats{display:flex;gap:clamp(18px,4vw,40px);margin-top:clamp(32px,5vw,52px);padding-top:clamp(24px,4vw,38px);border-top:1px solid rgba(44,62,80,.1);flex-wrap:wrap;opacity:0;animation:fadeUp .9s var(--ease) 2.2s forwards}
+        .stat-num{font-family:'Cinzel',serif;font-size:clamp(1.3rem,3vw,2rem);color:var(--slate);line-height:1}
+        .stat-label{font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-top:4px;font-weight:600}
+
+        /* Hero visual */
+        .hero-visual{position:relative;opacity:0;animation:fadeIn 1.2s var(--ease) 2s forwards}
+        .hero-symbol-wrap{aspect-ratio:1;display:flex;align-items:center;justify-content:center;position:relative}
+        .ring-outer,.ring-inner{position:absolute;border-radius:50%}
+        .ring-outer{width:92%;height:92%;border:1px solid rgba(180,151,90,.18);animation:slowSpin 40s linear infinite}
+        .ring-inner{width:68%;height:68%;border:1px dashed rgba(180,151,90,.12);animation:slowSpin 22s linear infinite reverse}
+        @keyframes slowSpin{to{transform:rotate(360deg)}}
+        .hero-svg-main{width:56%;position:relative;z-index:2;stroke:var(--slate);stroke-width:.5;fill:none;filter:drop-shadow(0 0 28px rgba(180,151,90,.12))}
+        .svg-path-anim{stroke-dasharray:600;stroke-dashoffset:600;animation:svgDraw 4s var(--ease) 2.2s forwards}
+        @keyframes svgDraw{to{stroke-dashoffset:0}}
+        .hero-gadu{position:absolute;bottom:14px;right:14px;font-family:'Cinzel',serif;font-size:.4rem;letter-spacing:.5em;color:var(--gold);opacity:.42}
+
+        /* ══ PILARES ══ */
+        #geometria{background:var(--white)}
+        .pilares-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(44,62,80,.07);border:1px solid rgba(44,62,80,.07);margin-top:clamp(32px,5vw,56px)}
+        .pilar-card{background:var(--white);padding:clamp(24px,4vw,52px) clamp(18px,3vw,40px);position:relative;overflow:hidden;transition:transform .5s var(--ease)}
+        .pilar-card::before{content:'';position:absolute;inset:0;background:var(--slate);transform:scaleY(0);transform-origin:bottom;transition:transform .6s var(--ease);z-index:0}
+        .pilar-card:hover::before{transform:scaleY(1)}
+        .pilar-card:hover .pilar-title{color:var(--gold)}
+        .pilar-card:hover p{color:rgba(255,255,255,.72)}
+        .pilar-card:hover .pilar-list li{color:rgba(255,255,255,.64);border-color:rgba(180,151,90,.24)}
+        .pilar-card:hover .pilar-num{color:rgba(255,255,255,.04)}
+        .pilar-card>*{position:relative;z-index:1}
+        .pilar-num{font-family:'Cinzel Decorative',serif;font-size:clamp(3rem,5.5vw,5rem);position:absolute;top:14px;right:18px;color:rgba(44,62,80,.04);line-height:1;transition:color .5s;pointer-events:none;z-index:0}
+        .pilar-icon{width:36px;height:36px;margin-bottom:20px}
+        .pilar-icon svg{width:100%;height:100%;stroke:var(--gold);stroke-width:1.5;fill:none}
+        .pilar-title{font-family:'Cinzel',serif;font-size:clamp(.62rem,1.4vw,.85rem);letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;transition:color .5s}
+        .pilar-card p{font-size:clamp(.7rem,1.2vw,.82rem);color:#6b7280;line-height:1.8;margin-bottom:20px;transition:color .5s}
+        .pilar-list{list-style:none}
+        .pilar-list li{font-size:clamp(.62rem,.9vw,.72rem);color:#9ca3af;padding:8px 0;border-bottom:1px solid rgba(44,62,80,.07);letter-spacing:.04em;transition:color .5s,border-color .5s}
+        .pilar-list li:last-child{border-bottom:none}
+        .triade-block{background:var(--slate);padding:clamp(16px,2.5vw,28px) clamp(14px,4vw,44px);display:flex;align-items:center;justify-content:center;gap:clamp(10px,2.5vw,24px);grid-column:span 3;flex-wrap:wrap}
+        .triade-word{font-family:'Cinzel',serif;font-size:clamp(.58rem,1.4vw,.75rem);color:rgba(255,255,255,.44);letter-spacing:.28em;text-transform:uppercase;transition:color .3s}
+        .triade-word:hover{color:var(--gold)}
+        .triade-sep{width:4px;height:4px;background:var(--gold);border-radius:50%;opacity:.4;flex-shrink:0}
+
+        /* ══ HISTORIA ══ */
+        #historia{background:#0a0c10;overflow:hidden;position:relative}
+        .hist-noise{position:absolute;inset:0;pointer-events:none;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+        #spotlight{position:absolute;inset:0;pointer-events:none;z-index:5;background:radial-gradient(circle 280px at var(--mx,50%) var(--my,50%),transparent 0%,rgba(10,12,16,.97) 100%);transition:opacity .5s;opacity:0}
+        #historia .section-inner{position:relative;z-index:10}
+        #historia h2{color:var(--white)}
+        #historia .section-label{color:var(--gold)}
+        .hist-intro{margin-bottom:clamp(44px,7vw,84px)}
+        .hist-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,6vw,80px);align-items:center;margin-bottom:clamp(56px,8vw,96px)}
+        .timeline{position:relative;padding-left:28px}
+        .timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(180deg,var(--gold) 0%,transparent 100%)}
+        .tl-item{position:relative;margin-bottom:clamp(24px,4vw,42px);opacity:0;transform:translateX(-20px);transition:all .8s var(--ease)}
+        .tl-item.active{opacity:1;transform:translateX(0)}
+        .tl-dot{position:absolute;left:-34px;top:4px;width:12px;height:12px;border-radius:50%;border:1.5px solid var(--gold);background:#0a0c10;transition:background .3s}
+        .tl-item:hover .tl-dot{background:var(--gold)}
+        .tl-year{font-family:'Cinzel',serif;font-size:.67rem;letter-spacing:.2em;color:var(--gold);margin-bottom:6px}
+        .tl-text{font-family:'Cormorant Garamond',serif;font-size:clamp(.92rem,1.4vw,1.05rem);color:rgba(255,255,255,.6);line-height:1.7}
+        .compasso-wrap{aspect-ratio:1;position:relative;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.05);background:rgba(255,255,255,.02);min-height:220px}
+        .compasso-year{position:absolute;top:18px;left:22px;font-family:'Cinzel Decorative',serif;font-size:clamp(1.8rem,3.5vw,3.2rem);color:rgba(180,151,90,.16);line-height:1}
+        .compasso-svg{width:60%;stroke:var(--gold);stroke-width:.8;fill:none}
+        .c-path{stroke-dasharray:500;stroke-dashoffset:500;animation:drawC 6s ease infinite alternate}
+        .c-legs{transform-origin:50% 18%;animation:openLegs 6s ease infinite alternate}
+        @keyframes drawC{0%{stroke-dashoffset:500;opacity:.2}60%,100%{stroke-dashoffset:0;opacity:1}}
+        @keyframes openLegs{0%,30%{transform:scaleX(.75)}100%{transform:scaleX(1.2)}}
+        .orbit-ring{position:absolute;border-radius:50%;border:1px solid rgba(180,151,90,.07)}
+
+        /* Carousel */
+        .masters-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:clamp(22px,3vw,38px);flex-wrap:wrap;gap:14px}
+        .masters-h3{font-family:'Cinzel',serif;color:var(--white);font-size:clamp(.82rem,2vw,1.1rem);letter-spacing:.17em;text-transform:uppercase}
+        .carousel-controls{display:flex;gap:10px}
+        .ctrl-btn{width:40px;height:40px;border:1px solid rgba(255,255,255,.13);background:none;color:rgba(255,255,255,.55);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .3s,color .3s,background .3s;font-size:.9rem;flex-shrink:0}
+        .ctrl-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(180,151,90,.06)}
+        .masters-track-wrap{overflow:hidden}
+        .masters-track{display:flex;gap:clamp(10px,1.8vw,24px);transition:transform .7s var(--ease);will-change:transform}
+        .master-card{flex:0 0 clamp(120px,18vw,160px);text-align:center}
+        .master-portrait{width:100%;aspect-ratio:3/4;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);position:relative;overflow:hidden;margin-bottom:11px;transition:border-color .4s}
+        .master-portrait::before{content:'';position:absolute;top:7px;left:7px;right:7px;bottom:7px;border:1px solid rgba(180,151,90,.13);transition:border-color .4s}
+        .master-portrait::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(180,151,90,.1) 100%);opacity:0;transition:opacity .4s}
+        .master-card:hover .master-portrait{border-color:rgba(180,151,90,.4)}
+        .master-card:hover .master-portrait::after{opacity:1}
+        .master-label{font-size:.5rem;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;font-weight:600}
+        .master-name{font-size:.62rem;color:rgba(255,255,255,.62);margin-top:4px}
+        .master-initial{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Cinzel Decorative',serif;font-size:2rem;color:rgba(180,151,90,.22)}
+        .carousel-dots{display:flex;gap:8px;justify-content:center;margin-top:22px}
+        .c-dot{width:20px;height:2px;background:rgba(255,255,255,.12);transition:background .3s,width .3s;cursor:pointer}
+        .c-dot.active{background:var(--gold);width:32px}
+
+        /* ══ PARAMAÇÔNICAS ══ */
+        #familias{background:var(--ice)}
+        .familias-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(10px,1.8vw,20px);margin-top:clamp(32px,5vw,52px)}
+        .familia-card{background:var(--white);position:relative;overflow:hidden;height:clamp(280px,36vw,380px)}
+        .fc-front,.fc-back{position:absolute;inset:0;padding:clamp(18px,3vw,40px) clamp(16px,2.5vw,32px);transition:transform .7s var(--ease),opacity .7s var(--ease)}
+        .fc-front{display:flex;flex-direction:column;border:1px solid rgba(44,62,80,.06)}
+        .fc-back{background:var(--slate);display:flex;flex-direction:column;justify-content:center;transform:translateY(100%);opacity:0}
+        .familia-card:hover .fc-front{transform:translateY(-100%);opacity:0}
+        .familia-card:hover .fc-back{transform:translateY(0);opacity:1}
+        .familia-card.flipped .fc-front{transform:translateY(-100%);opacity:0}
+        .familia-card.flipped .fc-back{transform:translateY(0);opacity:1}
+        .fc-num{font-family:'Cinzel Decorative',serif;font-size:clamp(2.2rem,4.5vw,4rem);color:rgba(44,62,80,.04);line-height:1;margin-bottom:10px}
+        .fc-icon-svg{width:34px;height:34px;stroke:var(--gold);stroke-width:1.5;fill:none;margin-bottom:14px}
+        .fc-title{font-family:'Cinzel',serif;font-size:clamp(.68rem,1.2vw,.85rem);letter-spacing:.08em;color:var(--slate);margin-bottom:10px}
+        .fc-desc{font-size:clamp(.65rem,.95vw,.75rem);color:#9ca3af;line-height:1.7;flex:1}
+        .fc-tag{font-size:.5rem;letter-spacing:.2em;color:var(--gold);font-weight:700;text-transform:uppercase;margin-top:auto;padding-top:14px}
+        .fc-back .fc-title{color:var(--gold);margin-bottom:12px}
+        .fc-back .fc-desc{color:rgba(255,255,255,.62)}
+        .fc-back .fc-tag{color:rgba(255,255,255,.27)}
+        .fc-back-glyph{font-family:'Cinzel Decorative',serif;font-size:4.5rem;color:rgba(255,255,255,.03);position:absolute;bottom:-8px;right:10px}
+        .tap-hint{display:none;text-align:center;margin-top:14px;font-size:.53rem;letter-spacing:.24em;color:var(--gold);opacity:.7;text-transform:uppercase}
+
+        /* ══ FAQ ══ */
+        #faq-section{background:var(--white)}
+        .faq-wrap{max-width:760px;margin:clamp(28px,5vw,52px) auto 0}
+        .faq-item{border-bottom:1px solid rgba(44,62,80,.08)}
+        .faq-q{display:flex;justify-content:space-between;align-items:center;padding:clamp(16px,3vw,28px) 0;cursor:pointer;font-family:'Cinzel',serif;font-size:clamp(.7rem,1.5vw,.88rem);color:var(--slate);letter-spacing:.03em;transition:color .3s;gap:14px}
+        .faq-q:hover{color:var(--gold)}
+        .faq-icon{width:26px;height:26px;border:1px solid rgba(44,62,80,.18);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1rem;color:var(--slate-mid);transition:all .4s}
+        .faq-item.active .faq-icon{background:var(--gold);border-color:var(--gold);color:var(--white);transform:rotate(45deg)}
+        .faq-a{max-height:0;overflow:hidden;transition:max-height .6s var(--ease),padding .4s;font-family:'Cormorant Garamond',serif;font-size:clamp(.92rem,1.5vw,1.05rem);color:#6b7280;line-height:1.75}
+        .faq-item.active .faq-a{max-height:200px;padding-bottom:clamp(16px,3vw,26px)}
+
+        /* ══ ORIENTE ══ */
+        #oriente{background:var(--slate);color:var(--white)}
+        #oriente h2{color:var(--white)}
+        .contact-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:clamp(32px,6vw,80px);align-items:start;margin-top:clamp(32px,5vw,56px)}
+        .contact-item{display:flex;gap:16px;align-items:flex-start;padding:clamp(18px,3vw,28px) 0;border-bottom:1px solid rgba(255,255,255,.06)}
+        .contact-item:first-child{padding-top:0}
+        .contact-icon{width:30px;height:30px;stroke:var(--gold);stroke-width:1.5;fill:none;flex-shrink:0;margin-top:2px}
+        .contact-label{font-size:.5rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:4px}
+        .contact-val{font-family:'Cormorant Garamond',serif;font-size:clamp(.92rem,1.5vw,1.1rem);color:rgba(255,255,255,.77);line-height:1.5}
+        .map-wrap{position:relative;height:clamp(260px,38vw,420px);overflow:hidden;border:1px solid rgba(255,255,255,.07)}
+        .map-wrap::before{content:'';position:absolute;inset:0;border:10px solid var(--slate);z-index:2;pointer-events:none}
+        .map-wrap iframe{width:100%;height:100%;border:0;filter:grayscale(1) contrast(.82) brightness(.9) sepia(.08)}
+
+        /* ══ FOOTER ══ */
+        footer{background:#080b10;padding:clamp(36px,6vw,60px) clamp(16px,5vw,40px);text-align:center}
+        .footer-logo{font-family:'Cinzel Decorative',serif;font-size:clamp(.95rem,3vw,1.4rem);letter-spacing:.32em;color:rgba(255,255,255,.62);margin-bottom:6px}
+        .footer-sub{font-size:.5rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.2);margin-bottom:26px}
+        .footer-links{display:flex;justify-content:center;gap:clamp(12px,3vw,28px);margin-bottom:28px;flex-wrap:wrap}
+        .footer-links a{font-size:.52rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.26);text-decoration:none;transition:color .3s}
+        .footer-links a:hover{color:var(--gold)}
+        .footer-line{width:44px;height:1px;background:var(--gold);margin:0 auto 22px;opacity:.24}
+        .footer-copy{font-size:.48rem;letter-spacing:.1em;color:rgba(255,255,255,.11)}
+        .footer-motto{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.8rem;color:rgba(255,255,255,.09);margin-top:18px;letter-spacing:.1em}
+
+        /* WA */
+        .wa-btn{position:fixed;bottom:clamp(18px,4vw,32px);right:clamp(14px,4vw,32px);width:50px;height:50px;border-radius:50%;background:var(--white);color:#25d366;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 28px rgba(0,0,0,.13);z-index:2000;border:1px solid rgba(37,211,102,.13);transition:transform .3s var(--ease),box-shadow .3s;animation:waBounce 3s ease-in-out 4s infinite}
+        .wa-btn:hover{transform:scale(1.1);box-shadow:0 12px 36px rgba(0,0,0,.18)}
+        @keyframes waBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+        /* ══ BREAKPOINTS ══ */
+
+        /* Tablet (≤1024px) */
+        @media(max-width:1024px){
+            .hero-inner{grid-template-columns:1fr}
+            .hero-visual{display:none}
+            .hero-desc{max-width:100%}
+            .pilares-grid{grid-template-columns:1fr 1fr}
+            .triade-block{grid-column:span 2}
+            .hist-grid{grid-template-columns:1fr}
+            .compasso-wrap{max-width:340px;margin:0 auto}
+            .familias-grid{grid-template-columns:repeat(2,1fr)}
+            .contact-grid{grid-template-columns:1fr}
+        }
+
+        /* Tablet small (≤768px) */
+        @media(max-width:768px){
+            .nav-links{display:none}
+            .nav-burger{display:flex}
+            .nav-drawer{display:flex}
+            .pilares-grid{grid-template-columns:1fr}
+            .triade-block{grid-column:span 1}
+            /* Disable hover flip on touch — use .flipped class instead */
+            .pilar-card::before{display:none}
+            .pilar-card:hover p{color:#6b7280}
+            .pilar-card:hover .pilar-list li{color:#9ca3af;border-color:rgba(44,62,80,.07)}
+            .faq-wrap{margin-left:0;margin-right:0}
+            /* Mobile family card: stack front+back, toggle visibility */
+            .familia-card{height:auto;min-height:0}
+            .fc-front,.fc-back{position:static;transform:none!important;opacity:1!important;transition:none!important}
+            .fc-back{display:none!important}
+            .familia-card.flipped .fc-front{display:none!important}
+            .familia-card.flipped .fc-back{display:flex!important}
+            .tap-hint{display:block}
+        }
+
+        /* Mobile (≤480px) */
+        @media(max-width:480px){
+            :root{--nav-h:60px}
+            h1{font-size:clamp(1.7rem,8.5vw,2.5rem)}
+            .hero-btns{flex-direction:column;align-items:stretch}
+            .btn-primary,.btn-outline{text-align:center;width:100%}
+            .hero-stats{gap:14px}
+            .familias-grid{grid-template-columns:1fr}
+            .master-card{flex:0 0 clamp(110px,38vw,140px)}
+            .triade-block{flex-direction:column;gap:10px}
+            .triade-sep{display:none}
+            .contact-item{flex-direction:column;gap:10px}
+            .footer-links{gap:10px}
+        }
+
+        /* Very small (≤360px) */
+        @media(max-width:360px){
+            h1{font-size:1.6rem}
+            .hero-tag{font-size:.44rem;letter-spacing:.28em}
+            .master-card{flex:0 0 110px}
+            .logo small{display:none}
+        }
+
+        /* Large (≥1440px) */
+        @media(min-width:1440px){
+            .hero-inner,.section-inner{padding-left:60px;padding-right:60px}
+        }
+    </style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+    <svg class="loader-symbol" viewBox="0 0 64 64"><circle cx="32" cy="32" r="28"/></svg>
+    <div class="loader-text">GLOMAM</div>
+</div>
+
+<!-- PROGRESS -->
+<div id="progress-bar"></div>
+
+<!-- CURSOR -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<!-- ══ HEADER ══ -->
+<header id="header">
+    <div class="nav-inner">
+        <a href="#inicio" class="logo">GLOMAM<small>Grande Loja Maçônica do Amazonas</small></a>
+        <div class="nav-links">
+            <a href="#inicio">Início</a>
+            <a href="#geometria">Princípios</a>
+            <a href="#historia">Memorial</a>
+            <a href="#familias">Colunas</a>
+            <a href="#faq-section">FAQ</a>
+            <a href="#oriente" class="nav-cta">Contacto</a>
+        </div>
+        <button class="nav-burger" id="nav-burger" aria-label="Abrir menu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+    <nav class="nav-drawer" id="nav-drawer">
+        <a href="#inicio">Início</a>
+        <a href="#geometria">Princípios</a>
+        <a href="#historia">Memorial</a>
+        <a href="#familias">Colunas</a>
+        <a href="#faq-section">FAQ</a>
+        <a href="#oriente">Contacto</a>
+    </nav>
+</header>
+
+<main>
+
+<!-- ══ HERO ══ -->
+<section id="inicio">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-bg-orb"></div>
+    <div class="hero-inner">
+        <div>
+            <div class="hero-tag">Arquitetura Social da Virtude</div>
+            <h1>A Perfeição<br>na <span class="gold"><span class="italic">Medida</span></span></h1>
+            <p class="hero-desc">Uma Ordem Universal dedicada ao aperfeiçoamento da humanidade através do estudo constante, da retidão moral e da fraternidade eterna.</p>
+            <div class="hero-btns">
+                <a href="#geometria" class="btn-primary"><span>Ver Princípios</span></a>
+                <a href="#oriente" class="btn-outline">Localização</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item"><div class="stat-num">1904</div><div class="stat-label">Fundação</div></div>
+                <div class="stat-item"><div class="stat-num">13+</div><div class="stat-label">Grão-Mestres</div></div>
+                <div class="stat-item"><div class="stat-num">120+</div><div class="stat-label">Anos de Luz</div></div>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="hero-symbol-wrap">
+                <div class="ring-outer"></div>
+                <div class="ring-inner"></div>
+                <svg class="hero-svg-main" viewBox="0 0 200 200">
+                    <path class="svg-path-anim" d="M15,48 L100,148 L185,48 L168,30 L100,120 L32,30 Z" stroke="#2C3E50" stroke-width=".7"/>
+                    <line class="svg-path-anim" x1="100" y1="18" x2="38" y2="162" stroke="#b4975a" stroke-width=".8" style="animation-delay:.5s"/>
+                    <line class="svg-path-anim" x1="100" y1="18" x2="162" y2="162" stroke="#b4975a" stroke-width=".8" style="animation-delay:.7s"/>
+                    <circle cx="100" cy="18" r="3" fill="#b4975a" stroke="none"/>
+                    <circle cx="100" cy="95" r="12" stroke="#b4975a" stroke-width=".5" opacity=".32" stroke-dasharray="3,4"/>
+                    <text x="100" y="100" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel" font-size="11" fill="#b4975a" opacity=".52">G</text>
+                    <circle cx="100" cy="100" r="88" stroke="#2C3E50" stroke-width=".25" stroke-dasharray="4,8" opacity=".17"/>
+                </svg>
+                <div class="hero-gadu">G.A.D.U.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══ PILARES ══ -->
+<section id="geometria">
+    <div class="section-inner">
+        <div class="reveal" style="text-align:center">
+            <div class="section-label" style="justify-content:center">Os Pilares da Ordem</div>
+            <h2>Princípios que Sustentam o Templo</h2>
+            <div class="divider" style="margin:16px auto 0"></div>
+        </div>
+        <div class="pilares-grid reveal reveal-d1">
+            <div class="pilar-card">
+                <div class="pilar-num">I</div>
+                <div class="pilar-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 19h20L12 2z"/><line x1="12" y1="9" x2="12" y2="14"/><circle cx="12" cy="17" r=".5" fill="#b4975a"/></svg></div>
+                <div class="pilar-title">A Maçonaria</div>
+                <p>Ordem constituída por homens de todas as raças, congregados em Lojas para o aperfeiçoamento da Sociedade Humana através de símbolos e alegorias.</p>
+                <ul class="pilar-list">
+                    <li>· Crença num Princípio Criador — G.A.D.U.</li>
+                    <li>· Liberdade de consciência sacratíssima</li>
+                    <li>· Tolerância e investigação da Verdade</li>
+                </ul>
+            </div>
+            <div class="pilar-card" style="background:var(--slate)">
+                <div class="pilar-num" style="color:rgba(255,255,255,.03)">II</div>
+                <div class="pilar-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/></svg></div>
+                <div class="pilar-title">Ser Maçom</div>
+                <p style="color:rgba(255,255,255,.52);font-style:italic;font-family:'Cormorant Garamond',serif;font-size:1rem">"É ser amante da Virtude, da Sabedoria e da Justiça. É educar a inteligência para o bem e praticar a concórdia entre os povos."</p>
+                <ul class="pilar-list">
+                    <li style="color:rgba(255,255,255,.47);border-color:rgba(255,255,255,.06)">· Amigo dos que sofrem</li>
+                    <li style="color:rgba(255,255,255,.47);border-color:rgba(255,255,255,.06)">· Propagador da instrução</li>
+                    <li style="color:rgba(255,255,255,.47);border-color:rgba(255,255,255,.06)">· Praticante da tolerância constante</li>
+                </ul>
+            </div>
+            <div class="pilar-card">
+                <div class="pilar-num">III</div>
+                <div class="pilar-icon"><svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg></div>
+                <div class="pilar-title">Finalidades</div>
+                <p>Tornar feliz a humanidade pelo amor, aperfeiçoamento dos costumes e respeito absoluto à família e à pátria.</p>
+                <ul class="pilar-list">
+                    <li>· Amor fraterno universal</li>
+                    <li>· Prática constante da caridade</li>
+                    <li>· Respeito à família e à nação</li>
+                </ul>
+            </div>
+            <div class="triade-block">
+                <span class="triade-word">Liberdade</span>
+                <span class="triade-sep"></span>
+                <span class="triade-word">Igualdade</span>
+                <span class="triade-sep"></span>
+                <span class="triade-word">Fraternidade</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══ MEMORIAL ══ -->
+<section id="historia">
+    <div class="hist-noise"></div>
+    <div id="spotlight"></div>
+    <div class="section-inner">
+        <div class="hist-intro reveal">
+            <div class="section-label">Memorial</div>
+            <h2>Iluminando o Passado</h2>
+            <div class="divider"></div>
+        </div>
+        <div class="hist-grid reveal reveal-d1">
+            <div class="compasso-wrap">
+                <div class="compasso-year">1904</div>
+                <div class="orbit-ring" style="width:90%;height:90%"></div>
+                <div class="orbit-ring" style="width:62%;height:62%"></div>
+                <svg class="compasso-svg" viewBox="0 0 100 100">
+                    <path class="c-path" d="M12,38 L50,78 L88,38 L78,28 L50,68 L22,28 Z"/>
+                    <g class="c-legs">
+                        <line class="c-path" x1="50" y1="12" x2="22" y2="88" style="animation-delay:.3s"/>
+                        <line class="c-path" x1="50" y1="12" x2="78" y2="88" style="animation-delay:.5s"/>
+                        <circle cx="50" cy="12" r="2.5" fill="#b4975a" stroke="none"/>
+                    </g>
+                    <text x="50" y="54" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel" font-size="8" fill="#b4975a" opacity=".5">G</text>
+                    <circle cx="50" cy="52" r="8" stroke="#b4975a" stroke-width=".4" fill="none" stroke-dasharray="2,4" opacity=".4"/>
+                </svg>
+            </div>
+            <div class="timeline">
+                <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1872</div><div class="tl-text">Surge a Loja "Esperança e Porvir" — primeiro farol maçônico a iluminar as terras do Amazonas.</div></div>
+                <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1884</div><div class="tl-text">Marco histórico: a Maçonaria lidera o decreto de extinção da escravidão na Província do Amazonas, antecedendo o Brasil.</div></div>
+                <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">1904</div><div class="tl-text">Fundação formal da GLOMAM — consolidando a regularidade no coração da Amazônia Ocidental.</div></div>
+                <div class="tl-item"><div class="tl-dot"></div><div class="tl-year">Hoje</div><div class="tl-text">Sentinela vigilante da tradição, a GLOMAM projeta sua luz através de gerações comprometidas com a humanidade.</div></div>
+            </div>
+        </div>
+
+        <!-- Carousel -->
+        <div class="reveal">
+            <div class="masters-header">
+                <h3 class="masters-h3">Galeria de Grão-Mestres</h3>
+                <div class="carousel-controls">
+                    <button class="ctrl-btn" id="prev-master" aria-label="Anterior">&#8592;</button>
+                    <button class="ctrl-btn" id="next-master" aria-label="Próximo">&#8594;</button>
+                </div>
+            </div>
+            <div class="masters-track-wrap" id="carousel-wrap">
+                <div class="masters-track" id="masters-track"></div>
+            </div>
+            <div class="carousel-dots" id="carousel-dots"></div>
+        </div>
+        <div style="text-align:center;margin-top:40px;opacity:.17;font-size:.52rem;letter-spacing:.5em;text-transform:uppercase;color:#fff">Mova o cursor para explorar com a sua luz</div>
+    </div>
+</section>
+
+<!-- ══ PARAMAÇÔNICAS ══ -->
+<section id="familias">
+    <div class="section-inner">
+        <div class="reveal" style="text-align:center">
+            <div class="section-label" style="justify-content:center">A Extensão do Templo na Família</div>
+            <h2>Ordens Paramaçônicas</h2>
+            <div class="divider" style="margin:16px auto 0"></div>
+        </div>
+        <p class="tap-hint reveal" style="margin-top:20px">Toque nos cards para ver mais ↓</p>
+        <div class="familias-grid">
+            <div class="familia-card reveal">
+                <div class="fc-front">
+                    <div class="fc-num">01</div>
+                    <svg class="fc-icon-svg" viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+                    <div class="fc-title">Ordem DeMolay</div>
+                    <p class="fc-desc">Formação de jovens de 12 a 20 anos baseada nas sete virtudes cardeais, patriotismo e desenvolvimento do carácter.</p>
+                    <div class="fc-tag">Masculino · 12–20 anos</div>
+                </div>
+                <div class="fc-back">
+                    <div class="fc-title">DeMolay</div>
+                    <p class="fc-desc">Jacques de Molay, último Grão-Mestre dos Templários, inspira jovens a viver com honra, cortesia e pureza de costumes.</p>
+                    <div class="fc-tag">Fundada em 1919</div>
+                    <div class="fc-back-glyph">D</div>
+                </div>
+            </div>
+            <div class="familia-card reveal reveal-d1">
+                <div class="fc-front">
+                    <div class="fc-num">02</div>
+                    <svg class="fc-icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="5" r="3"/><path d="M12 8v8M9 14l3 4 3-4M7 10l5 2 5-2"/></svg>
+                    <div class="fc-title">Filhas de Jó</div>
+                    <p class="fc-desc">Jovens de 10 a 19 anos, focadas no aperfeiçoamento do carácter através das virtudes bíblicas de paciência e fé.</p>
+                    <div class="fc-tag">Feminino · 10–19 anos</div>
+                </div>
+                <div class="fc-back">
+                    <div class="fc-title">Filhas de Jó</div>
+                    <p class="fc-desc">Cultiva fé, esperança, caridade e amor — os quatro pontos cardeais que norteiam a vida de cada jovem membro da ordem.</p>
+                    <div class="fc-tag">Fundada em 1920</div>
+                    <div class="fc-back-glyph">J</div>
+                </div>
+            </div>
+            <div class="familia-card reveal reveal-d2">
+                <div class="fc-front">
+                    <div class="fc-num">03</div>
+                    <svg class="fc-icon-svg" viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+                    <div class="fc-title">Estrela do Oriente</div>
+                    <p class="fc-desc">Fraternidade para homens e mulheres adultos, zelando pela solidariedade moral e pelos laços familiares maçônicos.</p>
+                    <div class="fc-tag">Misto · Adultos</div>
+                </div>
+                <div class="fc-back">
+                    <div class="fc-title">Estrela do Oriente</div>
+                    <p class="fc-desc">Fundada sobre cinco pontos da estrela, cada um representando uma heroína bíblica cujas virtudes guiam os membros.</p>
+                    <div class="fc-tag">Fundada em 1850</div>
+                    <div class="fc-back-glyph">★</div>
+                </div>
+            </div>
+            <div class="familia-card reveal reveal-d3">
+                <div class="fc-front">
+                    <div class="fc-num">04</div>
+                    <svg class="fc-icon-svg" viewBox="0 0 24 24"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2z"/></svg>
+                    <div class="fc-title">Escudeiros</div>
+                    <p class="fc-desc">Iniciação de garotos de 8 a 12 anos nas virtudes da Verdade, Justiça e Sabedoria — preparação para uma vida íntegra.</p>
+                    <div class="fc-tag">Infantil · 8–12 anos</div>
+                </div>
+                <div class="fc-back">
+                    <div class="fc-title">Escudeiros</div>
+                    <p class="fc-desc">O jovem Escudeiro aprende a honrar seus pais, respeitar as leis e agir com bondade — pilares de cidadãos exemplares.</p>
+                    <div class="fc-tag">Iniciação Precoce</div>
+                    <div class="fc-back-glyph">E</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══ FAQ ══ -->
+<section id="faq-section">
+    <div class="section-inner">
+        <div class="reveal" style="text-align:center">
+            <div class="section-label" style="justify-content:center">Dúvidas Frequentes</div>
+            <h2>Perguntas &amp; Respostas</h2>
+            <div class="divider" style="margin:16px auto 0"></div>
+        </div>
+        <div class="faq-wrap reveal">
+            <div class="faq-item">
+                <div class="faq-q"><span>A Maçonaria é uma religião?</span><div class="faq-icon">+</div></div>
+                <div class="faq-a">Não. A Maçonaria é um sistema de moral que une homens de bons costumes. Exige a crença em Deus — G.A.D.U. — e na imortalidade da alma como bases filosóficas, mas não é uma religião em si mesma.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q"><span>É uma sociedade secreta?</span><div class="faq-icon">+</div></div>
+                <div class="faq-a">Não. A Maçonaria é uma sociedade discreta. Nossos objetivos e leis são públicos. Mantemos reserva apenas sobre nossas cerimônias de reconhecimento e rituais internos — patrimônio simbólico da Ordem.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q"><span>Como posso ingressar na Ordem?</span><div class="faq-icon">+</div></div>
+                <div class="faq-a">A Maçonaria não convida — ela recebe. O candidato deve sentir o desejo espontâneo e genuíno de buscar a luz, ser um homem livre, de bons costumes, com crença em Deus e boa reputação moral.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q"><span>Existe algum requisito de idade?</span><div class="faq-icon">+</div></div>
+                <div class="faq-a">Sim. O candidato deve ter no mínimo 21 anos. Jovens mais novos podem participar das ordens paramaçônicas como o DeMolay (12–20 anos) ou as Filhas de Jó (10–19 anos).</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q"><span>Com que frequência há reuniões?</span><div class="faq-icon">+</div></div>
+                <div class="faq-a">As lojas se reúnem geralmente uma a duas vezes por mês para trabalhos rituais, estudos filosóficos e o exercício da fraternidade entre os membros. As datas variam conforme cada loja.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══ ORIENTE ══ -->
+<section id="oriente">
+    <div class="section-inner">
+        <div class="reveal">
+            <div class="section-label">Oriente de Manaus</div>
+            <h2>Sede &amp; Localização</h2>
+            <div class="divider"></div>
+        </div>
+        <div class="contact-grid">
+            <div class="reveal">
+                <div class="contact-item">
+                    <svg class="contact-icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <div><div class="contact-label">Endereço</div><div class="contact-val">Av. Prof. Nilton Lins, 1655<br>Flores — CEP 69.058-030<br>Manaus, Amazonas — Brasil</div></div>
+                </div>
+                <div class="contact-item">
+                    <svg class="contact-icon" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    <div><div class="contact-label">E-mail</div><div class="contact-val">secretaria@glomam.org.br</div></div>
+                </div>
+                <div class="contact-item">
+                    <svg class="contact-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                    <div><div class="contact-label">Registro</div><div class="contact-val">CNPJ: 04.405.007/0001-44</div></div>
+                </div>
+                <div style="margin-top:32px">
+                    <a href="https://wa.me/5592999999999" target="_blank" class="btn-primary" style="display:inline-block"><span>Entrar em Contacto</span></a>
+                </div>
+            </div>
+            <div class="map-wrap reveal reveal-d1">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3986.1157929457223!2d-60.0185!3d-3.0645!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x926c1967277a0631%3A0xc07a8264584b80b7!2sAv.%20Prof.%20Nilton%20Lins%2C%201655%20-%20Flores%2C%20Manaus%20-%20AM!5e0!3m2!1spt-BR!2sbr!4v1715000000000" allowfullscreen="" loading="lazy" title="Localização GLOMAM"></iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
+</main>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+    <div class="footer-logo">GLOMAM</div>
+    <div class="footer-sub">Grande Loja Maçônica do Amazonas — Desde 1904</div>
+    <div class="footer-links">
+        <a href="#inicio">Início</a>
+        <a href="#geometria">Princípios</a>
+        <a href="#historia">Memorial</a>
+        <a href="#familias">Colunas</a>
+        <a href="#faq-section">FAQ</a>
+        <a href="#oriente">Contacto</a>
+    </div>
+    <div class="footer-line"></div>
+    <div class="footer-copy">© 2025 GLOMAM · Tradição · Regularidade · Progresso · CNPJ 04.405.007/0001-44</div>
+    <div class="footer-motto">Ad Gloriam et Honorem</div>
+</footer>
+
+<a href="https://wa.me/5592999999999" target="_blank" class="wa-btn" aria-label="WhatsApp">
+    <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.94 3.659 1.437 5.634 1.437h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+(function(){
+    'use strict';
+    const $=s=>document.querySelector(s);
+    const $$=s=>[...document.querySelectorAll(s)];
+    const touch=()=>window.matchMedia('(pointer:coarse)').matches;
+
+    /* LOADER */
+    window.addEventListener('load',()=>{
+        setTimeout(()=>{
+            const l=$('#loader');
+            l.classList.add('fade');
+            setTimeout(()=>l.remove(),850);
+        },1000);
+    });
+
+    /* PROGRESS */
+    const pb=$('#progress-bar');
+    window.addEventListener('scroll',()=>{
+        const max=document.documentElement.scrollHeight-window.innerHeight;
+        pb.style.width=(max>0?window.scrollY/max*100:0)+'%';
+    },{passive:true});
+
+    /* CURSOR */
+    const dot=$('#cursor-dot'),ring=$('#cursor-ring');
+    if(!touch()&&dot&&ring){
+        let mx=0,my=0,rx=0,ry=0;
+        document.addEventListener('mousemove',e=>{
+            mx=e.clientX;my=e.clientY;
+            dot.style.left=mx+'px';dot.style.top=my+'px';
+        });
+        (function anim(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(anim);})();
+        document.addEventListener('mousedown',()=>ring.classList.add('click'));
+        document.addEventListener('mouseup',()=>ring.classList.remove('click'));
+        $$('a,button,.pilar-card,.familia-card,.faq-q,.master-card,.ctrl-btn,.c-dot').forEach(el=>{
+            el.addEventListener('mouseenter',()=>ring.classList.add('hover'));
+            el.addEventListener('mouseleave',()=>ring.classList.remove('hover'));
+        });
+    }
+
+    /* HEADER */
+    const header=$('#header');
+    window.addEventListener('scroll',()=>header.classList.toggle('shrunk',window.scrollY>60),{passive:true});
+
+    /* MOBILE NAV */
+    const burger=$('#nav-burger'),drawer=$('#nav-drawer');
+    burger.addEventListener('click',()=>{burger.classList.toggle('open');drawer.classList.toggle('open');});
+    $$('a',drawer).forEach(a=>a.addEventListener('click',()=>{burger.classList.remove('open');drawer.classList.remove('open');}));
+
+    /* REVEAL */
+    function reveal(){
+        $$('.reveal').forEach(el=>{if(el.getBoundingClientRect().top<window.innerHeight-80)el.classList.add('active');});
+        $$('.tl-item').forEach((el,i)=>{if(el.getBoundingClientRect().top<window.innerHeight-60)setTimeout(()=>el.classList.add('active'),i*130);});
+    }
+    window.addEventListener('scroll',reveal,{passive:true});
+    reveal();
+
+    /* SPOTLIGHT */
+    const hist=$('#historia'),spl=$('#spotlight');
+    document.addEventListener('mousemove',e=>{
+        if(!hist||!spl)return;
+        const r=hist.getBoundingClientRect();
+        if(e.clientY>=r.top&&e.clientY<=r.bottom){
+            hist.style.setProperty('--mx',(e.clientX-r.left)+'px');
+            hist.style.setProperty('--my',(e.clientY-r.top)+'px');
+            spl.style.opacity='1';
+        }else spl.style.opacity='0';
+    });
+
+    /* PILAR TILT */
+    if(!touch()){
+        $$('.pilar-card').forEach(c=>{
+            c.addEventListener('mousemove',e=>{
+                const r=c.getBoundingClientRect();
+                const x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+                c.style.transform=`perspective(900px) rotateY(${x*4}deg) rotateX(${-y*4}deg) translateZ(6px)`;
+            });
+            c.addEventListener('mouseleave',()=>c.style.transform='');
+        });
+    }
+
+    /* FAMILIA CARDS — touch tap */
+    if(touch()){
+        $$('.familia-card').forEach(card=>{
+            card.addEventListener('click',()=>{
+                const open=card.classList.contains('flipped');
+                $$('.familia-card').forEach(c=>c.classList.remove('flipped'));
+                if(!open)card.classList.add('flipped');
+            });
+        });
+    }
+
+    /* CAROUSEL */
+    const names=['Irmão Fundador','Eduardo Pimentel','Carlos Bentes','Antônio Lira',
+        'Mário Oliveira','João Rodrigues','Sebastião Faria','Raimundo Costa',
+        'Luiz Vasconcelos','Álvaro Monteiro','Fernando Paes','Henrique Lima','Paulo Menezes'];
+    const track=$('#masters-track');
+    const dotsWrap=$('#carousel-dots');
+    const wrap=$('#carousel-wrap');
+    let idx=0,timer;
+
+    names.forEach(n=>{
+        const c=document.createElement('div');
+        c.className='master-card';
+        const init=n.split(' ').find(w=>w.length>2)?.[0]||n[0];
+        c.innerHTML=`<div class="master-portrait"><div class="master-initial">${init}</div></div><div class="master-label">Grão-Mestre</div><div class="master-name">${n}</div>`;
+        track.appendChild(c);
+    });
+
+    function cardW(){return track.children[0]?.offsetWidth+(window.innerWidth<=480?10:window.innerWidth<=768?12:24)||184;}
+    function vis(){return window.innerWidth<=480?2:window.innerWidth<=768?3:window.innerWidth<=1024?4:5;}
+
+    function buildDots(){
+        dotsWrap.innerHTML='';
+        const grps=Math.ceil(names.length/vis());
+        for(let i=0;i<grps;i++){
+            const d=document.createElement('div');
+            d.className='c-dot'+(i===0?' active':'');
+            d.addEventListener('click',()=>{goTo(i*vis());startAuto();});
+            dotsWrap.appendChild(d);
+        }
+    }
+    function goTo(i){
+        const v=vis(),max=names.length-v;
+        idx=Math.max(0,Math.min(i,max));
+        track.style.transform=`translateX(-${idx*cardW()}px)`;
+        const g=Math.floor(idx/v);
+        $$('.c-dot',dotsWrap).forEach((d,j)=>d.classList.toggle('active',j===g));
+    }
+    function startAuto(){
+        clearInterval(timer);
+        timer=setInterval(()=>goTo(idx+1>names.length-vis()?0:idx+1),3500);
+    }
+    $('#prev-master').addEventListener('click',()=>{goTo(idx-vis());startAuto();});
+    $('#next-master').addEventListener('click',()=>{goTo(idx+vis());startAuto();});
+
+    /* Swipe */
+    let tx=0;
+    wrap.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
+    wrap.addEventListener('touchend',e=>{
+        const d=tx-e.changedTouches[0].clientX;
+        if(Math.abs(d)>36){d>0?goTo(idx+1):goTo(idx-1);startAuto();}
+    },{passive:true});
+
+    window.addEventListener('resize',()=>{buildDots();goTo(0);});
+    buildDots();goTo(0);startAuto();
+
+    /* FAQ */
+    $$('.faq-q').forEach(q=>{
+        q.addEventListener('click',()=>{
+            const item=q.closest('.faq-item');
+            const open=item.classList.contains('active');
+            $$('.faq-item').forEach(i=>{i.classList.remove('active');i.querySelector('.faq-icon').textContent='+';});
+            if(!open){item.classList.add('active');item.querySelector('.faq-icon').textContent='+';}
+        });
+    });
+
+    /* PARALLAX ORB */
+    if(!touch()){
+        const orb=$('.hero-bg-orb');
+        window.addEventListener('scroll',()=>{if(orb)orb.style.transform=`translate(${window.scrollY*.028}px,${window.scrollY*-.05}px)`;},{passive:true});
+    }
+})();
+</script>
+</body>
+</html>
