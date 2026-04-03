@@ -1,0 +1,51 @@
+<section id="geometria">
+    <div class="section-inner">
+        <div class="reveal active" style="text-align:center">
+            <div class="section-label" style="justify-content:center">Os Pilares da Ordem</div>
+            <h2>Princípios que Sustentam o Templo</h2>
+            <div class="divider" style="margin:16px auto 0"></div>
+        </div>
+        <div class="pilares-grid reveal reveal-d1 active">
+            <div class="pilar-card" style="">
+                <div class="pilar-num">I</div>
+                <div class="pilar-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 19h20L12 2z"></path><line x1="12" y1="9" x2="12" y2="14"></line><circle cx="12" cy="17" r=".5" fill="#b4975a"></circle></svg></div>
+                <div class="pilar-title">A Maçonaria</div>
+                <p>Ordem constituída por homens de todas as raças, congregados em Lojas para o aperfeiçoamento da Sociedade Humana através de símbolos e alegorias.</p>
+                <ul class="pilar-list">
+                    <li>· Crença num Princípio Criador — G.A.D.U.</li>
+                    <li>· Liberdade de consciência sacratíssima</li>
+                    <li>· Tolerância e investigação da Verdade</li>
+                </ul>
+            </div>
+            <div class="pilar-card" style="background: var(--slate);">
+                <div class="pilar-num" style="color:rgba(255,255,255,.03)">II</div>
+                <div class="pilar-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"></circle><path d="M6 20v-2a6 6 0 0 1 12 0v2"></path></svg></div>
+                <div class="pilar-title">Ser Maçom</div>
+                <p style="color:rgba(255,255,255,.52);font-style:italic;font-family:'Cormorant Garamond',serif;font-size:1rem">"É ser amante da Virtude, da Sabedoria e da Justiça. É educar a inteligência para o bem e praticar a concórdia entre os povos."</p>
+                <ul class="pilar-list">
+                    <li style="color:rgba(255,255,255,.47);border-color:rgba(255,255,255,.06)">· Amigo dos que sofrem</li>
+                    <li style="color:rgba(255,255,255,.47);border-color:rgba(255,255,255,.06)">· Propagador da instrução</li>
+                    <li style="color:rgba(255,255,255,.47);border-color:rgba(255,255,255,.06)">· Praticante da tolerância constante</li>
+                </ul>
+            </div>
+            <div class="pilar-card" style="">
+                <div class="pilar-num">III</div>
+                <div class="pilar-icon"><svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"></polygon></svg></div>
+                <div class="pilar-title">Finalidades</div>
+                <p>Tornar feliz a humanidade pelo amor, aperfeiçoamento dos costumes e respeito absoluto à família e à pátria.</p>
+                <ul class="pilar-list">
+                    <li>· Amor fraterno universal</li>
+                    <li>· Prática constante da caridade</li>
+                    <li>· Respeito à família e à nação</li>
+                </ul>
+            </div>
+            <div class="triade-block">
+                <span class="triade-word">Liberdade</span>
+                <span class="triade-sep"></span>
+                <span class="triade-word">Igualdade</span>
+                <span class="triade-sep"></span>
+                <span class="triade-word">Fraternidade</span>
+            </div>
+        </div>
+    </div>
+</section>
