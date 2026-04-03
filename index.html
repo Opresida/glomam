@@ -293,6 +293,98 @@
         .nh-cta-ornament{width:36px;height:1px;background:var(--gold)}
         .nh-cta-sub{font-size:.5rem;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);font-weight:600}
 
+        /* ══ LIDERANÇA GLOMAM ══ */
+        #lideranca{background:#0a0c10;overflow:hidden;position:relative}
+        #lideranca .section-inner{position:relative;z-index:2}
+        .lid-header{text-align:center;margin-bottom:clamp(48px,7vw,80px)}
+        .lid-header h2{color:var(--white)}
+        .lid-header .section-label{color:var(--gold)}
+
+        /* Pyramid wrapper */
+        .pyramid-wrap{position:relative;max-width:900px;margin:0 auto;padding:clamp(20px,4vw,48px) clamp(40px,8vw,100px) clamp(32px,5vw,64px)}
+
+        /* Eye of Providence */
+        .eye-section{display:flex;justify-content:center;margin-bottom:clamp(32px,5vw,56px);position:relative}
+        .eye-wrap{position:relative;width:clamp(120px,18vw,180px);height:clamp(120px,18vw,180px);display:flex;align-items:center;justify-content:center}
+        .eye-rays{position:absolute;inset:0;animation:raysSpin 20s linear infinite}
+        .eye-svg{width:100%;height:100%;position:relative;z-index:2}
+        .eye-glow{position:absolute;inset:-20px;border-radius:50%;background:radial-gradient(circle,rgba(180,151,90,.18) 0%,transparent 70%);animation:eyeGlow 2.5s ease-in-out infinite}
+        @keyframes eyeGlow{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
+        @keyframes raysSpin{to{transform:rotate(360deg)}}
+        .pupil-anim{animation:pupilPulse 2.5s ease-in-out infinite}
+        @keyframes pupilPulse{0%,100%{r:6}50%{r:8}}
+        .iris-anim{animation:irisPulse 2.5s ease-in-out infinite}
+        @keyframes irisPulse{0%,100%{r:16}50%{r:18}}
+
+        /* Pyramid SVG border */
+        .pyramid-svg-border{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:visible}
+        .pyr-edge{stroke:var(--gold);stroke-width:2;fill:none;stroke-dasharray:2400;stroke-dashoffset:2400;animation:edgeGlow 4s ease-in-out infinite alternate}
+        @keyframes edgeGlow{0%{stroke-dashoffset:2400;opacity:.2}100%{stroke-dashoffset:0;opacity:.85}}
+        .pyr-edge-r{stroke-dasharray:800;stroke-dashoffset:800;animation:edgeGlowR 4s ease-in-out 2s infinite alternate}
+        @keyframes edgeGlowR{0%{stroke-dashoffset:800;opacity:.2}100%{stroke-dashoffset:0;opacity:.85}}
+
+        /* Governors — portrait style (like Galeria de Grão-Mestres) */
+        .gov-tier-top{display:flex;justify-content:center;margin-bottom:clamp(20px,3vw,36px);position:relative;z-index:2}
+        .gov-tier-bottom{display:flex;justify-content:center;gap:clamp(20px,4vw,48px);margin-bottom:clamp(40px,6vw,64px);flex-wrap:wrap;position:relative;z-index:2}
+        .gov-card{text-align:center;position:relative}
+        .gov-card.gov-main{width:clamp(140px,18vw,200px)}
+        .gov-card.gov-vigilante{width:clamp(120px,15vw,170px)}
+        /* Portrait frame — replicates master-portrait */
+        .gov-portrait{width:100%;aspect-ratio:3/4;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);position:relative;overflow:hidden;margin-bottom:clamp(10px,1.5vw,16px);transition:border-color .4s}
+        .gov-portrait::before{content:'';position:absolute;top:7px;left:7px;right:7px;bottom:7px;border:1px solid rgba(180,151,90,.22);pointer-events:none;transition:border-color .4s;z-index:1}
+        .gov-portrait::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(180,151,90,.14) 100%);opacity:0;transition:opacity .4s;z-index:1}
+        .gov-card:hover .gov-portrait{border-color:rgba(180,151,90,.55)}
+        .gov-card:hover .gov-portrait::before{border-color:rgba(180,151,90,.4)}
+        .gov-card:hover .gov-portrait::after{opacity:1}
+        .gov-portrait img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+        .gov-rank{font-family:'Cinzel',serif;font-size:.48rem;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:5px;line-height:1.4}
+        .gov-cim{font-size:.44rem;letter-spacing:.18em;color:rgba(180,151,90,.55);margin-bottom:5px;font-family:'Cinzel',serif}
+        .gov-name{font-family:'Cinzel',serif;font-size:clamp(.6rem,1.1vw,.76rem);color:rgba(255,255,255,.88);letter-spacing:.06em;text-transform:uppercase;line-height:1.5}
+        /* Gold accent line under main card */
+        .gov-card.gov-main .gov-portrait{border-color:rgba(180,151,90,.45)}
+
+        /* Infinite carousels — stacked rows */
+        .exec-carousels{display:flex;flex-direction:column;gap:clamp(14px,2.5vw,28px);position:relative;z-index:2}
+        .exec-track-wrap{overflow:hidden;width:100%;position:relative}
+        .exec-track-wrap::before,.exec-track-wrap::after{content:'';position:absolute;top:0;bottom:0;width:clamp(30px,6vw,80px);z-index:3;pointer-events:none}
+        .exec-track-wrap::before{left:0;background:linear-gradient(90deg,#0a0c10,transparent)}
+        .exec-track-wrap::after{right:0;background:linear-gradient(270deg,#0a0c10,transparent)}
+        .exec-track{display:flex;gap:clamp(10px,1.8vw,20px);width:max-content}
+        .exec-track.right{animation:scrollRight 55s linear infinite}
+        .exec-track.left{animation:scrollLeft 55s linear infinite}
+        @keyframes scrollRight{0%{transform:translateX(-50%)}100%{transform:translateX(0%)}}
+        @keyframes scrollLeft{0%{transform:translateX(0%)}100%{transform:translateX(-50%)}}
+        .exec-track-wrap:hover .exec-track{animation-play-state:paused}
+        .exec-card{flex:0 0 clamp(110px,14vw,160px);background:rgba(255,255,255,.03);border:1px solid rgba(180,151,90,.16);padding:clamp(10px,1.4vw,18px) clamp(8px,1vw,14px);text-align:center;transition:border-color .3s}
+        .exec-card:hover{border-color:rgba(180,151,90,.5)}
+        /* Portrait frame — igual à moldura dos governantes */
+        .exec-photo{width:100%;aspect-ratio:3/4;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);position:relative;overflow:hidden;margin-bottom:clamp(7px,1vw,12px);transition:border-color .4s}
+        .exec-photo::before{content:'';position:absolute;top:5px;left:5px;right:5px;bottom:5px;border:1px solid rgba(180,151,90,.18);pointer-events:none;z-index:1}
+        .exec-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(180,151,90,.12) 100%);z-index:1}
+        .exec-card:hover .exec-photo{border-color:rgba(180,151,90,.45)}
+        .exec-photo img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+        .exec-photo-placeholder{display:flex;align-items:center;justify-content:center;width:100%;height:100%}
+        .exec-photo-placeholder svg{width:50%;height:50%;fill:rgba(180,151,90,.28)}
+        .exec-role{font-family:'Cinzel',serif;font-size:.4rem;letter-spacing:.14em;color:var(--gold);text-transform:uppercase;margin-bottom:4px;line-height:1.45}
+        .exec-name{font-size:clamp(.55rem,.85vw,.7rem);color:rgba(255,255,255,.65);letter-spacing:.03em;line-height:1.4}
+
+        /* Section separator line at top */
+        .lid-separator{width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto clamp(32px,5vw,56px)}
+
+        @media(max-width:768px){
+            .gov-card.gov-main{width:clamp(130px,38vw,180px)}
+            .gov-card.gov-vigilante{width:clamp(110px,30vw,155px)}
+            .gov-tier-bottom{gap:clamp(14px,3vw,28px)}
+            .pyramid-wrap{padding-left:clamp(12px,3vw,32px);padding-right:clamp(12px,3vw,32px)}
+            .exec-card{flex:0 0 clamp(100px,22vw,140px)}
+        }
+        @media(max-width:480px){
+            .gov-card.gov-main{width:clamp(130px,55vw,180px)}
+            .gov-card.gov-vigilante{width:clamp(110px,42vw,150px)}
+            .gov-tier-bottom{gap:clamp(10px,4vw,20px)}
+            .exec-card{flex:0 0 clamp(90px,36vw,120px)}
+        }
+
         /* ══ BREAKPOINTS ══ */
 
         /* Tablet (≤1024px) */
@@ -505,6 +597,7 @@
             <a href="#geometria">Princípios</a>
             <a href="#historia">Memorial</a>
             <a href="#nossa-historia">História</a>
+            <a href="#lideranca">Liderança</a>
             <a href="#familias">Colunas</a>
             <a href="#faq-section">FAQ</a>
             <a href="#oriente" class="nav-cta">Contacto</a>
@@ -518,6 +611,7 @@
         <a href="#geometria">Princípios</a>
         <a href="#historia">Memorial</a>
         <a href="#nossa-historia">História</a>
+        <a href="#lideranca">Liderança</a>
         <a href="#familias">Colunas</a>
         <a href="#faq-section">FAQ</a>
         <a href="#oriente">Contacto</a>
@@ -721,6 +815,151 @@
             <div class="nh-cta-ornament"></div>
             <p class="nh-cta-sub">Faça parte desta história</p>
             <a href="#oriente" class="btn-primary" style="padding:clamp(14px,2vw,18px) clamp(42px,6vw,72px)"><span>Quero Ser Maçom</span></a>
+        </div>
+
+    </div>
+</section>
+
+<!-- ══ LIDERANÇA GLOMAM ══ -->
+<section id="lideranca">
+    <div class="section-inner">
+
+        <div class="lid-header reveal">
+            <div class="section-label" style="justify-content:center">Grande Loja Maçônica do Amazonas</div>
+            <h2>Liderança GLOMAM</h2>
+            <div class="divider" style="margin:16px auto 0"></div>
+        </div>
+
+        <div class="pyramid-wrap">
+
+            <!-- Pyramid animated border overlay -->
+            <svg class="pyramid-svg-border" viewBox="0 0 900 600" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <polyline class="pyr-edge" points="450,10 10,590 890,590" fill="none"/>
+                <line class="pyr-edge pyr-edge-r" x1="450" y1="10" x2="10" y2="590"/>
+                <line class="pyr-edge" x1="450" y1="10" x2="890" y2="590"/>
+            </svg>
+
+            <!-- Eye of Providence -->
+            <div class="eye-section reveal">
+                <div class="eye-wrap">
+                    <div class="eye-glow"></div>
+                    <!-- Rotating rays -->
+                    <svg class="eye-rays" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <g stroke="rgba(180,151,90,0.22)" stroke-width="1" fill="none">
+                            <line x1="100" y1="100" x2="100" y2="4"/>
+                            <line x1="100" y1="100" x2="159" y2="18"/>
+                            <line x1="100" y1="100" x2="196" y2="59"/>
+                            <line x1="100" y1="100" x2="196" y2="141"/>
+                            <line x1="100" y1="100" x2="159" y2="182"/>
+                            <line x1="100" y1="100" x2="100" y2="196"/>
+                            <line x1="100" y1="100" x2="41" y2="182"/>
+                            <line x1="100" y1="100" x2="4" y2="141"/>
+                            <line x1="100" y1="100" x2="4" y2="59"/>
+                            <line x1="100" y1="100" x2="41" y2="18"/>
+                            <line x1="100" y1="100" x2="129" y2="11"/>
+                            <line x1="100" y1="100" x2="71" y2="11"/>
+                        </g>
+                    </svg>
+                    <!-- Eye SVG -->
+                    <svg class="eye-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Triangle -->
+                        <polygon points="100,24 184,162 16,162" stroke="rgba(180,151,90,0.7)" stroke-width="2" fill="rgba(180,151,90,0.04)"/>
+                        <!-- Eye outline -->
+                        <path d="M60,100 Q100,58 140,100 Q100,142 60,100Z" stroke="rgba(180,151,90,0.85)" stroke-width="1.5" fill="rgba(10,12,16,0.9)"/>
+                        <!-- Iris -->
+                        <circle class="iris-anim" cx="100" cy="100" r="16" stroke="var(--gold)" stroke-width="1.5" fill="rgba(180,151,90,0.08)"/>
+                        <!-- Pupil -->
+                        <circle class="pupil-anim" cx="100" cy="100" r="6" fill="var(--gold)" opacity="0.85"/>
+                        <!-- Inner glow ring -->
+                        <circle cx="100" cy="100" r="24" stroke="rgba(180,151,90,0.18)" stroke-width="1" fill="none"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Grão-Mestre — topo da pirâmide -->
+            <div class="gov-tier-top reveal reveal-d1">
+                <div class="gov-card gov-main">
+                    <div class="gov-portrait">
+                        <img src="https://i.imgur.com/DmqA6an.png" alt="TUFI SALIM JORGE FILHO">
+                    </div>
+                    <div class="gov-rank">Grão-Mestre</div>
+                    <div class="gov-cim">CIM: 8023</div>
+                    <div class="gov-name">TUFI SALIM JORGE FILHO</div>
+                </div>
+            </div>
+            <!-- Vigilantes — lado a lado abaixo -->
+            <div class="gov-tier-bottom reveal reveal-d2">
+                <div class="gov-card gov-vigilante">
+                    <div class="gov-portrait">
+                        <img src="https://i.imgur.com/yMM6r3J.png" alt="LOUSMAR BONATES">
+                    </div>
+                    <div class="gov-rank">Gr.: 1º Vigilante</div>
+                    <div class="gov-name">LOUSMAR BONATES</div>
+                </div>
+                <div class="gov-card gov-vigilante">
+                    <div class="gov-portrait">
+                        <img src="https://i.imgur.com/a2bVjCf.png" alt="José Nasser">
+                    </div>
+                    <div class="gov-rank">Gr.: 2º Vigilante</div>
+                    <div class="gov-name">JOSÉ NASSER</div>
+                </div>
+            </div>
+
+            <!-- Infinite Carousels — stacked rows -->
+            <div class="exec-carousels reveal reveal-d3">
+                <!-- Fileira 1: move para a DIREITA -->
+                <div class="exec-track-wrap">
+                    <div class="exec-track right" id="exec-track-1">
+                        <div class="exec-card"><div class="exec-photo"><img src="https://i.imgur.com/KDSWv0p.png" alt="Arthur Sales"></div><div class="exec-role">Gr. Sec. de Rel. Exteriores Adj.</div><div class="exec-name">Arthur Sales Gesta de Melo</div></div>
+                        <div class="exec-card"><div class="exec-photo"><img src="https://i.imgur.com/JsYyh6o.png" alt="Daniel Amâncio"></div><div class="exec-role">Gr. Sec. de Entidades Paramaç. Adj.</div><div class="exec-name">Daniel Txa-Iá A. Amâncio</div></div>
+                        <div class="exec-card"><div class="exec-photo"><img src="https://i.imgur.com/aVECNDU.png" alt="Denner Fadoul"></div><div class="exec-role">Gr. Sec. de Comunicação Adj.</div><div class="exec-name">Denner Fadoul</div></div>
+                        <div class="exec-card"><div class="exec-photo"><img src="https://i.imgur.com/RhxrvMj.png" alt="Eduardo Toledo"></div><div class="exec-role">Gr. Sec. de Relações Interiores</div><div class="exec-name">Eduardo Toledo da Silva</div></div>
+                        <div class="exec-card"><div class="exec-photo"><img src="https://i.imgur.com/mgR6oKp.png" alt="Ericlenio Castro"></div><div class="exec-role">Gr. Sec. de Gestão de Patrimônio Adj.</div><div class="exec-name">Ericlenio F. de Oliveira Castro</div></div>
+                        <div class="exec-card"><div class="exec-photo"><img src="https://i.imgur.com/BK3W3PM.png" alt="Gabriel Melgueiro"></div><div class="exec-role">Gr. Sec. de Gestão Administrativa Adj.</div><div class="exec-name">Gabriel Melgueiro Neto</div></div>
+                        <div class="exec-card"><div class="exec-photo"><img src="https://i.imgur.com/edK0jBY.png" alt="Jose Antonio"></div><div class="exec-role">Gr. Sec. de Dispensário Maçônico</div><div class="exec-name">Jose Antonio Costa Filho</div></div>
+                        <div class="exec-card"><div class="exec-photo"><img src="https://i.imgur.com/6FWy862.png" alt="Jose Ribamar"></div><div class="exec-role">Gr. Sec. de Relações Institucionais</div><div class="exec-name">Jose Ribamar Campelo Anibal</div></div>
+                        <div class="exec-card"><div class="exec-photo"><img src="https://i.imgur.com/oT1Kvem.png" alt="Leonardo Câmara"></div><div class="exec-role">Gr. Sec. de Estratégia e Planejamento</div><div class="exec-name">Leonardo Câmara</div></div>
+                        <div class="exec-card"><div class="exec-photo"><img src="https://i.imgur.com/LscWXIJ.png" alt="Marcos Sarquis"></div><div class="exec-role">Gr. Sec. de Gestão de Patrimônio Adj.</div><div class="exec-name">Marcos Carvalho Sarquis</div></div>
+                        <div class="exec-card"><div class="exec-photo"><img src="https://i.imgur.com/GUXxYmC.png" alt="Paulo Almeida"></div><div class="exec-role">Gr. Sec. de Patrimônio Histórico Adj.</div><div class="exec-name">Paulo da Silva R. de Almeida Filho</div></div>
+                        <div class="exec-card"><div class="exec-photo"><img src="https://i.imgur.com/jIxdaH9.png" alt="Arthur Sales"></div><div class="exec-role">Gr. Sec. de Relações Exteriores Adj.</div><div class="exec-name">Arthur Sales de Gesta de Melo</div></div>
+                        <div class="exec-card"><div class="exec-photo"><img src="https://i.imgur.com/BajoV1h.png" alt="Rafael Miranda"></div><div class="exec-role">Gr. Sec. de Assessoria Téc. de Intel.</div><div class="exec-name">Rafael Normando Miranda</div></div>
+                        <div class="exec-card"><div class="exec-photo"><img src="https://i.imgur.com/AUU4x3w.png" alt="Thiago Brandão"></div><div class="exec-role">Gr. Sec. de Gestão de Patrimônio Adj.</div><div class="exec-name">Thiago de Souza Brandão</div></div>
+                        <div class="exec-card"><div class="exec-photo"><img src="https://i.imgur.com/bppgpAw.png" alt="Valter Silveira"></div><div class="exec-role">Gr. Sec. de Tecnologia da Informação</div><div class="exec-name">Valter M. da Silveira Jr</div></div>
+                        <div class="exec-card"><div class="exec-photo"><img src="https://i.imgur.com/XCLpiPL.png" alt="Zilmar Souza"></div><div class="exec-role">Gr. Sec. de Eventos Adjunto</div><div class="exec-name">Zilmar Moreira de Souza</div></div>
+                    </div>
+                </div>
+                <!-- Fileira 2: move para a ESQUERDA -->
+                <div class="exec-track-wrap">
+                    <div class="exec-track left" id="exec-track-2">
+                        <div class="exec-card"><div class="exec-photo"><img src="https://i.imgur.com/vppcUiM.png" alt="Luiz Filipe"></div><div class="exec-role">Gr. Sec. de Relações Exteriores</div><div class="exec-name">Luiz Filipe B. Cardozo</div></div>
+                        <div class="exec-card"><div class="exec-photo"><img src="https://i.imgur.com/IuL19JA.png" alt="Julio Tomé"></div><div class="exec-role">Gr. Sec. de Assessoria Téc. Jurídica</div><div class="exec-name">Julio Tomé Neto</div></div>
+                        <div class="exec-card"><div class="exec-photo"><img src="https://i.imgur.com/4vTqmNX.png" alt="Yuri Simon"></div><div class="exec-role">Gr. Sec. de Entidades Paramaçônicas</div><div class="exec-name">Yuri Simon Salim J. Assel</div></div>
+                        <div class="exec-card"><div class="exec-photo"><img src="https://i.imgur.com/NwIlEIq.png" alt="Marcos Catunda"></div><div class="exec-role">Gr. Sec. de Patrimônio Histórico e Cultural</div><div class="exec-name">Marcos Túlio Tomé Catunda</div></div>
+                        <div class="exec-card"><div class="exec-photo"><img src="https://i.imgur.com/EQGfOkd.png" alt="Samuel Silva"></div><div class="exec-role">Gr. Sec. de Finanças</div><div class="exec-name">Samuel Marques da Silva</div></div>
+                        <div class="exec-card"><div class="exec-photo"><img src="https://i.imgur.com/o3LlRqB.png" alt="Rennalt Freitas"></div><div class="exec-role">Gr. Sec. de Assessoria Téc. Jurídica</div><div class="exec-name">Rennalt Lessa de Freitas</div></div>
+                        <div class="exec-card"><div class="exec-photo"><img src="https://i.imgur.com/OFOCaKv.png" alt="Manoel Matos"></div><div class="exec-role">Gr. Sec. de Integração Institucional</div><div class="exec-name">Manoel Bernado Matos</div></div>
+                        <div class="exec-card"><div class="exec-photo"><img src="https://i.imgur.com/NSk9VTP.png" alt="Wandecy Campos"></div><div class="exec-role">Gr. Sec. de Gestão Administrativa</div><div class="exec-name">Wandecy Gomes Campos</div></div>
+                        <div class="exec-card"><div class="exec-photo"><img src="https://i.imgur.com/iOhdKtU.png" alt="André Souza"></div><div class="exec-role">Gr. Sec. de Comunicação</div><div class="exec-name">André L. Souza</div></div>
+                        <div class="exec-card"><div class="exec-photo"><img src="https://i.imgur.com/4acXfeO.png" alt="Raimundo Almeida"></div><div class="exec-role">Gr. Sec. de Eventos Adjunto</div><div class="exec-name">Raimundo Bentes de Almeida</div></div>
+                        <div class="exec-card"><div class="exec-photo"><img src="https://i.imgur.com/Eqt05Io.png" alt="Eduardo Sakita"></div><div class="exec-role">Gr. Sec. de Relações Interiores Adj.</div><div class="exec-name">Eduardo Akira Sakita</div></div>
+                        <div class="exec-card"><div class="exec-photo"><img src="https://i.imgur.com/GrpwsZE.png" alt="João Bosco"></div><div class="exec-role">Gr. Sec. de Eventos</div><div class="exec-name">João Bosco Pinto Rocha</div></div>
+                        <div class="exec-card"><div class="exec-photo"><img src="https://i.imgur.com/5I2xorA.png" alt="Éder Santiago"></div><div class="exec-role">Gr. Sec. de Assessoria Téc. de Intel.</div><div class="exec-name">Éder Willian Lisboa Santiago</div></div>
+                        <div class="exec-card"><div class="exec-photo"><img src="https://i.imgur.com/5anxwJ1.png" alt="José Jaborandy"></div><div class="exec-role">Gr. Sec. de Assessoria Téc. de Intel.</div><div class="exec-name">José Jaborandy Neto</div></div>
+                        <div class="exec-card"><div class="exec-photo"><img src="https://i.imgur.com/cp8Qw3m.png" alt="Jocélio Cardoso"></div><div class="exec-role">Gr. Sec. de Integração Inst. Adj.</div><div class="exec-name">Jocélio B. Cardoso</div></div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /pyramid-wrap -->
+
+        <!-- CTA -->
+        <div class="lid-cta reveal" style="text-align:center;margin-top:clamp(56px,8vw,96px);padding-top:clamp(40px,6vw,64px);border-top:1px solid rgba(180,151,90,.14)">
+            <div style="width:44px;height:1px;background:var(--gold);margin:0 auto 24px;opacity:.6"></div>
+            <p style="font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.48em;text-transform:uppercase;color:var(--gold);margin-bottom:clamp(18px,3vw,28px);opacity:.85">Faça parte desta irmandade</p>
+            <h3 style="font-family:'Cinzel Decorative',serif;font-size:clamp(1.2rem,3vw,2rem);color:var(--white);font-weight:400;line-height:1.3;margin-bottom:clamp(16px,2.5vw,24px);max-width:640px;margin-left:auto;margin-right:auto">Você está pronto para dar o próximo passo?</h3>
+            <p style="font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,1.8vw,1.22rem);color:rgba(255,255,255,.52);line-height:1.85;max-width:600px;margin:0 auto clamp(28px,4vw,44px);font-style:italic">A liderança que você acabou de conhecer não é fruto do acaso — é o resultado de anos de aprimoramento moral, intelectual e fraterno. A Maçonaria não transforma apenas o homem; ela transforma o mundo ao seu redor. Se você sente que nasceu para algo maior, o Templo tem uma vaga reservada para você.</p>
+            <a href="#oriente" class="btn-primary" style="padding:clamp(14px,2vw,18px) clamp(42px,6vw,72px)"><span>Quero Ser Maçom</span></a>
+            <div style="width:44px;height:1px;background:var(--gold);margin:clamp(28px,4vw,44px) auto 0;opacity:.3"></div>
         </div>
 
     </div>
@@ -1214,6 +1453,18 @@
             camera.updateProjectionMatrix();
             renderer.setSize(nw, nh);
         }).observe(escWrap);
+    })();
+
+    /* ══ EXEC CAROUSEL CLONE ══ */
+    (function(){
+        ['exec-track-1','exec-track-2'].forEach(function(id){
+            var track = document.getElementById(id);
+            if(!track) return;
+            var cards = Array.from(track.children);
+            cards.forEach(function(card){
+                track.appendChild(card.cloneNode(true));
+            });
+        });
     })();
 </script>
 </body>
