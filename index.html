@@ -192,6 +192,7 @@
         .master-card:hover .master-portrait::after{opacity:1}
         .master-label{font-size:.5rem;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;font-weight:600}
         .master-name{font-size:.78rem;color:rgba(255,255,255,.62);margin-top:4px}
+        .master-term{font-size:.58rem;color:rgba(180,151,90,.7);margin-top:3px;letter-spacing:.06em}
         .master-initial{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Cinzel Decorative',serif;font-size:2rem;color:rgba(180,151,90,.22)}
         .carousel-dots{display:flex;gap:8px;justify-content:center;margin-top:22px}
         .c-dot{width:20px;height:2px;background:rgba(255,255,255,.12);transition:background .3s,width .3s;cursor:pointer}
@@ -1227,19 +1228,43 @@
     }
 
     /* CAROUSEL */
-    const names=['Irmão Fundador','Eduardo Pimentel','Carlos Bentes','Antônio Lira',
-        'Mário Oliveira','João Rodrigues','Sebastião Faria','Raimundo Costa',
-        'Luiz Vasconcelos','Álvaro Monteiro','Fernando Paes','Henrique Lima','Paulo Menezes'];
+    const masters=[
+        {name:'Raimundo Perdigão',term:'1904-1908',photo:'https://i.imgur.com/D5FphSc.jpeg'},
+        {name:'Clemente Bittencourt',term:'1908-1914',photo:'https://i.imgur.com/0rTsJYm.jpeg'},
+        {name:'Ramalho Júnior',term:'1914-1917',photo:'https://i.imgur.com/schlQjs.jpeg'},
+        {name:'Silvério Nery',term:'1917-1923',photo:'https://i.imgur.com/u5J8V9W.jpeg'},
+        {name:'Gaspar Guimarães',term:'1923-1935',photo:'https://i.imgur.com/8CAa1EN.jpeg'},
+        {name:'Hamilton Mourão',term:'1935-1942',photo:'https://i.imgur.com/Kk0KCRe.jpeg'},
+        {name:'Angello Bitencourt',term:'1942-1952',photo:'https://i.imgur.com/DDk5Zlx.jpeg'},
+        {name:'Venâncio Igreja',term:'1952-1961',photo:'https://i.imgur.com/LfH3XrM.jpeg'},
+        {name:'Felismino Soares',term:'1961-1962',photo:'https://i.imgur.com/mYtZfe2.jpeg'},
+        {name:'Mário Verçosa',term:'1962-1977',photo:'https://i.imgur.com/TbBKoff.jpeg'},
+        {name:'Cândido Honório',term:'1977-1979',photo:'https://i.imgur.com/MwuT6lB.jpeg'},
+        {name:'Rodolpho Valle',term:'1977 (Ago-Out)',photo:'https://i.imgur.com/CO0VzJv.jpeg'},
+        {name:'Afonso Lins',term:'1979-1980 / 1986-1989',photo:'https://i.imgur.com/JWVHqHC.jpeg'},
+        {name:'Manoel Ribeiro',term:'1980-1986',photo:'https://i.imgur.com/p23qgyP.jpeg'},
+        {name:'Vicente Nogueira',term:'1989 (Ago-Dez)',photo:'https://i.imgur.com/E8cla5p.jpeg'},
+        {name:'Francisco Oswaldino',term:'1990-1993',photo:'https://i.imgur.com/8h63RVg.jpeg'},
+        {name:'Renan Corrêa Peixoto',term:'1994-1997',photo:'https://i.imgur.com/44FBUJ1.jpeg'},
+        {name:'Ronaldo de Brito Leite',term:'1998-2004',photo:'https://i.imgur.com/GiSESq8.jpeg'},
+        {name:'René Levy Aguiar',term:'2004-2010',photo:'https://i.imgur.com/es7Jwfr.jpeg'},
+        {name:'Átila Atala Tuma',term:'2010-2013',photo:'https://i.imgur.com/Z8DZtrf.jpeg'},
+        {name:'Elzio Duarte Alecrim',term:'2013-2016',photo:'https://i.imgur.com/PUTJSNL.jpeg'},
+        {name:'Fernando Ferreira Lima',term:'2016-2019',photo:'https://i.imgur.com/FjDdkMM.png'}
+    ];
     const track=$('#masters-track');
     const dotsWrap=$('#carousel-dots');
     const wrap=$('#carousel-wrap');
     let idx=0,timer;
 
-    names.forEach(n=>{
+    masters.forEach(m=>{
         const c=document.createElement('div');
         c.className='master-card';
-        const init=n.split(' ').find(w=>w.length>2)?.[0]||n[0];
-        c.innerHTML=`<div class="master-portrait"><div class="master-initial">${init}</div></div><div class="master-label">Grão-Mestre</div><div class="master-name">${n}</div>`;
+        const init=m.name.split(' ').find(w=>w.length>2)?.[0]||m.name[0];
+        const portrait=m.photo
+            ?`<div class="master-portrait" style="background-image:url('${m.photo}');background-size:cover;background-position:center top;"></div>`
+            :`<div class="master-portrait"><div class="master-initial">${init}</div></div>`;
+        c.innerHTML=`${portrait}<div class="master-label">Grão-Mestre</div><div class="master-name">${m.name}</div><div class="master-term">${m.term}</div>`;
         track.appendChild(c);
     });
 
@@ -1248,7 +1273,7 @@
 
     function buildDots(){
         dotsWrap.innerHTML='';
-        const grps=Math.ceil(names.length/vis());
+        const grps=Math.ceil(masters.length/vis());
         for(let i=0;i<grps;i++){
             const d=document.createElement('div');
             d.className='c-dot'+(i===0?' active':'');
@@ -1257,7 +1282,7 @@
         }
     }
     function goTo(i){
-        const v=vis(),max=names.length-v;
+        const v=vis(),max=masters.length-v;
         idx=Math.max(0,Math.min(i,max));
         track.style.transform=`translateX(-${idx*cardW()}px)`;
         const g=Math.floor(idx/v);
@@ -1265,7 +1290,7 @@
     }
     function startAuto(){
         clearInterval(timer);
-        timer=setInterval(()=>goTo(idx+1>names.length-vis()?0:idx+1),3500);
+        timer=setInterval(()=>goTo(idx+1>masters.length-vis()?0:idx+1),3500);
     }
     $('#prev-master').addEventListener('click',()=>{goTo(idx-vis());startAuto();});
     $('#next-master').addEventListener('click',()=>{goTo(idx+vis());startAuto();});
