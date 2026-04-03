@@ -1,0 +1,32 @@
+import React, { useEffect, useState } from 'react';
+
+export default function Loader() {
+  const [visible, setVisible] = useState(true);
+  const [fading, setFading] = useState(false);
+
+  useEffect(() => {
+    const onLoad = () => {
+      setTimeout(() => {
+        setFading(true);
+        setTimeout(() => setVisible(false), 850);
+      }, 1000);
+    };
+    if (document.readyState === 'complete') {
+      onLoad();
+    } else {
+      window.addEventListener('load', onLoad);
+      return () => window.removeEventListener('load', onLoad);
+    }
+  }, []);
+
+  if (!visible) return null;
+
+  return (
+    <div id="loader" className={fading ? 'fade' : ''}>
+      <svg className="loader-symbol" viewBox="0 0 64 64">
+        <circle cx="32" cy="32" r="28" />
+      </svg>
+      <div className="loader-text">GLOMAM</div>
+    </div>
+  );
+}
