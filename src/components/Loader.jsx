@@ -5,18 +5,29 @@ export default function Loader() {
   const [fading, setFading] = useState(false);
 
   useEffect(() => {
-    const onLoad = () => {
-      setTimeout(() => {
-        setFading(true);
-        setTimeout(() => setVisible(false), 850);
-      }, 1000);
+    let timeoutId;
+    let done = false;
+
+    const hideLoader = () => {
+      if (done) return;
+      done = true;
+      clearTimeout(timeoutId);
+      window.removeEventListener('load', hideLoader);
+      setFading(true);
+      setTimeout(() => setVisible(false), 850);
     };
+
     if (document.readyState === 'complete') {
-      onLoad();
+      hideLoader();
     } else {
-      window.addEventListener('load', onLoad);
-      return () => window.removeEventListener('load', onLoad);
+      window.addEventListener('load', hideLoader);
+      timeoutId = setTimeout(hideLoader, 3000);
     }
+
+    return () => {
+      window.removeEventListener('load', hideLoader);
+      clearTimeout(timeoutId);
+    };
   }, []);
 
   if (!visible) return null;
