@@ -76,6 +76,27 @@ h2{font-family:'Cinzel',serif;font-size:clamp(1.5rem,3.5vw,2.8rem);line-height:1
 @keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
+/* ══ PALÁCIO MAÇÔNICO ══ */
+#palacio{padding:0;overflow:hidden;background:var(--bg);position:relative}
+.palacio-img-wrap{position:relative;width:100%;height:clamp(320px,70vh,800px);overflow:hidden;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0%,black 6%,black 72%,transparent 100%),
+    linear-gradient(0deg,transparent 0%,black 6%,black 100%);
+  mask-image:linear-gradient(180deg,transparent 0%,black 6%,black 72%,transparent 100%);
+  -webkit-mask-composite:source-over;mask-composite:add}
+.palacio-img{width:100%;height:100%;object-fit:cover;object-position:center 0%;display:block}
+.palacio-ornament{position:absolute;bottom:clamp(16px,4vw,36px);left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:clamp(10px,2vw,22px);white-space:nowrap;z-index:2}
+.palacio-city{font-family:'Cinzel',serif;font-size:clamp(.54rem,1.3vw,.72rem);letter-spacing:.38em;text-transform:uppercase;color:var(--gold);text-shadow:0 1px 8px rgba(0,0,0,.38)}
+.palacio-sep{display:inline-block;width:22px;height:1px;background:var(--gold);opacity:.52;flex-shrink:0}
+.palacio-year{font-family:'Cinzel',serif;font-size:clamp(.48rem,1.1vw,.62rem);letter-spacing:.32em;color:rgba(180,151,90,.7);text-shadow:0 1px 8px rgba(0,0,0,.38)}
+.palacio-reflect-wrap{width:100%;height:clamp(40px,10vh,100px);overflow:hidden;position:relative;margin-top:-1px;
+  -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.28) 0%,transparent 100%);
+  mask-image:linear-gradient(180deg,rgba(0,0,0,.28) 0%,transparent 100%)}
+.palacio-reflect{width:100%;height:clamp(80px,18vh,180px);object-fit:cover;object-position:center 0%;display:block;transform:scaleY(-1);transform-origin:top;filter:blur(2px) saturate(.7);opacity:.35;margin-top:0}
+@media(max-width:640px){
+  .palacio-img-wrap{height:clamp(240px,55vw,420px)}
+  .palacio-reflect-wrap{height:clamp(30px,7vh,60px)}
+}
+
 /* ══ HERO ══ */
 #inicio{min-height:100svh;display:flex;align-items:center;position:relative;overflow:hidden;padding-top:var(--nav-h)}
 .hero-bg-grid{position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(44,62,80,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(44,62,80,.04) 1px,transparent 1px);background-size:48px 48px}

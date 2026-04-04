@@ -16,6 +16,7 @@ import EsculturaParticulas from '../components/EsculturaParticulas.jsx';
 import FAQ from '../components/FAQ.jsx';
 import Newsletter from '../components/Newsletter.jsx';
 import Oriente from '../components/Oriente.jsx';
+import PalacioSection from '../components/PalacioSection.jsx';
 import useReveal from '../hooks/useReveal.js';
 
 function WhatsAppBtn() {
@@ -37,6 +38,7 @@ export default function Home() {
       <ProgressBar />
       <Header />
       <main>
+        <PalacioSection />
         <Hero />
         <Pilares />
         <Memorial />
