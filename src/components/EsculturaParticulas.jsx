@@ -32,7 +32,7 @@ export default function EsculturaParticulas() {
     const H = escWrap.offsetHeight || 480;
 
     const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x05070a, 0.002);
+    scene.fog = new THREE.FogExp2(0x050b16, 0.002);
 
     const camera = new THREE.PerspectiveCamera(60, W / H, 0.1, 1000);
     camera.position.z = 250;
@@ -50,7 +50,7 @@ export default function EsculturaParticulas() {
     }
     renderer.setSize(W, H);
     renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setClearColor(0x05070a, 1);
+    renderer.setClearColor(0x050b16, 1);
     escWrap.appendChild(renderer.domElement);
 
     let particleSystem = null;
@@ -172,7 +172,7 @@ export default function EsculturaParticulas() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          background: 'radial-gradient(ellipse at center, #0d1117 0%, #05070a 100%)',
+          background: 'radial-gradient(ellipse at center, #0d1420 0%, #050b16 100%)',
           flexDirection: 'column',
           gap: '1rem',
         }}>
@@ -207,6 +207,32 @@ export default function EsculturaParticulas() {
           <input type="range" id="escultura-slider" ref={sliderRef} min="0" max="1" step="0.001" defaultValue="0" />
         </div>
         <p id="escultura-quote">&ldquo;O Maçom trabalha a sua pedra bruta &mdash; a si mesmo &mdash; com a mesma dedicação que o escultor revela a forma oculta no mármore.&rdquo;</p>
+      </div>
+
+      <div id="escultura-cta">
+        <div className="esc-cta-ornament">
+          <span className="esc-cta-line"></span>
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1">
+            <polygon points="9,1 17,17 1,17" />
+          </svg>
+          <span className="esc-cta-line"></span>
+        </div>
+        <p className="esc-cta-eyebrow">A forma já existe dentro de você</p>
+        <h3 className="esc-cta-heading">O primeiro golpe do cinzel<br/>é uma escolha</h3>
+        <p className="esc-cta-body">
+          Todo Maçom começou exatamente onde você está agora &mdash; diante da pedra bruta,
+          sentindo o peso do cinzel pela primeira vez. A Maçonaria não transforma homens:
+          ela os auxilia a revelar quem já são. Se algo nessa jornada ressoou em você,
+          a porta está aberta.
+        </p>
+        <a href="#oriente" className="esc-cta-btn">
+          <span>Quero Ser Maçom</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <line x1="2" y1="8" x2="14" y2="8" />
+            <polyline points="9,3 14,8 9,13" />
+          </svg>
+        </a>
+        <p className="esc-cta-note">Entre em contato com a nossa Loja &mdash; toda candidatura é recebida com discrição e respeito.</p>
       </div>
     </section>
   );
