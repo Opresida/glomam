@@ -9,6 +9,7 @@ import Memorial from '../components/Memorial.jsx';
 import NossaHistoria from '../components/NossaHistoria.jsx';
 import Novidades from '../components/Novidades.jsx';
 import Lideranca from '../components/Lideranca.jsx';
+import Depoimentos from '../components/Depoimentos.jsx';
 import Familias from '../components/Familias.jsx';
 import ProjetosSociais from '../components/ProjetosSociais.jsx';
 import EsculturaParticulas from '../components/EsculturaParticulas.jsx';
@@ -42,6 +43,7 @@ export default function Home() {
         <NossaHistoria />
         <Novidades />
         <Lideranca />
+        <Depoimentos />
         <Familias />
         <ProjetosSociais />
         <EsculturaParticulas />
