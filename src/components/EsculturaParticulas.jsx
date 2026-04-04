@@ -1,11 +1,29 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
+
+function detectWebGL() {
+  try {
+    const canvas = document.createElement('canvas');
+    return !!(
+      window.WebGLRenderingContext &&
+      (canvas.getContext('webgl') || canvas.getContext('experimental-webgl'))
+    );
+  } catch (e) {
+    return false;
+  }
+}
 
 export default function EsculturaParticulas() {
   const wrapRef = useRef(null);
   const sliderRef = useRef(null);
+  const [webglAvailable, setWebglAvailable] = useState(true);
 
   useEffect(() => {
+    if (!detectWebGL()) {
+      setWebglAvailable(false);
+      return;
+    }
+
     const escWrap = wrapRef.current;
     const escSlider = sliderRef.current;
     if (!escWrap || !escSlider) return;
@@ -23,9 +41,13 @@ export default function EsculturaParticulas() {
     try {
       renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     } catch (e) {
+      setWebglAvailable(false);
       return;
     }
-    if (!renderer || !renderer.domElement) return;
+    if (!renderer || !renderer.domElement) {
+      setWebglAvailable(false);
+      return;
+    }
     renderer.setSize(W, H);
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setClearColor(0x05070a, 1);
@@ -143,7 +165,35 @@ export default function EsculturaParticulas() {
 
   return (
     <section id="escultura-section">
-      <div id="escultura-canvas-wrap" ref={wrapRef}></div>
+      {webglAvailable ? (
+        <div id="escultura-canvas-wrap" ref={wrapRef}></div>
+      ) : (
+        <div id="escultura-canvas-wrap" style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          background: 'radial-gradient(ellipse at center, #0d1117 0%, #05070a 100%)',
+          flexDirection: 'column',
+          gap: '1rem',
+        }}>
+          <div style={{
+            fontSize: '4rem',
+            opacity: 0.6,
+            filter: 'drop-shadow(0 0 20px #c9a84c)',
+          }}>&#9670;</div>
+          <p style={{
+            color: '#c9a84c',
+            fontSize: '0.9rem',
+            letterSpacing: '0.15em',
+            textTransform: 'uppercase',
+            opacity: 0.7,
+            textAlign: 'center',
+            maxWidth: '280px',
+          }}>
+            Escultura de Partículas
+          </p>
+        </div>
+      )}
       <div id="escultura-ui">
         <div className="esc-label">Iniciativa Maçônica</div>
         <h2>A Arte de Esculpir a Alma</h2>
