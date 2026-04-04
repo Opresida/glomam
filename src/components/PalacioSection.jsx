@@ -10,11 +10,14 @@ export default function PalacioSection() {
       transition={{ duration: 1.2, ease: [0.19, 1, 0.22, 1], delay: 0.6 }}
     >
       <div className="palacio-img-wrap">
-        <img
-          src="/palacio-masonico.png"
-          alt="Palácio Maçônico de Manaus"
-          className="palacio-img"
-        />
+        <picture>
+          <source media="(max-width: 640px)" srcSet="/palacio-masonico-mobile.png" />
+          <img
+            src="/palacio-masonico.png"
+            alt="Palácio Maçônico de Manaus"
+            className="palacio-img"
+          />
+        </picture>
         <div className="palacio-ornament">
           <span className="palacio-city">Manaus — AM</span>
           <span className="palacio-sep"></span>
@@ -22,12 +25,15 @@ export default function PalacioSection() {
         </div>
       </div>
       <div className="palacio-reflect-wrap">
-        <img
-          src="/palacio-masonico.png"
-          alt=""
-          className="palacio-reflect"
-          aria-hidden="true"
-        />
+        <picture>
+          <source media="(max-width: 640px)" srcSet="/palacio-masonico-mobile.png" />
+          <img
+            src="/palacio-masonico.png"
+            alt=""
+            className="palacio-reflect"
+            aria-hidden="true"
+          />
+        </picture>
       </div>
     </motion.section>
   );
