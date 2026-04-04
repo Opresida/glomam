@@ -18,15 +18,12 @@ export default function Header() {
       <div className="nav-inner">
         <a href="#inicio" className="logo">GLOMAM<small>Grande Loja Maçônica do Amazonas</small></a>
         <div className="nav-links">
-          <a href="#inicio">Início</a>
-          <a href="#geometria">Princípios</a>
+          <Link to="/">Início</Link>
           <a href="#historia">Memorial</a>
           <a href="#nossa-historia">História</a>
           <a href="#lideranca">Liderança</a>
-          <a href="#familias">Colunas</a>
-          <a href="#faq-section">FAQ</a>
           <Link to="/imprensa">Imprensa</Link>
-          <a href="#oriente" className="nav-cta">Contacto</a>
+          <Link to="/admin" className="nav-cta">Login</Link>
         </div>
         <button
           className={`nav-burger${open ? ' open' : ''}`}
@@ -37,15 +34,12 @@ export default function Header() {
         </button>
       </div>
       <nav className={`nav-drawer${open ? ' open' : ''}`}>
-        <a href="#inicio" onClick={closeDrawer}>Início</a>
-        <a href="#geometria" onClick={closeDrawer}>Princípios</a>
+        <Link to="/" onClick={closeDrawer}>Início</Link>
         <a href="#historia" onClick={closeDrawer}>Memorial</a>
         <a href="#nossa-historia" onClick={closeDrawer}>História</a>
         <a href="#lideranca" onClick={closeDrawer}>Liderança</a>
-        <a href="#familias" onClick={closeDrawer}>Colunas</a>
-        <a href="#faq-section" onClick={closeDrawer}>FAQ</a>
         <Link to="/imprensa" onClick={closeDrawer}>Imprensa</Link>
-        <a href="#oriente" onClick={closeDrawer}>Contacto</a>
+        <Link to="/admin" onClick={closeDrawer} className="nav-cta">Login</Link>
       </nav>
     </header>
   );
