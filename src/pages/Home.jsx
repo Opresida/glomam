@@ -10,8 +10,10 @@ import NossaHistoria from '../components/NossaHistoria.jsx';
 import Novidades from '../components/Novidades.jsx';
 import Lideranca from '../components/Lideranca.jsx';
 import Familias from '../components/Familias.jsx';
+import ProjetosSociais from '../components/ProjetosSociais.jsx';
 import EsculturaParticulas from '../components/EsculturaParticulas.jsx';
 import FAQ from '../components/FAQ.jsx';
+import Newsletter from '../components/Newsletter.jsx';
 import Oriente from '../components/Oriente.jsx';
 import useReveal from '../hooks/useReveal.js';
 
@@ -41,8 +43,10 @@ export default function Home() {
         <Novidades />
         <Lideranca />
         <Familias />
+        <ProjetosSociais />
         <EsculturaParticulas />
         <FAQ />
+        <Newsletter />
         <Oriente />
       </main>
       <Footer />
