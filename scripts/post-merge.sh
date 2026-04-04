@@ -1,5 +1,7 @@
 #!/bin/bash
 set -e
 
-# Static HTML site — no dependencies to install or build steps to run.
+# Install/sync Node.js dependencies after any merge that touches package.json
+pnpm install --frozen-lockfile
+
 echo "Post-merge setup complete."
