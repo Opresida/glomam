@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Header() {
   const [shrunk, setShrunk] = useState(false);
@@ -24,6 +25,7 @@ export default function Header() {
           <a href="#lideranca">Liderança</a>
           <a href="#familias">Colunas</a>
           <a href="#faq-section">FAQ</a>
+          <Link to="/imprensa">Imprensa</Link>
           <a href="#oriente" className="nav-cta">Contacto</a>
         </div>
         <button
@@ -42,6 +44,7 @@ export default function Header() {
         <a href="#lideranca" onClick={closeDrawer}>Liderança</a>
         <a href="#familias" onClick={closeDrawer}>Colunas</a>
         <a href="#faq-section" onClick={closeDrawer}>FAQ</a>
+        <Link to="/imprensa" onClick={closeDrawer}>Imprensa</Link>
         <a href="#oriente" onClick={closeDrawer}>Contacto</a>
       </nav>
     </header>

@@ -7,6 +7,7 @@ import Hero from '../components/Hero.jsx';
 import Pilares from '../components/Pilares.jsx';
 import Memorial from '../components/Memorial.jsx';
 import NossaHistoria from '../components/NossaHistoria.jsx';
+import Novidades from '../components/Novidades.jsx';
 import Lideranca from '../components/Lideranca.jsx';
 import Familias from '../components/Familias.jsx';
 import EsculturaParticulas from '../components/EsculturaParticulas.jsx';
@@ -37,6 +38,7 @@ export default function Home() {
         <Pilares />
         <Memorial />
         <NossaHistoria />
+        <Novidades />
         <Lideranca />
         <Familias />
         <EsculturaParticulas />
