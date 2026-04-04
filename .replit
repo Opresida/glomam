@@ -39,7 +39,8 @@ externalPort = 3000
 
 [deployment]
 deploymentTarget = "static"
-publicDir = "."
+publicDir = "dist"
+build = ["pnpm", "build"]
 
 [postMerge]
 path = "scripts/post-merge.sh"
