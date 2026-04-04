@@ -41,7 +41,6 @@ A high-fidelity, single-page landing page for **GLOMAM (Grande Loja Maçônica d
 │   │   └── Oriente.jsx     # Contact/map section
 │   └── hooks/
 │       └── useReveal.js    # Scroll reveal animation hook
-└── index.html.bak          # Original pure HTML backup
 ```
 
 ## Running the App
