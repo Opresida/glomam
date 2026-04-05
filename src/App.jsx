@@ -4,6 +4,7 @@ import Home from './pages/Home.jsx';
 import Imprensa from './pages/Imprensa.jsx';
 import AdminLogin from './pages/AdminLogin.jsx';
 import AdminIntranet from './pages/AdminIntranet.jsx';
+import Brandbook from './pages/Brandbook.jsx';
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
         <Route path="/imprensa" element={<Imprensa />} />
         <Route path="/admin" element={<AdminLogin />} />
         <Route path="/admin/intranet" element={<AdminIntranet />} />
+        <Route path="/brandbook" element={<Brandbook />} />
       </Routes>
     </BrowserRouter>
   );
