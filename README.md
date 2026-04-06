@@ -272,7 +272,7 @@ AdminLogin.jsx
 - [ ] Autenticação real em `/admin`
 - [ ] Upload real de fotos no Álbum de Eventos
 - [ ] Integração real da Newsletter (Mailchimp/Resend)
-- [ ] Fotos reais dos Grão-Mestres no carrossel
+- [x] Fotos reais dos Grão-Mestres no carrossel ✓ *aprovado 2026-04-06*
 - [ ] Link âncora `#album-eventos` no Header e Footer
 - [ ] Página de detalhe de notícia (`/imprensa/:slug`)
 - [ ] SEO — meta tags Open Graph dinâmicas
