@@ -12,6 +12,7 @@ import Lideranca from '../components/Lideranca.jsx';
 import Depoimentos from '../components/Depoimentos.jsx';
 import Familias from '../components/Familias.jsx';
 import ProjetosSociais from '../components/ProjetosSociais.jsx';
+import AlbumEventos from '../components/AlbumEventos.jsx';
 import EsculturaParticulas from '../components/EsculturaParticulas.jsx';
 import FAQ from '../components/FAQ.jsx';
 import Newsletter from '../components/Newsletter.jsx';
@@ -48,6 +49,7 @@ export default function Home() {
         <Depoimentos />
         <Familias />
         <ProjetosSociais />
+        <AlbumEventos />
         <EsculturaParticulas />
         <FAQ />
         <Newsletter />
