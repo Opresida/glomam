@@ -5,16 +5,21 @@
   <em>Tradição · Regularidade · Progresso</em>
 </p>
 
-Site institucional e intranet administrativa da Grande Loja Maçônica do Amazonas, fundada em 1904, Manaus/AM.
+Site institucional e intranet administrativa da Grande Loja Maçônica do Amazonas, potência maçônica regular fundada em 1904, Manaus/AM. O projeto combina um portal público de 16 seções interativas com um painel de gestão organizacional completo.
+
+**URL de produção:** Netlify (deploy automático via push na main)
+**Ambiente de dev:** `http://localhost:5000`
 
 ---
 
-## Pré-requisitos
+## Instalação e Uso
+
+### Pré-requisitos
 
 - Node.js >= 18
 - npm ou pnpm
 
-## Instalação
+### Instalação
 
 ```bash
 git clone https://github.com/Opresida/glomam.git
@@ -22,21 +27,21 @@ cd glomam
 npm install
 ```
 
-## Rodar em desenvolvimento
+### Rodar em desenvolvimento
 
 ```bash
 npm run dev
 # Acesse: http://localhost:5000
 ```
 
-## Build para produção
+### Build para produção
 
 ```bash
 npm run build
 npm run preview   # preview local do build
 ```
 
-## Deploy
+### Deploy
 
 Deploy automático na **Netlify** via `netlify.toml`. Qualquer push na branch principal dispara o deploy.
 
@@ -46,7 +51,7 @@ Deploy automático na **Netlify** via `netlify.toml`. Qualquer push na branch pr
 
 | Rota | Descrição |
 |------|-----------|
-| `/` | Página institucional (15 seções) |
+| `/` | Página institucional (16 seções) |
 | `/imprensa` | Portal de notícias |
 | `/brandbook` | Manual de identidade visual |
 | `/admin` | Login administrativo |
@@ -54,5 +59,231 @@ Deploy automático na **Netlify** via `netlify.toml`. Qualquer push na branch pr
 
 ---
 
-> Consulte `ARCHITECTURE.md` para estrutura de pastas e fluxo de dados.
-> Consulte `PROJECT_CONTEXT.md` para visão geral, stack e status atual.
+## Stack Tecnológica
+
+- **Linguagem:** JavaScript (JSX)
+- **Framework:** React 19 + Vite 8
+- **Roteamento:** React Router DOM 7
+- **Animações:** Framer Motion 12 + CSS custom animations
+- **3D/WebGL:** Three.js 0.183.2
+- **Estilização:** CSS puro com variáveis custom (sem Tailwind, sem CSS Modules)
+- **Hospedagem:** Netlify (static SPA)
+- **Ferramentas de IA:** Claude Code + RTK
+
+> Apenas 6 dependências de produção — bundle leve e rápido.
+
+---
+
+## Arquitetura
+
+### Visão Geral
+
+```
+SPA estática (React + Vite)
+        │
+        ├── Portal Público (/)
+        │     └── Home.jsx → 16 componentes em sequência
+        │
+        ├── Imprensa (/imprensa)
+        │     └── dados de src/data/noticias.js
+        │
+        ├── Brandbook (/brandbook)
+        │     └── documentação visual standalone
+        │
+        └── Intranet (/admin/intranet)
+              └── AdminIntranet.jsx → roteamento por abas → 8 subpáginas
+```
+
+### Estrutura de Pastas
+
+```
+glomam/
+├── public/                    # Assets estáticos servidos diretamente
+│   ├── logo-glomam-*.svg      # Variantes do logo (original, slate, gold, blue-slate)
+│   ├── palacio-masonico.png   # Imagem hero desktop (alta res)
+│   ├── palacio-masonico-mobile.png
+│   ├── amazonas-map.svg
+│   └── favicon.*
+│
+├── src/
+│   ├── main.jsx               # Entry point — monta <App /> no DOM
+│   ├── App.jsx                # BrowserRouter + Routes (5 rotas)
+│   ├── index.css              # Design system global: variáveis, reset, utilitários, estilos de todos os componentes públicos
+│   │
+│   ├── components/            # Seções e elementos reutilizáveis
+│   │   ├── Header.jsx         # Navegação fixa — links de âncora + React Router Links
+│   │   ├── Footer.jsx
+│   │   ├── Loader.jsx         # Splash screen (mostra durante hydration)
+│   │   ├── ProgressBar.jsx    # Barra de progresso baseada em scroll
+│   │   ├── AlbumEventos.jsx   # Grade de álbuns → Modal → Lightbox + download
+│   │   └── [demais seções]    # Hero, Pilares, Memorial, etc.
+│   │
+│   ├── pages/
+│   │   ├── Home.jsx           # Orquestra todos os componentes de seção em ordem
+│   │   ├── Imprensa.jsx       # Consome src/data/noticias.js
+│   │   ├── Brandbook.jsx      # Standalone, usa Brandbook.css
+│   │   ├── AdminLogin.jsx     # UI de login (sem auth real)
+│   │   └── AdminIntranet.jsx  # Layout da intranet + roteamento por aba state
+│   │       ├── IntranetDashboard.jsx
+│   │       ├── IntranetImprensa.jsx
+│   │       ├── IntranetFinanceiro.jsx
+│   │       ├── IntranetDocumentos.jsx
+│   │       ├── IntranetEventos.jsx
+│   │       ├── IntranetUsuarios.jsx
+│   │       ├── IntranetNewsletter.jsx
+│   │       └── IntranetCandidato.jsx
+│   │
+│   ├── hooks/
+│   │   └── useReveal.js       # Intersection Observer → adiciona .active em .reveal
+│   │
+│   └── data/
+│       └── noticias.js        # Array de artigos — consumido por Imprensa.jsx e Novidades.jsx
+│
+├── scripts/
+│   └── recolor-logo.mjs       # Script Node para gerar variantes de cor do SVG do logo
+│
+├── README.md                  # Este arquivo
+├── CONTEXT.md                 # Regras, stack e lógica de negócio
+├── TODO.md                    # Tarefas pendentes e bugs
+├── vite.config.js
+└── netlify.toml
+```
+
+### Fluxo de Dados — Página Pública (Home)
+
+```
+index.html
+    └── main.jsx (ReactDOM.createRoot)
+          └── App.jsx (BrowserRouter)
+                └── Route "/" → Home.jsx
+                      ├── useReveal() — registra Intersection Observer global
+                      ├── <Loader /> — estado local, remove após mount
+                      ├── <ProgressBar /> — ouve scroll via useEffect
+                      ├── <Header /> — navegação estática
+                      ├── <PalacioSection /> — imagem estática
+                      ├── <Hero /> — SVG animado + parallax
+                      ├── <Pilares /> — estado local (mousePos por card)
+                      ├── <Memorial /> — estado local (carouselIndex)
+                      ├── <NossaHistoria /> — estático
+                      ├── <Novidades /> — consome data/noticias.js, rAF loop
+                      ├── <Lideranca /> — estado local (2 tracks rAF)
+                      ├── <Depoimentos /> — Framer Motion AnimatePresence
+                      ├── <Familias /> — flip por CSS :hover + touch click
+                      ├── <ProjetosSociais /> — SVG path interativo
+                      ├── <AlbumEventos /> — estado local (albumAberto, fotoAtiva)
+                      ├── <EsculturaParticulas /> — Three.js WebGL
+                      ├── <FAQ /> — estado local (openIndex)
+                      ├── <Newsletter /> — estado local (email, enviado)
+                      └── <Oriente /> — estático + Google Maps iframe
+```
+
+### Fluxo de Dados — Álbum de Eventos
+
+```
+AlbumEventos.jsx
+│
+├── albums[] (dados hardcoded no componente)
+│
+├── Estado: albumAberto (null | album)
+│     ├── null → renderiza grade de .alb-card
+│     └── album → renderiza <Modal album={albumAberto} />
+│
+└── Modal
+      ├── Estado: fotoAtiva (null | index)
+      │     ├── null → renderiza .alb-fotos-grid (grade 3 colunas)
+      │     └── index → renderiza .alb-lightbox (tela cheia)
+      │
+      └── downloadFoto(src, legenda)
+            └── fetch(src) → blob → URL.createObjectURL → <a download> → click
+```
+
+### Fluxo de Dados — Intranet
+
+```
+AdminLogin.jsx
+    └── navigate('/admin/intranet') [sem auth real]
+          └── AdminIntranet.jsx
+                ├── Estado: abaAtiva (string)
+                └── Renderiza subcomponente conforme abaAtiva:
+                      'dashboard'  → IntranetDashboard
+                      'imprensa'   → IntranetImprensa
+                      'financeiro' → IntranetFinanceiro
+                      'documentos' → IntranetDocumentos
+                      'eventos'    → IntranetEventos
+                      'usuarios'   → IntranetUsuarios
+                      'newsletter' → IntranetNewsletter
+                      'candidato'  → IntranetCandidato
+```
+
+### Decisões Arquiteturais
+
+| Decisão | Justificativa |
+|---------|--------------|
+| SPA sem backend | Hospedagem estática simples no Netlify, sem custos de servidor |
+| CSS global em `index.css` | Design system único, evita conflitos de escopo e facilita manutenção visual |
+| Dados hardcoded | Sem banco de dados — arrays em `data/` e dentro dos componentes |
+| Three.js sem suspense | Componente detecta WebGL disponível e renderiza fallback se não houver |
+| Intranet por aba (state) | UX de painel sem criar rotas separadas para cada módulo |
+| React Router v7 | Versão mais recente com melhor performance e tipagem |
+
+### Estilos por arquivo
+
+| Arquivo CSS | Responsabilidade |
+|-------------|-----------------|
+| `src/index.css` | Reset, variáveis, utilitários, todos os componentes públicos |
+| `src/components/Depoimentos.css` | Estilos específicos do carrossel de depoimentos |
+| `src/pages/Brandbook.css` | Estilos exclusivos da página Brandbook |
+| `src/pages/AdminIntranet.css` | Estilos completos do painel administrativo |
+
+---
+
+## Status Atual
+
+### Concluído
+- [x] Setup inicial React + Vite + React Router
+- [x] Design system completo (paleta, tipografia, animações)
+- [x] Header fixo responsivo com drawer mobile
+- [x] Seção Palácio Maçônico (hero imagem)
+- [x] Seção Hero (SVG animado + parallax + stats)
+- [x] Seção Pilares (cards 3D com mouse tracking)
+- [x] Seção Memorial (timeline + carrossel 22 Grão-Mestres)
+- [x] Seção Nossa História
+- [x] Seção Novidades (carrossel infinito via rAF)
+- [x] Seção Liderança (pirâmide + 2 tracks auto-scroll)
+- [x] Seção Depoimentos (Framer Motion)
+- [x] Seção Famílias Paramaçônicas (flip cards CSS)
+- [x] Seção Projetos Sociais (mapa SVG interativo do Amazonas)
+- [x] Escultura de Partículas 3D (Three.js WebGL com morphing)
+- [x] FAQ accordion
+- [x] Newsletter form (UI)
+- [x] Seção Oriente (contato + Google Maps)
+- [x] Footer institucional
+- [x] Portal de Imprensa (`/imprensa`) com carrosseis por categoria
+- [x] Brandbook completo (`/brandbook`) — cores, tipografia, UI system, materiais
+- [x] Intranet Administrativa (`/admin/intranet`) — 8 módulos UI
+- [x] Loader animado + barra de progresso de scroll
+- [x] useReveal hook (Intersection Observer)
+- [x] Deploy configurado no Netlify
+- [x] **Álbum de Eventos** — grade de álbuns, modal com fotos, lightbox, download individual ✓ *aprovado 2026-04-06*
+
+### Pendente
+- [ ] Substituir fotos placeholder do Álbum de Eventos por fotos reais
+- [ ] Backend/API para persistência real da Intranet
+- [ ] Autenticação real em `/admin`
+- [ ] Upload real de fotos no Álbum de Eventos
+- [ ] Integração real da Newsletter (Mailchimp/Resend)
+- [ ] Fotos reais dos Grão-Mestres no carrossel
+- [ ] Link âncora `#album-eventos` no Header e Footer
+- [ ] Página de detalhe de notícia (`/imprensa/:slug`)
+- [ ] SEO — meta tags Open Graph dinâmicas
+- [ ] Lazy loading dos componentes pesados (Three.js)
+- [ ] Otimização de imagens para `.webp`
+
+---
+
+<p align="center">
+  <strong>Tradição · Regularidade · Progresso</strong><br>
+  <em>Ad Gloriam et Honorem</em><br><br>
+  Grande Loja Maçônica do Amazonas — Fundada em 1904<br>
+  Manaus, Amazonas, Brasil
+</p>
