@@ -265,6 +265,7 @@ AdminLogin.jsx
 - [x] useReveal hook (Intersection Observer)
 - [x] Deploy configurado no Netlify
 - [x] **Álbum de Eventos** — grade de álbuns, modal com fotos, lightbox, download individual ✓ *aprovado 2026-04-06*
+- [x] Fotos reais dos Grão-Mestres no carrossel ✓ *aprovado 2026-04-06*
 
 ### Pendente
 - [ ] Substituir fotos placeholder do Álbum de Eventos por fotos reais
@@ -272,7 +273,6 @@ AdminLogin.jsx
 - [ ] Autenticação real em `/admin`
 - [ ] Upload real de fotos no Álbum de Eventos
 - [ ] Integração real da Newsletter (Mailchimp/Resend)
-- [x] Fotos reais dos Grão-Mestres no carrossel ✓ *aprovado 2026-04-06*
 - [ ] Link âncora `#album-eventos` no Header e Footer
 - [ ] Página de detalhe de notícia (`/imprensa/:slug`)
 - [ ] SEO — meta tags Open Graph dinâmicas

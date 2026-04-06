@@ -19,7 +19,6 @@ Lista de tarefas pendentes, melhorias planejadas e bugs conhecidos.
 - [ ] Formulário de Newsletter com integração real (Mailchimp, Resend, etc.)
 
 ### Média prioridade
-- [x] Adicionar fotos reais dos Grão-Mestres no carrossel ✓ *aprovado 2026-04-06*
 - [ ] Link âncora `#album-eventos` no Header e Footer
 - [ ] Página de detalhe de notícia (`/imprensa/:slug`)
 - [ ] SEO: meta tags Open Graph e Twitter Card dinâmicas por página
@@ -76,3 +75,4 @@ Lista de tarefas pendentes, melhorias planejadas e bugs conhecidos.
 - [x] useReveal hook (Intersection Observer)
 - [x] Deploy configurado no Netlify
 - [x] **Álbum de Eventos** — grade de álbuns, modal com fotos, lightbox, download individual ✓ *aprovado 2026-04-06*
+- [x] Fotos reais dos Grão-Mestres no carrossel ✓ *aprovado 2026-04-06*
