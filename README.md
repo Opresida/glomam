@@ -51,7 +51,12 @@ Deploy automático na **Netlify** via `netlify.toml`. Qualquer push na branch pr
 
 | Rota | Descrição |
 |------|-----------|
-| `/` | Página institucional (16 seções) |
+| `/` | Página institucional (17 seções) |
+| `/principios` | Princípios Maçônicos — 3 blocos (Síntese, Ser Maçom, Nossas Finalidades) |
+| `/judiciario` | Judiciário GLOMAM — Procuradoria, Corregedoria, Juízes, Secretaria |
+| `/legislativo` | Legislativo GLOMAM — 27 Grandes Oficiais |
+| `/lojas` | Lojas filiadas — 50 cadastradas com busca e filtro por Oriente |
+| `/dispensario/quem-somos` | Dispensário Maçônico — carta de apresentação |
 | `/imprensa` | Portal de notícias |
 | `/brandbook` | Manual de identidade visual |
 | `/admin` | Login administrativo |
@@ -119,11 +124,16 @@ glomam/
 │   │   └── [demais seções]    # Hero, Pilares, Memorial, etc.
 │   │
 │   ├── pages/
-│   │   ├── Home.jsx           # Orquestra todos os componentes de seção em ordem
-│   │   ├── Imprensa.jsx       # Consome src/data/noticias.js
-│   │   ├── Brandbook.jsx      # Standalone, usa Brandbook.css
-│   │   ├── AdminLogin.jsx     # UI de login (sem auth real)
-│   │   └── AdminIntranet.jsx  # Layout da intranet + roteamento por aba state
+│   │   ├── Home.jsx                    # Orquestra todos os componentes de seção em ordem
+│   │   ├── Principios.jsx              # Síntese, Ser Maçom, Nossas Finalidades
+│   │   ├── Judiciario.jsx              # Procuradoria, Corregedoria, Juízes, Secretaria
+│   │   ├── Legislativo.jsx             # 27 Grandes Oficiais (Legislativo 2024/2025)
+│   │   ├── Lojas.jsx                   # 50 Lojas com busca e filtro por Oriente
+│   │   ├── DispensarioQuemSomos.jsx    # Dispensário Maçônico — carta + contato
+│   │   ├── Imprensa.jsx                # Consome src/data/noticias.js
+│   │   ├── Brandbook.jsx               # Standalone, usa Brandbook.css
+│   │   ├── AdminLogin.jsx              # UI de login (sem auth real)
+│   │   └── AdminIntranet.jsx           # Layout da intranet + roteamento por aba state
 │   │       ├── IntranetDashboard.jsx
 │   │       ├── IntranetImprensa.jsx
 │   │       ├── IntranetFinanceiro.jsx
@@ -137,10 +147,13 @@ glomam/
 │   │   └── useReveal.js       # Intersection Observer → adiciona .active em .reveal
 │   │
 │   └── data/
-│       └── noticias.js        # Array de artigos — consumido por Imprensa.jsx e Novidades.jsx
+│       ├── noticias.js        # Array de artigos — consumido por Imprensa.jsx e Novidades.jsx
+│       ├── lojas.js           # 50 Lojas filiadas à GLOMAM (dados completos)
+│       └── photoDirectory.js  # Diretório central de fotos de Irmãos + findPhoto(nome)
 │
 ├── scripts/
-│   └── recolor-logo.mjs       # Script Node para gerar variantes de cor do SVG do logo
+│   ├── recolor-logo.mjs       # Script Node para gerar variantes de cor do SVG do logo
+│   └── generate-pdf.mjs       # Gera PDF com screenshots de todas as rotas (Playwright + pdf-lib)
 │
 ├── README.md                  # Este arquivo
 ├── CONTEXT.md                 # Regras, stack e lógica de negócio
@@ -266,18 +279,35 @@ AdminLogin.jsx
 - [x] Deploy configurado no Netlify
 - [x] **Álbum de Eventos** — grade de álbuns, modal com fotos, lightbox, download individual ✓ *aprovado 2026-04-06*
 - [x] Fotos reais dos Grão-Mestres no carrossel ✓ *aprovado 2026-04-06*
+- [x] **Paleta oficial institucional** aplicada em todo o projeto (9 tons: navy/blue/copper/gold) ✓ *aprovado 2026-04-14*
+- [x] **Tipografia oficial alinhada** — Playfair Display + Lora + Montserrat ✓ *aprovado 2026-04-14*
+- [x] **Seção Nossos Objetivos** na Home — 5 pilares interativos (Amor, Aperfeiçoamento, Tolerância, Igualdade, Respeito) ✓ *aprovado 2026-04-14*
+- [x] **Rota `/principios`** — Síntese dos Princípios Maçônicos, Ser Maçom e Nossas Finalidades ✓ *aprovado 2026-04-14*
+- [x] **Rota `/judiciario`** — Procuradoria, Corregedoria, 8 Juízes e Secretaria do Judiciário ✓ *aprovado 2026-04-14*
+- [x] **Rota `/legislativo`** — 27 Grandes Oficiais do Legislativo 2024/2025 ✓ *aprovado 2026-04-14*
+- [x] **Rota `/lojas`** — 50 Lojas filiadas com busca, filtro por Oriente e expansão de detalhes ✓ *aprovado 2026-04-14*
+- [x] **Rota `/dispensario/quem-somos`** — carta institucional do Dispensário Maçônico ✓ *aprovado 2026-04-14*
+- [x] **Brandbook refeito** — logo adaptativa por fundo (claro/escuro), UI System com código de referência, diretrizes alinhadas ✓ *aprovado 2026-04-14*
+- [x] **Diretório central de fotos** (`photoDirectory.js`) com matching tolerante entre Liderança / Judiciário / Legislativo ✓ *aprovado 2026-04-14*
+- [x] **Hash-scroll** inteligente para âncoras vindas de outras rotas ✓ *aprovado 2026-04-14*
+- [x] **Componente WhatsAppBtn** reutilizável ✓ *aprovado 2026-04-14*
+- [x] **Script `generate-pdf.mjs`** — gera PDF do site com screenshots de todas as rotas (Playwright + pdf-lib) ✓ *aprovado 2026-04-14*
 
 ### Pendente
 - [ ] Substituir fotos placeholder do Álbum de Eventos por fotos reais
+- [ ] Adicionar fotos dos Irmãos do Legislativo (27 cards hoje usam iniciais)
+- [ ] Cadastrar Lojas Nº 25 e Nº 32 (faltantes na sequência)
+- [ ] Confirmar número oficial do WhatsApp (atualmente placeholder)
 - [ ] Backend/API para persistência real da Intranet
 - [ ] Autenticação real em `/admin`
 - [ ] Upload real de fotos no Álbum de Eventos
 - [ ] Integração real da Newsletter (Mailchimp/Resend)
-- [ ] Link âncora `#album-eventos` no Header e Footer
 - [ ] Página de detalhe de notícia (`/imprensa/:slug`)
-- [ ] SEO — meta tags Open Graph dinâmicas
+- [ ] Páginas de detalhe para cada Loja (`/lojas/:numero`)
+- [ ] SEO — meta tags Open Graph dinâmicas por rota
 - [ ] Lazy loading dos componentes pesados (Three.js)
 - [ ] Otimização de imagens para `.webp`
+- [ ] Otimizar SVG oficial da logo (atualmente ~17MB — rodar SVGO)
 
 ---
 

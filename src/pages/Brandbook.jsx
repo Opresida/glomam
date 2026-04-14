@@ -44,7 +44,6 @@ const SPACING = [4, 8, 12, 16, 24, 32, 48, 64, 96, 120];
 export default function Brandbook() {
   const [activeTab, setActiveTab] = useState('logo');
   const [copiedColor, setCopiedColor] = useState(null);
-  const [githubUrl, setGithubUrl] = useState('https://github.com/Opresida/glomam.git');
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
@@ -1001,16 +1000,9 @@ section { padding: clamp(60px, 8vw, 100px) 0 }`}</pre>
                 <p>Acesse o código-fonte completo da GLOMAM no GitHub.</p>
               </div>
             </div>
-            <a
-              href={githubUrl || '#'}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`bb-gh-btn${!githubUrl ? ' disabled' : ''}`}
-              onClick={(e) => { if (!githubUrl) e.preventDefault(); }}
-            >
-              <span>{githubUrl ? 'Abrir Repositório' : 'Link em breve'}</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14m0 0l-7-7m7 7l-7 7"/></svg>
-            </a>
+            <span className="bb-gh-btn disabled" aria-disabled="true">
+              <span>Link em breve</span>
+            </span>
           </div>
         </div>
       </section>
