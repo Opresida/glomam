@@ -931,7 +931,7 @@ a.disp-contato-valor:hover{color:var(--gold)}
 
 .lojas-grid-section{background:#161d34;padding:clamp(60px,8vw,100px) 0}
 .lojas-vazio{text-align:center;font-family:'Lora',serif;font-style:italic;color:rgba(255,255,255,.45);padding:60px 20px}
-.lojas-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(20px,3vw,32px);max-width:1280px;margin:0 auto}
+.lojas-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:clamp(20px,3vw,32px);max-width:1280px;margin:0 auto}
 .loja-card{background:rgba(255,255,255,.025);border:1px solid rgba(211,165,76,.14);overflow:hidden;transition:border-color .4s,transform .4s}
 .loja-card:hover{border-color:rgba(211,165,76,.42);transform:translateY(-3px)}
 .loja-foto-wrap{position:relative;aspect-ratio:16/10;overflow:hidden;background:#0d1424}
@@ -975,9 +975,9 @@ a.disp-contato-valor:hover{color:var(--gold)}
 .jud-bloco-header{text-align:center;max-width:720px;margin:0 auto clamp(48px,6vw,72px)}
 .jud-bloco-titulo{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);color:var(--white);font-weight:400;letter-spacing:.02em;line-height:1.2;margin-top:6px}
 .jud-bloco-epigrafe{font-family:'Lora',serif;font-size:clamp(.95rem,1.4vw,1.08rem);color:rgba(255,255,255,.55);line-height:1.8;font-style:italic}
-.jud-destaque-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(24px,3vw,48px);max-width:860px;margin:0 auto}
+.jud-destaque-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:clamp(24px,3vw,48px);max-width:860px;margin:0 auto}
 .jud-corregedor-wrap{max-width:380px;margin:0 auto}
-.jud-juizes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:clamp(18px,2.4vw,32px);max-width:1200px;margin:0 auto}
+.jud-juizes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:clamp(18px,2.4vw,32px);max-width:1200px;margin:0 auto}
 .jud-card{position:relative;text-align:center;padding:clamp(20px,2.6vw,30px) clamp(14px,1.8vw,22px);background:rgba(255,255,255,.02);border:1px solid rgba(211,165,76,.12);transition:border-color .4s,transform .4s,background .4s}
 .jud-card:hover{border-color:rgba(211,165,76,.42);background:rgba(255,255,255,.035);transform:translateY(-3px)}
 .jud-card--destaque{padding:clamp(28px,3.2vw,40px) clamp(20px,2.4vw,28px)}
@@ -1012,7 +1012,7 @@ a.disp-contato-valor:hover{color:var(--gold)}
 .principios-bloco-titulo{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);color:var(--white);font-weight:400;letter-spacing:.02em;line-height:1.2;margin-top:6px}
 .principios-bloco-header .principios-divider{margin:22px auto 22px}
 .principios-epigrafe{font-family:'Lora',serif;font-size:clamp(.95rem,1.4vw,1.08rem);color:rgba(255,255,255,.55);line-height:1.8;font-style:italic}
-.principios-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(16px,2.4vw,28px);max-width:1200px;margin:0 auto}
+.principios-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:clamp(16px,2.4vw,28px);max-width:1200px;margin:0 auto}
 .principio-card{position:relative;background:rgba(255,255,255,.025);border:1px solid rgba(211,165,76,.14);padding:clamp(24px,3vw,34px) clamp(24px,3vw,32px) clamp(24px,3vw,34px) clamp(62px,7vw,78px);transition:border-color .4s,background .4s,transform .4s}
 .principio-card:hover{border-color:rgba(211,165,76,.42);background:rgba(255,255,255,.035);transform:translateY(-2px)}
 .principio-card::after{content:'';position:absolute;left:clamp(24px,3vw,32px);top:clamp(24px,3vw,34px);bottom:clamp(24px,3vw,34px);width:1px;background:linear-gradient(180deg,transparent,rgba(211,165,76,.35),transparent)}
