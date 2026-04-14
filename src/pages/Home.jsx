@@ -7,6 +7,7 @@ import Hero from '../components/Hero.jsx';
 import NewsCards from '../components/NewsCards.jsx';
 import WelcomeSection from '../components/WelcomeSection.jsx';
 import Objetivos from '../components/Objetivos.jsx';
+import VisitaVirtual from '../components/VisitaVirtual.jsx';
 import Pilares from '../components/Pilares.jsx';
 import Memorial from '../components/Memorial.jsx';
 import NossaHistoria from '../components/NossaHistoria.jsx';
@@ -45,8 +46,9 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
-        <NewsCards />
         <WelcomeSection />
+        <VisitaVirtual />
+        <NewsCards />
         <Objetivos />
         <Pilares />
         <StatsSection />
