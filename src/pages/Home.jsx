@@ -48,12 +48,12 @@ export default function Home() {
         <Hero />
         <WelcomeSection />
         <VisitaVirtual />
+        <NossaHistoria />
         <NewsCards />
         <Objetivos />
         <Pilares />
         <StatsSection />
         <Memorial />
-        <NossaHistoria />
         <Lideranca />
         <Familias />
         <FAQ />
