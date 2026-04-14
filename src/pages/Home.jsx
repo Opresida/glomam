@@ -14,6 +14,7 @@ import NossaHistoria from '../components/NossaHistoria.jsx';
 import StatsSection from '../components/StatsSection.jsx';
 import Lideranca from '../components/Lideranca.jsx';
 import Familias from '../components/Familias.jsx';
+import ApoioProjetos from '../components/ApoioProjetos.jsx';
 import FAQ from '../components/FAQ.jsx';
 import Oriente from '../components/Oriente.jsx';
 import useReveal from '../hooks/useReveal.js';
@@ -56,6 +57,7 @@ export default function Home() {
         <Memorial />
         <Lideranca />
         <Familias />
+        <ApoioProjetos />
         <FAQ />
         <Oriente />
       </main>

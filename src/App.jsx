@@ -10,6 +10,7 @@ import Judiciario from './pages/Judiciario.jsx';
 import Legislativo from './pages/Legislativo.jsx';
 import Lojas from './pages/Lojas.jsx';
 import DispensarioQuemSomos from './pages/DispensarioQuemSomos.jsx';
+import Doacao from './pages/Doacao.jsx';
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
         <Route path="/legislativo" element={<Legislativo />} />
         <Route path="/lojas" element={<Lojas />} />
         <Route path="/dispensario/quem-somos" element={<DispensarioQuemSomos />} />
+        <Route path="/doar/:currency" element={<Doacao />} />
       </Routes>
     </BrowserRouter>
   );
