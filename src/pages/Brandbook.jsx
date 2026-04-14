@@ -2,23 +2,32 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Brandbook.css';
 
+/* ── Logos oficiais ── */
+const LOGO_LIGHT = 'https://raw.githubusercontent.com/Opresida/glomam/main/GLOMAM%20SVG%20EM%20ALTA.svg'; // usar em fundos claros (creme, branco, gold)
+const LOGO_DARK = 'https://i.imgur.com/XVkyVtV.png'; // usar em fundos escuros (navy, gradiente dark)
+const LOGO_SVG = LOGO_LIGHT;
+const LOGO_NAVY = LOGO_LIGHT;
+const LOGO_GOLD = LOGO_DARK;
+
 /* ── Dados ── */
 const COLORS = [
-  { name: 'Gold', var: '--gold', hex: '#b4975a', use: 'Destaque primário, CTAs, ornamentos' },
-  { name: 'Gold Light', var: '--gold-light', hex: '#d4b87a', use: 'Gradientes, hovers claros' },
-  { name: 'Gold Dark', var: '--gold-dark', hex: '#8a7040', use: 'Gradientes, sombras douradas' },
-  { name: 'Slate', var: '--slate', hex: '#1a2332', use: 'Texto principal, seções escuras' },
-  { name: 'Slate Mid', var: '--slate-mid', hex: '#2c3e50', use: 'Texto secundário, efeitos' },
-  { name: 'Background', var: '--bg', hex: '#f0ede8', use: 'Fundo geral da aplicação' },
+  { name: 'Navy Darkest', var: '--slate', hex: '#161d34', use: 'Fundo primário de seções dark, texto principal' },
+  { name: 'Navy', var: '--slate-mid', hex: '#172d4b', use: 'Fundo secundário, texto médio, gradientes' },
+  { name: 'Blue Deep', var: '--blue-dark', hex: '#123b61', use: 'Acentos profundos, gradientes institucionais' },
+  { name: 'Blue', var: '--blue', hex: '#005587', use: 'Links, botões e elementos institucionais' },
+  { name: 'Blue Light', var: '--blue-light', hex: '#0d7dc2', use: 'Hovers, destaques e focos' },
+  { name: 'Copper', var: '--copper', hex: '#a95f21', use: 'Acento complementar, CTAs secundários' },
+  { name: 'Gold', var: '--gold', hex: '#d3a54c', use: 'Destaque primário, tipografia ornamental, bordas' },
+  { name: 'Gold Light', var: '--gold-light', hex: '#e3da98', use: 'Gradientes, hovers claros, highlights' },
+  { name: 'Background', var: '--bg', hex: '#f0ede8', use: 'Fundo geral papel creme' },
   { name: 'Ice', var: '--ice', hex: '#edf2f7', use: 'Fundos alternativos claros' },
   { name: 'White', var: '--white', hex: '#ffffff', use: 'Fundos de cards, destaque' },
 ];
 
 const FONTS = [
-  { family: 'Cinzel', weights: [400, 600, 700], role: 'Headings & Identidade', sample: 'GLOMAM — Grande Loja Maçônica do Amazonas', class: 'cinzel' },
-  { family: 'Cinzel Decorative', weights: [400, 700], role: 'Títulos Especiais & Numerais Ornamentais', sample: 'Ad Gloriam et Honorem — 1904', class: 'cinzel-deco' },
-  { family: 'Cormorant Garamond', weights: [300, 400, 500], role: 'Subtítulos, Citações & Descrições', sample: 'Arquitetura Social da Virtude — Tradição, Regularidade e Progresso', class: 'cormorant' },
-  { family: 'Montserrat', weights: [200, 300, 400, 500, 600], role: 'Corpo, UI, Formulários & Labels', sample: 'A excelência na comunicação institucional reflete a tradição da Ordem.', class: 'montserrat' },
+  { family: 'Playfair Display', weights: [400, 500, 600, 700, 800], role: 'Headings, Logotipo & Títulos Principais', sample: 'GLOMAM — Grande Loja Maçônica do Amazonas', class: 'playfair' },
+  { family: 'Lora', weights: [400, 500, 600, 700], role: 'Corpo Literário, Subtítulos & Citações', sample: 'Arquitetura Social da Virtude — Tradição, Regularidade e Progresso', class: 'lora' },
+  { family: 'Montserrat', weights: [200, 300, 400, 500, 600], role: 'UI, Labels, Navegação & Metadados', sample: 'A excelência na comunicação institucional reflete a tradição da Ordem.', class: 'montserrat' },
 ];
 
 const COMPONENTS_UI = [
@@ -73,7 +82,7 @@ export default function Brandbook() {
       {/* ── Hero ── */}
       <section className="bb-hero">
         <div className="bb-hero-ornament">
-          <svg width="60" height="60" viewBox="0 0 60 60" fill="none" stroke="#b4975a" strokeWidth="0.6">
+          <svg width="60" height="60" viewBox="0 0 60 60" fill="none" stroke="#d3a54c" strokeWidth="0.6">
             <circle cx="30" cy="30" r="28" strokeDasharray="4 4"/>
             <path d="M30 4L18 52M30 4L42 52M14 38H46" />
             <circle cx="30" cy="22" r="6" />
@@ -122,16 +131,16 @@ export default function Brandbook() {
             <h3 className="bb-h3">Versões Principais</h3>
             <div className="bb-logo-main-grid">
               <div className="bb-logo-display bb-logo-bg-original">
-                <img src="/logo-glomam-original.svg" alt="Logo GLOMAM Original" className="bb-logo-img" />
-                <span className="bb-logo-caption">Original — Fundo Índigo #2e2f98</span>
+                <img src={LOGO_SVG} alt="Logo GLOMAM Original" className="bb-logo-img bb-logo--original" />
+                <span className="bb-logo-caption">Original — Colorida Oficial</span>
               </div>
               <div className="bb-logo-display" style={{ background: '#f0ede8', border: '1px solid rgba(44,62,80,.06)' }}>
-                <img src="/logo-glomam-slate.svg" alt="Logo GLOMAM Slate" className="bb-logo-img" />
-                <span className="bb-logo-caption">Slate — Monocromática #1a2332</span>
+                <img src={LOGO_NAVY} alt="Logo GLOMAM Navy" className="bb-logo-img" />
+                <span className="bb-logo-caption">Navy — Monocromática #161d34</span>
               </div>
-              <div className="bb-logo-display" style={{ background: '#1a2332' }}>
-                <img src="/logo-glomam-gold.svg" alt="Logo GLOMAM Gold" className="bb-logo-img" />
-                <span className="bb-logo-caption" style={{ color: 'rgba(255,255,255,.5)' }}>Gold — Monocromática #b4975a</span>
+              <div className="bb-logo-display" style={{ background: '#161d34' }}>
+                <img src={LOGO_GOLD} alt="Logo GLOMAM Gold" className="bb-logo-img" />
+                <span className="bb-logo-caption" style={{ color: 'rgba(255,255,255,.5)' }}>Gold — Monocromática #d3a54c</span>
               </div>
             </div>
 
@@ -140,51 +149,51 @@ export default function Brandbook() {
             <p className="bb-desc" style={{ marginBottom: 24 }}>Cada variante da marca é projetada para um contexto específico de aplicação.</p>
             <div className="bb-logo-variants">
               <div className="bb-logo-variant-card">
-                <div className="bb-logo-variant-preview" style={{ background: '#1a2332' }}>
-                  <img src="/logo-glomam-original.svg" alt="Original sobre Slate" className="bb-logo-img-sm" />
+                <div className="bb-logo-variant-preview" style={{ background: '#161d34' }}>
+                  <img src={LOGO_DARK} alt="Original sobre Navy" className="bb-logo-img-sm" />
                 </div>
-                <span className="bb-logo-variant-name">Original sobre Slate</span>
+                <span className="bb-logo-variant-name">Original sobre Navy</span>
                 <code>Versão preferencial</code>
                 <span className="bb-logo-variant-use">Seções escuras, footer, convites</span>
               </div>
               <div className="bb-logo-variant-card">
                 <div className="bb-logo-variant-preview" style={{ background: '#f0ede8' }}>
-                  <img src="/logo-glomam-slate.svg" alt="Slate sobre Background" className="bb-logo-img-sm" />
+                  <img src={LOGO_NAVY} alt="Navy sobre Background" className="bb-logo-img-sm" />
                 </div>
-                <span className="bb-logo-variant-name">Slate sobre Claro</span>
-                <code>#1a2332 sobre #f0ede8</code>
+                <span className="bb-logo-variant-name">Navy sobre Claro</span>
+                <code>#161d34 sobre #f0ede8</code>
                 <span className="bb-logo-variant-use">Header, documentos, site</span>
               </div>
               <div className="bb-logo-variant-card">
                 <div className="bb-logo-variant-preview" style={{ background: '#ffffff' }}>
-                  <img src="/logo-glomam-slate.svg" alt="Slate sobre Branco" className="bb-logo-img-sm" />
+                  <img src={LOGO_NAVY} alt="Navy sobre Branco" className="bb-logo-img-sm" />
                 </div>
-                <span className="bb-logo-variant-name">Slate sobre Branco</span>
-                <code>#1a2332 sobre #fff</code>
+                <span className="bb-logo-variant-name">Navy sobre Branco</span>
+                <code>#161d34 sobre #fff</code>
                 <span className="bb-logo-variant-use">Impressos, papel timbrado</span>
               </div>
               <div className="bb-logo-variant-card">
-                <div className="bb-logo-variant-preview" style={{ background: '#080f1c' }}>
-                  <img src="/logo-glomam-gold.svg" alt="Gold sobre Dark" className="bb-logo-img-sm" />
+                <div className="bb-logo-variant-preview" style={{ background: '#161d34' }}>
+                  <img src={LOGO_GOLD} alt="Gold sobre Dark" className="bb-logo-img-sm" />
                 </div>
                 <span className="bb-logo-variant-name">Gold sobre Escuro</span>
-                <code>#b4975a sobre #080f1c</code>
+                <code>#d3a54c sobre #161d34</code>
                 <span className="bb-logo-variant-use">Materiais premium, certificados</span>
               </div>
               <div className="bb-logo-variant-card">
-                <div className="bb-logo-variant-preview" style={{ background: '#b4975a' }}>
-                  <img src="/logo-glomam-slate.svg" alt="Slate sobre Gold" className="bb-logo-img-sm" />
+                <div className="bb-logo-variant-preview" style={{ background: '#d3a54c' }}>
+                  <img src={LOGO_NAVY} alt="Navy sobre Gold" className="bb-logo-img-sm" />
                 </div>
-                <span className="bb-logo-variant-name">Slate sobre Gold</span>
-                <code>#1a2332 sobre #b4975a</code>
+                <span className="bb-logo-variant-name">Navy sobre Gold</span>
+                <code>#161d34 sobre #d3a54c</code>
                 <span className="bb-logo-variant-use">Convites especiais</span>
               </div>
               <div className="bb-logo-variant-card">
-                <div className="bb-logo-variant-preview" style={{ background: 'linear-gradient(135deg, #1a2332, #2c3e50)' }}>
-                  <img src="/logo-glomam-original.svg" alt="Original sobre Gradiente" className="bb-logo-img-sm" />
+                <div className="bb-logo-variant-preview" style={{ background: 'linear-gradient(135deg, #161d34, #172d4b)' }}>
+                  <img src={LOGO_DARK} alt="Original sobre Gradiente" className="bb-logo-img-sm" />
                 </div>
                 <span className="bb-logo-variant-name">Gradiente Institucional</span>
-                <code>slate → slate-mid</code>
+                <code>navy → navy-mid</code>
                 <span className="bb-logo-variant-use">Apresentações formais</span>
               </div>
             </div>
@@ -194,25 +203,25 @@ export default function Brandbook() {
             <div className="bb-logo-sizes">
               <div className="bb-logo-size-item">
                 <div className="bb-logo-size-preview" style={{ width: 120, height: 120 }}>
-                  <img src="/logo-glomam-original.svg" alt="120px" style={{ width: '100%', height: '100%' }} />
+                  <img src={LOGO_SVG} alt="120px" style={{ width: '100%', height: '100%' }} />
                 </div>
                 <span>120px — Digital padrão</span>
               </div>
               <div className="bb-logo-size-item">
                 <div className="bb-logo-size-preview" style={{ width: 80, height: 80 }}>
-                  <img src="/logo-glomam-original.svg" alt="80px" style={{ width: '100%', height: '100%' }} />
+                  <img src={LOGO_SVG} alt="80px" style={{ width: '100%', height: '100%' }} />
                 </div>
                 <span>80px — Mínimo digital</span>
               </div>
               <div className="bb-logo-size-item">
                 <div className="bb-logo-size-preview" style={{ width: 48, height: 48 }}>
-                  <img src="/logo-glomam-original.svg" alt="48px" style={{ width: '100%', height: '100%' }} />
+                  <img src={LOGO_SVG} alt="48px" style={{ width: '100%', height: '100%' }} />
                 </div>
                 <span>48px — Favicon / ícone</span>
               </div>
               <div className="bb-logo-size-item">
                 <div className="bb-logo-size-preview" style={{ width: 32, height: 32 }}>
-                  <img src="/logo-glomam-original.svg" alt="32px" style={{ width: '100%', height: '100%' }} />
+                  <img src={LOGO_SVG} alt="32px" style={{ width: '100%', height: '100%' }} />
                 </div>
                 <span>32px — Mínimo absoluto</span>
               </div>
@@ -223,7 +232,7 @@ export default function Brandbook() {
             <div className="bb-logo-clearspace">
               <div className="bb-logo-clearspace-box">
                 <div className="bb-logo-clearspace-inner">
-                  <img src="/logo-glomam-original.svg" alt="Área de proteção" className="bb-logo-clearspace-img" />
+                  <img src={LOGO_SVG} alt="Área de proteção" className="bb-logo-clearspace-img" />
                 </div>
                 <div className="bb-logo-clearspace-label-top">X</div>
                 <div className="bb-logo-clearspace-label-bottom">X</div>
@@ -238,37 +247,37 @@ export default function Brandbook() {
             <div className="bb-logo-donts">
               <div className="bb-logo-dont-item">
                 <div className="bb-logo-dont-preview" style={{ background: '#fff' }}>
-                  <img src="/logo-glomam-original.svg" alt="Não distorcer" className="bb-logo-img-sm" style={{ transform: 'scaleX(0.6)' }} />
+                  <img src={LOGO_SVG} alt="Não distorcer" className="bb-logo-img-sm" style={{ transform: 'scaleX(0.6)' }} />
                 </div>
                 <span>Não distorcer proporções</span>
               </div>
               <div className="bb-logo-dont-item">
                 <div className="bb-logo-dont-preview" style={{ background: '#fff' }}>
-                  <img src="/logo-glomam-original.svg" alt="Não rotacionar" className="bb-logo-img-sm" style={{ transform: 'rotate(25deg)', opacity: 0.8 }} />
+                  <img src={LOGO_SVG} alt="Não rotacionar" className="bb-logo-img-sm" style={{ transform: 'rotate(25deg)', opacity: 0.8 }} />
                 </div>
                 <span>Não rotacionar</span>
               </div>
               <div className="bb-logo-dont-item">
                 <div className="bb-logo-dont-preview" style={{ background: '#fff' }}>
-                  <img src="/logo-glomam-original.svg" alt="Não alterar cores" className="bb-logo-img-sm" style={{ filter: 'hue-rotate(90deg) saturate(3)' }} />
+                  <img src={LOGO_SVG} alt="Não alterar cores" className="bb-logo-img-sm" style={{ filter: 'hue-rotate(90deg) saturate(3)' }} />
                 </div>
                 <span>Não alterar cores</span>
               </div>
               <div className="bb-logo-dont-item">
                 <div className="bb-logo-dont-preview" style={{ background: '#fff' }}>
-                  <img src="/logo-glomam-original.svg" alt="Não aplicar sombra" className="bb-logo-img-sm" style={{ filter: 'drop-shadow(4px 4px 8px rgba(0,0,0,0.5))' }} />
+                  <img src={LOGO_SVG} alt="Não aplicar sombra" className="bb-logo-img-sm" style={{ filter: 'drop-shadow(4px 4px 8px rgba(0,0,0,0.5))' }} />
                 </div>
                 <span>Não aplicar sombras</span>
               </div>
               <div className="bb-logo-dont-item">
                 <div className="bb-logo-dont-preview" style={{ background: '#ff0000' }}>
-                  <img src="/logo-glomam-original.svg" alt="Não usar em fundo colorido" className="bb-logo-img-sm" />
+                  <img src={LOGO_SVG} alt="Não usar em fundo colorido" className="bb-logo-img-sm" />
                 </div>
                 <span>Não usar sobre cores vibrantes</span>
               </div>
               <div className="bb-logo-dont-item">
                 <div className="bb-logo-dont-preview" style={{ background: '#fff' }}>
-                  <img src="/logo-glomam-original.svg" alt="Não reduzir opacidade" className="bb-logo-img-sm" style={{ opacity: 0.3 }} />
+                  <img src={LOGO_SVG} alt="Não reduzir opacidade" className="bb-logo-img-sm" style={{ opacity: 0.3 }} />
                 </div>
                 <span>Não reduzir opacidade</span>
               </div>
@@ -277,25 +286,25 @@ export default function Brandbook() {
             {/* Composição com texto */}
             <h3 className="bb-h3">Composição Logo + Texto</h3>
             <div className="bb-logo-compositions">
-              <div className="bb-logo-comp-item" style={{ background: '#1a2332' }}>
-                <img src="/logo-glomam-original.svg" alt="Logo" style={{ width: 80, height: 80 }} />
+              <div className="bb-logo-comp-item" style={{ background: '#161d34' }}>
+                <img src={LOGO_DARK} alt="Logo" style={{ width: 80, height: 80 }} />
                 <div className="bb-logo-comp-text">
                   <span className="bb-logo-comp-title" style={{ color: '#fff' }}>GLOMAM</span>
                   <span className="bb-logo-comp-sub" style={{ color: 'rgba(255,255,255,.4)' }}>Grande Loja Maçônica do Amazonas</span>
                 </div>
               </div>
               <div className="bb-logo-comp-item" style={{ background: '#f0ede8' }}>
-                <img src="/logo-glomam-original.svg" alt="Logo" style={{ width: 80, height: 80 }} />
+                <img src={LOGO_SVG} alt="Logo" style={{ width: 80, height: 80 }} />
                 <div className="bb-logo-comp-text">
-                  <span className="bb-logo-comp-title" style={{ color: '#1a2332' }}>GLOMAM</span>
+                  <span className="bb-logo-comp-title" style={{ color: '#161d34' }}>GLOMAM</span>
                   <span className="bb-logo-comp-sub" style={{ color: '#9ca3af' }}>Grande Loja Maçônica do Amazonas</span>
                 </div>
               </div>
-              <div className="bb-logo-comp-item bb-logo-comp-vertical" style={{ background: '#1a2332' }}>
-                <img src="/logo-glomam-original.svg" alt="Logo" style={{ width: 100, height: 100 }} />
-                <span className="bb-logo-comp-title" style={{ color: '#b4975a' }}>GLOMAM</span>
+              <div className="bb-logo-comp-item bb-logo-comp-vertical" style={{ background: '#161d34' }}>
+                <img src={LOGO_DARK} alt="Logo" style={{ width: 100, height: 100 }} />
+                <span className="bb-logo-comp-title" style={{ color: '#d3a54c' }}>GLOMAM</span>
                 <span className="bb-logo-comp-sub" style={{ color: 'rgba(255,255,255,.35)' }}>Grande Loja Maçônica do Amazonas</span>
-                <span style={{ fontFamily: "'Cormorant Garamond',serif", fontStyle: 'italic', fontSize: '.6rem', color: 'rgba(180,151,90,.5)', marginTop: 4 }}>Est. 1904</span>
+                <span style={{ fontFamily: "'Lora',serif", fontStyle: 'italic', fontSize: '.6rem', color: 'rgba(211,165,76,.5)', marginTop: 4 }}>Est. 1904</span>
               </div>
             </div>
           </div>
@@ -314,14 +323,14 @@ export default function Brandbook() {
 
             {/* Paleta principal */}
             <div className="bb-colors-hero">
-              <div className="bb-color-hero-main" style={{ background: '#b4975a' }}>
+              <div className="bb-color-hero-main" style={{ background: '#d3a54c' }}>
                 <span className="bb-ch-name">Gold</span>
-                <span className="bb-ch-hex">#b4975a</span>
+                <span className="bb-ch-hex">#d3a54c</span>
                 <span className="bb-ch-role">Cor primária de destaque</span>
               </div>
-              <div className="bb-color-hero-main" style={{ background: '#1a2332' }}>
-                <span className="bb-ch-name" style={{ color: '#fff' }}>Slate</span>
-                <span className="bb-ch-hex" style={{ color: 'rgba(255,255,255,.6)' }}>#1a2332</span>
+              <div className="bb-color-hero-main" style={{ background: '#161d34' }}>
+                <span className="bb-ch-name" style={{ color: '#fff' }}>Navy</span>
+                <span className="bb-ch-hex" style={{ color: 'rgba(255,255,255,.6)' }}>#161d34</span>
                 <span className="bb-ch-role" style={{ color: 'rgba(255,255,255,.4)' }}>Cor institucional de base</span>
               </div>
               <div className="bb-color-hero-main" style={{ background: '#f0ede8', border: '1px solid rgba(44,62,80,.08)' }}>
@@ -352,17 +361,17 @@ export default function Brandbook() {
             <h3 className="bb-h3">Gradientes</h3>
             <div className="bb-gradients">
               <div className="bb-gradient-card">
-                <div className="bb-gradient-bar" style={{ background: 'linear-gradient(135deg, #8a7040, #b4975a, #d4b87a)' }} />
+                <div className="bb-gradient-bar" style={{ background: 'linear-gradient(135deg, #a95f21, #d3a54c, #e3da98)' }} />
                 <span>Gold Gradient</span>
-                <code>linear-gradient(135deg, #8a7040, #b4975a, #d4b87a)</code>
+                <code>linear-gradient(135deg, #a95f21, #d3a54c, #e3da98)</code>
               </div>
               <div className="bb-gradient-card">
-                <div className="bb-gradient-bar" style={{ background: 'linear-gradient(135deg, #1a2332, #2c3e50)' }} />
-                <span>Slate Gradient</span>
-                <code>linear-gradient(135deg, #1a2332, #2c3e50)</code>
+                <div className="bb-gradient-bar" style={{ background: 'linear-gradient(135deg, #161d34, #172d4b)' }} />
+                <span>Navy Gradient</span>
+                <code>linear-gradient(135deg, #161d34, #172d4b)</code>
               </div>
               <div className="bb-gradient-card">
-                <div className="bb-gradient-bar" style={{ background: 'linear-gradient(90deg, #8a7040, #b4975a, #d4b87a)' }} />
+                <div className="bb-gradient-bar" style={{ background: 'linear-gradient(90deg, #a95f21, #d3a54c, #e3da98)' }} />
                 <span>Progress Bar</span>
                 <code>linear-gradient(90deg, gold-dark → gold → gold-light)</code>
               </div>
@@ -371,16 +380,16 @@ export default function Brandbook() {
             {/* Contraste */}
             <h3 className="bb-h3">Acessibilidade — Contraste</h3>
             <div className="bb-contrast-grid">
-              <div className="bb-contrast-item" style={{ background: '#1a2332', color: '#b4975a' }}>
-                <span>Gold sobre Slate</span><span className="bb-contrast-ratio">AA ✓ — 4.8:1</span>
+              <div className="bb-contrast-item" style={{ background: '#161d34', color: '#d3a54c' }}>
+                <span>Gold sobre Navy</span><span className="bb-contrast-ratio">AA ✓ — 4.8:1</span>
               </div>
-              <div className="bb-contrast-item" style={{ background: '#1a2332', color: '#ffffff' }}>
-                <span>White sobre Slate</span><span className="bb-contrast-ratio">AAA ✓ — 14.5:1</span>
+              <div className="bb-contrast-item" style={{ background: '#161d34', color: '#ffffff' }}>
+                <span>White sobre Navy</span><span className="bb-contrast-ratio">AAA ✓ — 14.5:1</span>
               </div>
-              <div className="bb-contrast-item" style={{ background: '#f0ede8', color: '#1a2332' }}>
-                <span>Slate sobre Background</span><span className="bb-contrast-ratio">AAA ✓ — 12.1:1</span>
+              <div className="bb-contrast-item" style={{ background: '#f0ede8', color: '#161d34' }}>
+                <span>Navy sobre Background</span><span className="bb-contrast-ratio">AAA ✓ — 12.1:1</span>
               </div>
-              <div className="bb-contrast-item" style={{ background: '#f0ede8', color: '#b4975a' }}>
+              <div className="bb-contrast-item" style={{ background: '#f0ede8', color: '#d3a54c' }}>
                 <span>Gold sobre Background</span><span className="bb-contrast-ratio">AA Large ✓ — 3.2:1</span>
               </div>
             </div>
@@ -427,19 +436,19 @@ export default function Brandbook() {
             <div className="bb-type-scale">
               <div className="bb-scale-row">
                 <code>h1</code>
-                <span style={{ fontFamily: "'Cinzel',serif", fontSize: 'clamp(2rem,5.5vw,3.4rem)', lineHeight: 1.06 }}>A Perfeição na Medida</span>
+                <span style={{ fontFamily: "'Playfair Display',serif", fontSize: 'clamp(2rem,5.5vw,3.4rem)', lineHeight: 1.06 }}>A Perfeição na Medida</span>
               </div>
               <div className="bb-scale-row">
                 <code>h2</code>
-                <span style={{ fontFamily: "'Cinzel',serif", fontSize: 'clamp(1.5rem,3.5vw,2.2rem)', lineHeight: 1.15 }}>Iluminando o Passado</span>
+                <span style={{ fontFamily: "'Playfair Display',serif", fontSize: 'clamp(1.5rem,3.5vw,2.2rem)', lineHeight: 1.15 }}>Iluminando o Passado</span>
               </div>
               <div className="bb-scale-row">
                 <code>h3</code>
-                <span style={{ fontFamily: "'Cinzel',serif", fontSize: 'clamp(.82rem,2vw,1.1rem)', letterSpacing: '.17em', textTransform: 'uppercase' }}>Galeria de Grão-Mestres</span>
+                <span style={{ fontFamily: "'Playfair Display',serif", fontSize: 'clamp(.82rem,2vw,1.1rem)', letterSpacing: '.17em', textTransform: 'uppercase' }}>Galeria de Grão-Mestres</span>
               </div>
               <div className="bb-scale-row">
                 <code>subtitle</code>
-                <span style={{ fontFamily: "'Cormorant Garamond',serif", fontStyle: 'italic', fontSize: 'clamp(1.1rem,2vw,1.35rem)', fontWeight: 300 }}>Arquitetura Social da Virtude</span>
+                <span style={{ fontFamily: "'Lora',serif", fontStyle: 'italic', fontSize: 'clamp(1.1rem,2vw,1.35rem)', fontWeight: 300 }}>Arquitetura Social da Virtude</span>
               </div>
               <div className="bb-scale-row">
                 <code>body</code>
@@ -447,7 +456,7 @@ export default function Brandbook() {
               </div>
               <div className="bb-scale-row">
                 <code>label</code>
-                <span style={{ fontFamily: "'Montserrat',sans-serif", fontSize: '.55rem', letterSpacing: '.44em', textTransform: 'uppercase', color: '#b4975a', fontWeight: 600 }}>Seção Label</span>
+                <span style={{ fontFamily: "'Montserrat',sans-serif", fontSize: '.55rem', letterSpacing: '.44em', textTransform: 'uppercase', color: '#d3a54c', fontWeight: 600 }}>Seção Label</span>
               </div>
               <div className="bb-scale-row">
                 <code>small</code>
@@ -459,9 +468,9 @@ export default function Brandbook() {
             <h3 className="bb-h3">Letter Spacing</h3>
             <div className="bb-spacing-demo">
               <div><code>0.06em</code><span style={{ letterSpacing: '0.06em' }}>Texto de corpo padrão</span></div>
-              <div><code>0.14em</code><span style={{ letterSpacing: '0.14em', fontFamily: "'Cinzel',serif" }}>Títulos intermediários</span></div>
+              <div><code>0.14em</code><span style={{ letterSpacing: '0.14em', fontFamily: "'Playfair Display',serif" }}>Títulos intermediários</span></div>
               <div><code>0.24em</code><span style={{ letterSpacing: '0.24em', textTransform: 'uppercase', fontSize: '.7rem' }}>Navegação e links</span></div>
-              <div><code>0.44em</code><span style={{ letterSpacing: '0.44em', textTransform: 'uppercase', fontSize: '.6rem', color: '#b4975a', fontWeight: 600 }}>Section labels</span></div>
+              <div><code>0.44em</code><span style={{ letterSpacing: '0.44em', textTransform: 'uppercase', fontSize: '.6rem', color: '#d3a54c', fontWeight: 600 }}>Section labels</span></div>
             </div>
           </div>
         </section>
@@ -483,7 +492,7 @@ export default function Brandbook() {
               <div className="bb-ui-demo">
                 <button className="bb-btn-primary"><span>Ver Princípios</span></button>
                 <code>.btn-primary</code>
-                <span className="bb-ui-note">Background slate, hover revela ouro via scaleX. Cinzel, uppercase, 0.2em spacing.</span>
+                <span className="bb-ui-note">Background navy, hover revela ouro via scaleX. Playfair Display, uppercase, 0.2em spacing.</span>
               </div>
               <div className="bb-ui-demo">
                 <button className="bb-btn-outline">Localização</button>
@@ -496,6 +505,25 @@ export default function Brandbook() {
                 <span className="bb-ui-note">Borda gold, hover preenche gold com texto branco.</span>
               </div>
             </div>
+            <details className="bb-code-toggle bb-code-toggle--wide">
+              <summary>Ver código — Botões</summary>
+              <pre className="bb-code-block">{`{/* JSX */}
+<a href="#geometria" className="btn-primary"><span>Ver Princípios</span></a>
+<a href="#localizacao" className="btn-outline">Localização</a>
+<Link to="/admin" className="nav-cta">Login</Link>
+
+/* CSS-chave */
+.btn-primary{background:var(--slate);color:var(--white);padding:14px 36px;font-family:'Playfair Display',serif;letter-spacing:.2em;text-transform:uppercase;position:relative;overflow:hidden}
+.btn-primary::before{content:'';position:absolute;inset:0;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
+.btn-primary:hover::before{transform:scaleX(1)}
+.btn-primary span{position:relative;z-index:1}
+
+.btn-outline{border:1px solid rgba(22,29,52,.2);color:var(--slate);padding:12px 28px;background:transparent;transition:border-color .3s,color .3s}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+
+.nav-cta{border:1px solid var(--gold);color:var(--gold);padding:7px 18px;font-family:'Playfair Display',serif;transition:background .3s,color .3s}
+.nav-cta:hover{background:var(--gold);color:var(--white)}`}</pre>
+            </details>
 
             {/* Cards */}
             <h3 className="bb-h3">Cards</h3>
@@ -503,7 +531,7 @@ export default function Brandbook() {
               <div className="bb-demo-pilar">
                 <div className="bb-dp-num">01</div>
                 <div className="bb-dp-icon">
-                  <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="#b4975a" strokeWidth="1.5"><path d="M17 2L2 32h30L17 2z"/></svg>
+                  <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="#d3a54c" strokeWidth="1.5"><path d="M17 2L2 32h30L17 2z"/></svg>
                 </div>
                 <h4>A Maçonaria</h4>
                 <p>Construção simbólica do caráter humano, alicerçada em princípios éticos universais.</p>
@@ -511,12 +539,35 @@ export default function Brandbook() {
               <div className="bb-demo-pilar bb-demo-pilar-dark">
                 <div className="bb-dp-num">02</div>
                 <div className="bb-dp-icon">
-                  <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="#b4975a" strokeWidth="1.5"><circle cx="17" cy="10" r="6"/><path d="M5 30c0-7 5-12 12-12s12 5 12 12"/></svg>
+                  <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="#d3a54c" strokeWidth="1.5"><circle cx="17" cy="10" r="6"/><path d="M5 30c0-7 5-12 12-12s12 5 12 12"/></svg>
                 </div>
                 <h4>Ser Maçom</h4>
                 <p>Compromisso diário com virtude, fraternidade e aperfeiçoamento moral contínuo.</p>
               </div>
             </div>
+            <details className="bb-code-toggle bb-code-toggle--wide">
+              <summary>Ver código — Cards</summary>
+              <pre className="bb-code-block">{`{/* JSX — card pilar */}
+<article className="pilar-card">
+  <div className="pilar-num">01</div>
+  <div className="pilar-icon">
+    <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="var(--gold)" strokeWidth="1.5">
+      <path d="M17 2L2 32h30L17 2z"/>
+    </svg>
+  </div>
+  <h4>A Maçonaria</h4>
+  <p>Construção simbólica do caráter humano...</p>
+</article>
+
+/* CSS-chave */
+.pilar-card{background:var(--white);border:1px solid rgba(211,165,76,.14);padding:32px;transition:border-color .4s,transform .4s}
+.pilar-card:hover{border-color:rgba(211,165,76,.42);transform:translateY(-2px)}
+.pilar-card.dark{background:var(--slate);color:var(--white)}
+.pilar-num{font-family:'Playfair Display',serif;font-size:.62rem;letter-spacing:.3em;color:var(--gold);margin-bottom:16px}
+.pilar-icon{margin-bottom:20px;opacity:.85}
+.pilar-card h4{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:400;margin-bottom:12px}
+.pilar-card p{font-family:'Lora',serif;font-size:.95rem;line-height:1.82;color:rgba(22,29,52,.7)}`}</pre>
+            </details>
 
             {/* Inputs */}
             <h3 className="bb-h3">Formulários</h3>
@@ -533,6 +584,25 @@ export default function Brandbook() {
                 <button className="bb-btn-primary"><span>Enviar</span></button>
               </div>
             </div>
+            <details className="bb-code-toggle bb-code-toggle--wide">
+              <summary>Ver código — Formulários</summary>
+              <pre className="bb-code-block">{`{/* JSX */}
+<div className="form-group">
+  <label htmlFor="email">Email institucional</label>
+  <input id="email" type="email" placeholder="irmao@glomam.org.br" />
+</div>
+
+<div className="form-group">
+  <label htmlFor="msg">Mensagem</label>
+  <textarea id="msg" rows="3" placeholder="Sua mensagem..." />
+</div>
+
+/* CSS-chave */
+.form-group label{font-family:'Montserrat',sans-serif;font-size:.58rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:8px;display:block}
+.form-group input,.form-group textarea{width:100%;background:transparent;border:none;border-bottom:1px solid rgba(22,29,52,.18);padding:12px 4px;font-family:'Lora',serif;font-size:1rem;color:var(--slate);transition:border-color .3s}
+.form-group input:focus,.form-group textarea:focus{outline:none;border-bottom-color:var(--gold)}
+.form-group input::placeholder,.form-group textarea::placeholder{color:rgba(22,29,52,.35);font-style:italic}`}</pre>
+            </details>
 
             {/* Spacing */}
             <h3 className="bb-h3">Espaçamento</h3>
@@ -544,36 +614,65 @@ export default function Brandbook() {
                 </div>
               ))}
             </div>
+            <details className="bb-code-toggle bb-code-toggle--wide">
+              <summary>Ver código — Escala de Espaçamento</summary>
+              <pre className="bb-code-block">{`/* Escala base (px): 4 · 8 · 12 · 16 · 24 · 32 · 48 · 64 · 96 · 128 */
+
+/* Uso recomendado em clamp() para responsividade */
+padding: clamp(16px, 5vw, 40px);        /* section-inner */
+margin-bottom: clamp(48px, 7vw, 80px);  /* bloco de seção */
+gap: clamp(10px, 1.8vw, 20px);          /* grid/flex gap */
+padding: clamp(24px, 3vw, 34px);        /* card interno */
+
+/* Tokens principais usados no projeto */
+--nav-h: 72px;                          /* altura do header */
+section { padding: clamp(60px, 8vw, 100px) 0 }`}</pre>
+            </details>
 
             {/* Ícones / SVG */}
             <h3 className="bb-h3">Iconografia (SVG Inline)</h3>
             <p className="bb-desc" style={{ marginBottom: 24 }}>Todos os ícones são SVG inline com stroke <code>var(--gold)</code>, strokeWidth <code>1.5</code>, fill <code>none</code>.</p>
             <div className="bb-icons-grid">
               <div className="bb-icon-item">
-                <svg width="32" height="32" viewBox="0 0 34 34" fill="none" stroke="#b4975a" strokeWidth="1.5"><path d="M17 2L2 32h30L17 2z"/></svg>
+                <svg width="32" height="32" viewBox="0 0 34 34" fill="none" stroke="#d3a54c" strokeWidth="1.5"><path d="M17 2L2 32h30L17 2z"/></svg>
                 <span>Triângulo</span>
               </div>
               <div className="bb-icon-item">
-                <svg width="32" height="32" viewBox="0 0 34 34" fill="none" stroke="#b4975a" strokeWidth="1.5"><circle cx="17" cy="10" r="6"/><path d="M5 30c0-7 5-12 12-12s12 5 12 12"/></svg>
+                <svg width="32" height="32" viewBox="0 0 34 34" fill="none" stroke="#d3a54c" strokeWidth="1.5"><circle cx="17" cy="10" r="6"/><path d="M5 30c0-7 5-12 12-12s12 5 12 12"/></svg>
                 <span>Pessoa</span>
               </div>
               <div className="bb-icon-item">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#b4975a" strokeWidth="1.5"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"/></svg>
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#d3a54c" strokeWidth="1.5"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"/></svg>
                 <span>Grid</span>
               </div>
               <div className="bb-icon-item">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#b4975a" strokeWidth="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#d3a54c" strokeWidth="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
                 <span>Localização</span>
               </div>
               <div className="bb-icon-item">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#b4975a" strokeWidth="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#d3a54c" strokeWidth="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                 <span>Email</span>
               </div>
               <div className="bb-icon-item">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#b4975a" strokeWidth="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#d3a54c" strokeWidth="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
                 <span>Documento</span>
               </div>
             </div>
+            <details className="bb-code-toggle bb-code-toggle--wide">
+              <summary>Ver código — Iconografia</summary>
+              <pre className="bb-code-block">{`{/* Padrão SVG inline — stroke gold, width 1.5, fill none */}
+<svg width="32" height="32" viewBox="0 0 24 24" fill="none"
+     stroke="var(--gold)" strokeWidth="1.5"
+     strokeLinecap="round" strokeLinejoin="round">
+  <path d="M17 2L2 32h30L17 2z" />
+</svg>
+
+/* Regras de uso */
+- Tamanhos padrão: 16, 20, 24, 32, 40, 48, 56, 72 px
+- Sempre stroke var(--gold) em fundos escuros; var(--slate) em fundos claros
+- Evitar fill colorido (a marca é linha fina, não cheia)
+- viewBox consistente: 0 0 24 24 para utilitários, 0 0 34 34 para ornamentais`}</pre>
+            </details>
 
             {/* Animações */}
             <h3 className="bb-h3">Animações & Transições</h3>
@@ -594,6 +693,28 @@ export default function Brandbook() {
                 <span>Background reveal via scaleX(0→1)</span>
               </div>
             </div>
+            <details className="bb-code-toggle bb-code-toggle--wide">
+              <summary>Ver código — Animações</summary>
+              <pre className="bb-code-block">{`/* Easing institucional — curva lenta-rápida-lenta */
+:root{ --ease: cubic-bezier(0.19, 1, 0.22, 1); }
+
+/* Reveal on scroll — usado junto com useReveal() */
+.reveal{opacity:0;transform:translateY(38px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.reveal.active{opacity:1;transform:translateY(0)}
+.reveal-d1{transition-delay:.12s}
+.reveal-d2{transition-delay:.24s}
+.reveal-d3{transition-delay:.36s}
+
+/* Background reveal por scaleX (botão primário) */
+.el::before{content:'';position:absolute;inset:0;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
+.el:hover::before{transform:scaleX(1)}
+
+/* Fade + Y para entrada de painéis (ex: Nossos Objetivos) */
+@keyframes objetivosFade{
+  from{opacity:0;transform:translateY(8px)}
+  to  {opacity:1;transform:translateY(0)}
+}`}</pre>
+            </details>
           </div>
         </section>
       )}
@@ -619,9 +740,7 @@ export default function Brandbook() {
                   <div className="bb-cv-corner bb-cv-bl" /><div className="bb-cv-corner bb-cv-br" />
                   <div className="bb-cv-content">
                     <div className="bb-cv-top">
-                      <svg className="bb-cv-symbol" width="32" height="32" viewBox="0 0 60 60" fill="none" stroke="#b4975a" strokeWidth="0.8">
-                        <path d="M30 4L18 52M30 4L42 52M14 38H46" /><circle cx="30" cy="22" r="6" />
-                      </svg>
+                      <img className="bb-cv-symbol" src={LOGO_NAVY} alt="GLOMAM" width="40" height="40" />
                       <div className="bb-cv-brand">
                         <span className="bb-cv-logo">GLOMAM</span>
                         <span className="bb-cv-sub">Grande Loja Maçônica do Amazonas</span>
@@ -646,10 +765,7 @@ export default function Brandbook() {
                   <div className="bb-cv-corner bb-cv-tl" /><div className="bb-cv-corner bb-cv-tr" />
                   <div className="bb-cv-corner bb-cv-bl" /><div className="bb-cv-corner bb-cv-br" />
                   <div className="bb-cv-back-content">
-                    <svg width="56" height="56" viewBox="0 0 60 60" fill="none" stroke="#b4975a" strokeWidth="0.6">
-                      <circle cx="30" cy="30" r="28" strokeDasharray="4 4"/>
-                      <path d="M30 4L18 52M30 4L42 52M14 38H46" /><circle cx="30" cy="22" r="6" />
-                    </svg>
+                    <img src={LOGO_GOLD} alt="GLOMAM" width="72" height="72" />
                     <span className="bb-cv-back-logo">GLOMAM</span>
                     <span className="bb-cv-back-motto">Ad Gloriam et Honorem</span>
                     <span className="bb-cv-back-year">Est. 1904</span>
@@ -666,9 +782,7 @@ export default function Brandbook() {
                 {/* Header */}
                 <div className="bb-lh-header">
                   <div className="bb-lh-header-left">
-                    <svg width="36" height="36" viewBox="0 0 60 60" fill="none" stroke="#b4975a" strokeWidth="0.8">
-                      <path d="M30 4L18 52M30 4L42 52M14 38H46" /><circle cx="30" cy="22" r="6" />
-                    </svg>
+                    <img src={LOGO_NAVY} alt="GLOMAM" width="48" height="48" />
                     <div>
                       <span className="bb-lh-logo">GLOMAM</span>
                       <span className="bb-lh-sub">Grande Loja Maçônica do Amazonas</span>
@@ -719,27 +833,25 @@ export default function Brandbook() {
                 <table cellPadding="0" cellSpacing="0" style={{ fontFamily: "'Montserrat', Arial, sans-serif", maxWidth: 520 }}>
                   <tbody>
                     <tr>
-                      <td style={{ paddingRight: 20, borderRight: '2px solid #b4975a', verticalAlign: 'top' }}>
-                        <div style={{ width: 70, height: 70, borderRadius: '50%', background: '#1a2332', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto' }}>
-                          <svg width="32" height="32" viewBox="0 0 60 60" fill="none" stroke="#b4975a" strokeWidth="0.8">
-                            <path d="M30 4L18 52M30 4L42 52M14 38H46" /><circle cx="30" cy="22" r="6" />
-                          </svg>
+                      <td style={{ paddingRight: 20, borderRight: '2px solid #d3a54c', verticalAlign: 'top' }}>
+                        <div style={{ width: 70, height: 70, borderRadius: '50%', background: '#161d34', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto' }}>
+                          <img src={LOGO_GOLD} alt="GLOMAM" width="54" height="54" />
                         </div>
                       </td>
                       <td style={{ paddingLeft: 20, verticalAlign: 'top' }}>
-                        <p style={{ margin: 0, fontFamily: "'Cinzel', Georgia, serif", fontSize: 15, fontWeight: 700, color: '#1a2332', letterSpacing: '0.08em' }}>
+                        <p style={{ margin: 0, fontFamily: "'Playfair Display', Georgia, serif", fontSize: 15, fontWeight: 700, color: '#161d34', letterSpacing: '0.08em' }}>
                           Tufi Salim Jorge Filho
                         </p>
-                        <p style={{ margin: '2px 0 0', fontSize: 11, color: '#b4975a', letterSpacing: '0.15em', textTransform: 'uppercase', fontWeight: 600 }}>
+                        <p style={{ margin: '2px 0 0', fontSize: 11, color: '#d3a54c', letterSpacing: '0.15em', textTransform: 'uppercase', fontWeight: 600 }}>
                           Grão-Mestre · CIM 8023
                         </p>
-                        <div style={{ width: '100%', height: 1, background: 'rgba(180,151,90,0.2)', margin: '10px 0' }} />
+                        <div style={{ width: '100%', height: 1, background: 'rgba(211,165,76,0.2)', margin: '10px 0' }} />
                         <p style={{ margin: 0, fontSize: 11, color: '#6b7280', lineHeight: '1.6' }}>
                           GLOMAM — Grande Loja Maçônica do Amazonas<br/>
                           Av. Prof. Nilton Lins, 1655 — Manaus, AM<br/>
                           secretaria@glomam.org.br
                         </p>
-                        <p style={{ margin: '8px 0 0', fontFamily: "'Cormorant Garamond', Georgia, serif", fontStyle: 'italic', fontSize: 12, color: '#b4975a', opacity: 0.7 }}>
+                        <p style={{ margin: '8px 0 0', fontFamily: "'Lora', Georgia, serif", fontStyle: 'italic', fontSize: 12, color: '#d3a54c', opacity: 0.7 }}>
                           Ad Gloriam et Honorem
                         </p>
                       </td>
@@ -754,25 +866,25 @@ export default function Brandbook() {
               <summary>Ver código HTML da assinatura</summary>
               <pre className="bb-code-block">{`<table cellpadding="0" cellspacing="0" style="font-family:'Montserrat',Arial,sans-serif;max-width:520px">
   <tr>
-    <td style="padding-right:20px;border-right:2px solid #b4975a;vertical-align:top">
-      <div style="width:70px;height:70px;border-radius:50%;background:#1a2332;text-align:center;line-height:70px">
-        <img src="LOGO_URL" alt="GLOMAM" width="32" style="vertical-align:middle"/>
+    <td style="padding-right:20px;border-right:2px solid #d3a54c;vertical-align:top">
+      <div style="width:70px;height:70px;border-radius:50%;background:#161d34;text-align:center;line-height:70px">
+        <img src="https://i.imgur.com/XVkyVtV.png" alt="GLOMAM" width="54" style="vertical-align:middle"/>
       </div>
     </td>
     <td style="padding-left:20px;vertical-align:top">
-      <p style="margin:0;font-family:'Cinzel',Georgia,serif;font-size:15px;font-weight:700;color:#1a2332;letter-spacing:0.08em">
+      <p style="margin:0;font-family:'Playfair Display',Georgia,serif;font-size:15px;font-weight:700;color:#161d34;letter-spacing:0.08em">
         Nome do Irmão
       </p>
-      <p style="margin:2px 0 0;font-size:11px;color:#b4975a;letter-spacing:0.15em;text-transform:uppercase;font-weight:600">
+      <p style="margin:2px 0 0;font-size:11px;color:#d3a54c;letter-spacing:0.15em;text-transform:uppercase;font-weight:600">
         Cargo · CIM 0000
       </p>
-      <div style="width:100%;height:1px;background:rgba(180,151,90,0.2);margin:10px 0"></div>
+      <div style="width:100%;height:1px;background:rgba(211,165,76,0.2);margin:10px 0"></div>
       <p style="margin:0;font-size:11px;color:#6b7280;line-height:1.6">
         GLOMAM — Grande Loja Maçônica do Amazonas<br/>
         Av. Prof. Nilton Lins, 1655 — Manaus, AM<br/>
         secretaria@glomam.org.br
       </p>
-      <p style="margin:8px 0 0;font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:12px;color:#b4975a;opacity:0.7">
+      <p style="margin:8px 0 0;font-family:'Lora',Georgia,serif;font-style:italic;font-size:12px;color:#d3a54c;opacity:0.7">
         Ad Gloriam et Honorem
       </p>
     </td>
@@ -797,42 +909,62 @@ export default function Brandbook() {
               <div className="bb-guideline-card bb-do">
                 <h4>✓ Fazer</h4>
                 <ul>
-                  <li>Manter proporções do símbolo maçônico</li>
-                  <li>Usar ouro (#b4975a) como cor de destaque principal</li>
-                  <li>Cinzel para headings, Montserrat para corpo</li>
-                  <li>Manter letter-spacing mínimo de 0.06em</li>
-                  <li>Respeitar área de respiro ao redor do logo</li>
-                  <li>Usar backgrounds escuros para seções de destaque</li>
-                  <li>Manter contraste WCAG AA mínimo</li>
+                  <li>Usar apenas os 9 tons oficiais da paleta institucional (navy, blue, copper, gold e variações)</li>
+                  <li>Aplicar a versão <strong>colorida</strong> da logo sobre fundos claros (creme <code>#f0ede8</code>, branco, gold)</li>
+                  <li>Aplicar a versão <strong>dark</strong> da logo sobre fundos escuros (navy <code>#161d34</code>, gradientes institucionais)</li>
+                  <li><strong>Playfair Display</strong> para headings e logotipo; <strong>Lora</strong> para corpo literário e citações; <strong>Montserrat</strong> para UI, labels e metadados</li>
+                  <li>Manter letter-spacing entre 0.06em e 0.48em conforme hierarquia (textos institucionais usam até .44em)</li>
+                  <li>Respeitar área de respiro mínima de 1X ao redor do brasão</li>
+                  <li>Dar preferência a backgrounds navy (<code>#161d34</code>) para seções premium e cerimoniais</li>
+                  <li>Manter contraste mínimo WCAG AA (4.5:1 para texto corrido)</li>
                 </ul>
               </div>
               <div className="bb-guideline-card bb-dont">
                 <h4>✗ Não Fazer</h4>
                 <ul>
-                  <li>Alterar as cores da paleta institucional</li>
-                  <li>Distorcer ou rotacionar o símbolo</li>
-                  <li>Usar fontes não autorizadas</li>
-                  <li>Aplicar efeitos de sombra no logo</li>
-                  <li>Usar ouro sobre fundo claro sem contraste</li>
-                  <li>Reduzir o logo abaixo de 24px de altura</li>
-                  <li>Combinar com cores vibrantes ou neon</li>
+                  <li>Alterar, recolorir ou adicionar hex codes fora dos 9 tons oficiais</li>
+                  <li>Distorcer, rotacionar, espelhar ou recortar o brasão</li>
+                  <li>Usar fontes fora do trio oficial (Playfair Display / Lora / Montserrat)</li>
+                  <li>Aplicar sombras, brilhos, traços ou efeitos 3D no logo</li>
+                  <li>Usar a logo colorida sobre fundo escuro (o texto circular some)</li>
+                  <li>Reduzir o logo abaixo de <strong>32px</strong> de altura (mínimo absoluto)</li>
+                  <li>Combinar a marca com cores vibrantes, neon ou gradientes externos à paleta</li>
+                  <li>Misturar branding GLOMAM com logos de outras Potências ou lojas sem aprovação</li>
                 </ul>
               </div>
             </div>
 
-            {/* Logo specs */}
+            {/* Paleta oficial — strip de referência */}
+            <h3 className="bb-h3">Paleta Oficial — Referência Rápida</h3>
+            <div className="bb-palette-strip">
+              {[
+                { hex: '#161d34', name: 'Navy Darkest' },
+                { hex: '#172d4b', name: 'Navy' },
+                { hex: '#123b61', name: 'Blue Deep' },
+                { hex: '#005587', name: 'Blue' },
+                { hex: '#0d7dc2', name: 'Blue Light' },
+                { hex: '#a95f21', name: 'Copper' },
+                { hex: '#d3a54c', name: 'Gold' },
+                { hex: '#e3da98', name: 'Gold Light' },
+                { hex: '#f0ede8', name: 'Background' },
+              ].map(c => (
+                <div key={c.hex} className="bb-palette-chip" style={{ background: c.hex }}>
+                  <span style={{ color: ['#e3da98','#f0ede8','#d3a54c','#0d7dc2'].includes(c.hex) ? '#161d34' : '#ffffff' }}>{c.name}</span>
+                  <code style={{ color: ['#e3da98','#f0ede8','#d3a54c','#0d7dc2'].includes(c.hex) ? 'rgba(22,29,52,.7)' : 'rgba(255,255,255,.7)' }}>{c.hex}</code>
+                </div>
+              ))}
+            </div>
+
+            {/* Logo — área de proteção */}
             <h3 className="bb-h3">Logo — Área de Proteção</h3>
             <div className="bb-logo-protection">
               <div className="bb-logo-area">
                 <div className="bb-logo-safe">
                   <span className="bb-logo-x">X</span>
-                  <div className="bb-logo-center">
-                    <span className="bb-logo-text">GLOMAM</span>
-                    <span className="bb-logo-subtext">Grande Loja Maçônica do Amazonas</span>
-                  </div>
+                  <img src={LOGO_LIGHT} alt="GLOMAM" style={{ width: 120, height: 120 }} />
                   <span className="bb-logo-x">X</span>
                 </div>
-                <p className="bb-logo-note">Área mínima de proteção = 1X em todos os lados, onde X = altura da letra "G" do logotipo.</p>
+                <p className="bb-logo-note">Área mínima de proteção = <strong>1X</strong> em todos os lados, onde X = 25% do diâmetro do brasão. Nenhum elemento gráfico ou textual deve invadir esta área.</p>
               </div>
             </div>
 
@@ -841,15 +973,15 @@ export default function Brandbook() {
             <div className="bb-voice-grid">
               <div className="bb-voice-card">
                 <strong>Institucional</strong>
-                <p>Comunicação formal, respeitosa, que reflete a tradição centenária. Vocabulário elevado sem ser inacessível.</p>
+                <p>Comunicação formal, respeitosa, que reflete a tradição centenária da Ordem. Vocabulário elevado, mas acessível — nunca rebuscado ao ponto de excluir.</p>
               </div>
               <div className="bb-voice-card">
                 <strong>Acolhedor</strong>
-                <p>Fraternal e inclusivo. Transmite pertencimento sem exclusividade. Convida ao conhecimento.</p>
+                <p>Fraternal e inclusivo. Transmite pertencimento sem ar de exclusividade. Convida ao conhecimento e à jornada de aprimoramento.</p>
               </div>
               <div className="bb-voice-card">
                 <strong>Elegante</strong>
-                <p>Minimalismo visual e textual. Menos é mais. Cada palavra e elemento carrega propósito.</p>
+                <p>Minimalismo visual e textual. Menos é mais. Cada palavra, cada espaçamento e cada elemento gráfico carrega propósito e simbolismo.</p>
               </div>
             </div>
           </div>
@@ -861,7 +993,7 @@ export default function Brandbook() {
         <div className="bb-section-inner">
           <div className="bb-github-card">
             <div className="bb-gh-left">
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#b4975a" strokeWidth="1.2">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#d3a54c" strokeWidth="1.2">
                 <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/>
               </svg>
               <div>

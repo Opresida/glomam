@@ -39,7 +39,7 @@ export default function Pilares() {
           <div className="pilar-card">
             <div className="pilar-num">I</div>
             <div className="pilar-icon">
-              <svg viewBox="0 0 24 24"><path d="M12 2L2 19h20L12 2z" /><line x1="12" y1="9" x2="12" y2="14" /><circle cx="12" cy="17" r=".5" fill="#b4975a" /></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2L2 19h20L12 2z" /><line x1="12" y1="9" x2="12" y2="14" /><circle cx="12" cy="17" r=".5" fill="#d3a54c" /></svg>
             </div>
             <div className="pilar-title">A Maçonaria</div>
             <p>Ordem constituída por homens de todas as raças, congregados em Lojas para o aperfeiçoamento da Sociedade Humana através de símbolos e alegorias.</p>
@@ -55,7 +55,7 @@ export default function Pilares() {
               <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" /><path d="M6 20v-2a6 6 0 0 1 12 0v2" /></svg>
             </div>
             <div className="pilar-title">Ser Maçom</div>
-            <p style={{ color: 'rgba(255,255,255,.52)', fontStyle: 'italic', fontFamily: "'Cormorant Garamond',serif", fontSize: '1rem' }}>"É ser amante da Virtude, da Sabedoria e da Justiça. É educar a inteligência para o bem e praticar a concórdia entre os povos."</p>
+            <p style={{ color: 'rgba(255,255,255,.52)', fontStyle: 'italic', fontFamily: "'Lora',serif", fontSize: '1rem' }}>"É ser amante da Virtude, da Sabedoria e da Justiça. É educar a inteligência para o bem e praticar a concórdia entre os povos."</p>
             <ul className="pilar-list">
               <li>· Prática constante da caridade</li>
               <li>· Respeito à família e à nação</li>

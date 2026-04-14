@@ -145,10 +145,10 @@ export default function Memorial() {
               <g className="c-legs">
                 <line className="c-path" x1="50" y1="12" x2="22" y2="88" style={{ animationDelay: '.3s' }} />
                 <line className="c-path" x1="50" y1="12" x2="78" y2="88" style={{ animationDelay: '.5s' }} />
-                <circle cx="50" cy="12" r="2.5" fill="#b4975a" stroke="none" />
+                <circle cx="50" cy="12" r="2.5" fill="#d3a54c" stroke="none" />
               </g>
-              <text x="50" y="54" textAnchor="middle" dominantBaseline="middle" fontFamily="Cinzel" fontSize="8" fill="#b4975a" opacity=".5">G</text>
-              <circle cx="50" cy="52" r="8" stroke="#b4975a" strokeWidth=".4" fill="none" strokeDasharray="2,4" opacity=".4" />
+              <text x="50" y="54" textAnchor="middle" dominantBaseline="middle" fontFamily="Playfair Display" fontSize="8" fill="#d3a54c" opacity=".5">G</text>
+              <circle cx="50" cy="52" r="8" stroke="#d3a54c" strokeWidth=".4" fill="none" strokeDasharray="2,4" opacity=".4" />
             </svg>
           </div>
           <div className="timeline">

@@ -5,6 +5,11 @@ import Imprensa from './pages/Imprensa.jsx';
 import AdminLogin from './pages/AdminLogin.jsx';
 import AdminIntranet from './pages/AdminIntranet.jsx';
 import Brandbook from './pages/Brandbook.jsx';
+import Principios from './pages/Principios.jsx';
+import Judiciario from './pages/Judiciario.jsx';
+import Legislativo from './pages/Legislativo.jsx';
+import Lojas from './pages/Lojas.jsx';
+import DispensarioQuemSomos from './pages/DispensarioQuemSomos.jsx';
 
 export default function App() {
   return (
@@ -15,6 +20,11 @@ export default function App() {
         <Route path="/admin" element={<AdminLogin />} />
         <Route path="/admin/intranet" element={<AdminIntranet />} />
         <Route path="/brandbook" element={<Brandbook />} />
+        <Route path="/principios" element={<Principios />} />
+        <Route path="/judiciario" element={<Judiciario />} />
+        <Route path="/legislativo" element={<Legislativo />} />
+        <Route path="/lojas" element={<Lojas />} />
+        <Route path="/dispensario/quem-somos" element={<DispensarioQuemSomos />} />
       </Routes>
     </BrowserRouter>
   );
