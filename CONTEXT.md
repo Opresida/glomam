@@ -21,19 +21,43 @@ Regras, stack e lógica de negócio do projeto. Leia antes de fazer qualquer alt
 
 ## Design System — Regras Invioláveis
 
-### Paleta de cores (CSS variables — `src/index.css`)
+### Paleta de cores oficial — 9 tons institucionais
 
+⚠️ **Paleta atualizada em 2026-04-14 (commit `b3c62b1`)**. A paleta antiga (gold marrom `#b4975a`, slate `#1a2332`) está **OBSOLETA** e não deve ser usada em lugar nenhum.
+
+CSS variables em `src/index.css`:
+
+```css
+:root {
+  /* Navy / Slate (texto e seções escuras) */
+  --slate:      #161d34;   ← navy profundo, texto principal
+  --slate-mid:  #172d4b;   ← navy intermediário
+
+  /* Blue (acentos institucionais) */
+  --blue:       #005587;   ← azul institucional base
+  --blue-light: #0d7dc2;   ← azul claro
+  --blue-dark:  #123b61;   ← azul escuro
+
+  /* Gold (accent primário, NUNCA substituir por amarelo puro) */
+  --gold:       #d3a54c;   ← dourado principal
+  --gold-light: #e3da98;   ← dourado pálido
+  --gold-dark:  #a95f21;   ← dourado escuro (= copper)
+
+  /* Copper (alias do gold-dark, usado em acentos quentes) */
+  --copper:     #a95f21;
+
+  /* Neutros e utilitários */
+  --bg:         #f0ede8;   ← fundo principal (bege quente)
+  --ice:        #edf2f7;   ← fundo alternativo (cinza-azulado claro)
+  --white:      #ffffff;
+
+  /* Animação */
+  --ease:       cubic-bezier(0.19,1,0.22,1);
+  --nav-h:      68px;
+}
 ```
---gold:       #b4975a   ← accent primário, NUNCA substituir por amarelo puro
---gold-light: #d4b87a
---gold-dark:  #8a7040
---slate:      #1a2332   ← texto principal e seções escuras
---slate-mid:  #2c3e50
---bg:         #f0ede8   ← fundo principal (bege quente)
---white:      #ffffff
---ease:       cubic-bezier(0.19,1,0.22,1)   ← easing padrão de todas as animações
---nav-h:      68px
-```
+
+**Os 9 tons institucionais** (excluindo neutros): `--slate`, `--slate-mid`, `--blue`, `--blue-light`, `--blue-dark`, `--gold`, `--gold-light`, `--gold-dark`, `--copper`.
 
 ### Tipografia — hierarquia obrigatória
 

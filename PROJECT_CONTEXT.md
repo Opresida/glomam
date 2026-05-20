@@ -38,7 +38,7 @@ Site institucional e intranet administrativa da Grande Loja Maçônica do Amazon
 
 ## Instruções para a IA (Vibe Coding)
 
-- Sempre respeitar a paleta: `--gold` `#b4975a`, `--slate` `#1a2332`, `--bg` `#f0ede8`
+- Sempre respeitar a paleta oficial de 9 tons (atualizada 2026-04-14): `--slate` `#161d34`, `--slate-mid` `#172d4b`, `--blue` `#005587`, `--blue-light` `#0d7dc2`, `--blue-dark` `#123b61`, `--gold` `#d3a54c`, `--gold-light` `#e3da98`, `--gold-dark` `#a95f21`, `--copper` `#a95f21`. Neutros: `--bg` `#f0ede8`, `--ice` `#edf2f7`, `--white` `#ffffff`. ⚠️ A paleta antiga (gold marrom `#b4975a`, slate `#1a2332`) está OBSOLETA — não usar. Detalhes em [CONTEXT.md](./CONTEXT.md#paleta-de-cores-oficial--9-tons-institucionais)
 - Sempre usar `var(--ease)` em transitions e animations
 - Sempre adicionar `.reveal` em elementos novos de seção para animação de entrada
 - Nunca criar backend, API ou banco — o projeto é estático
