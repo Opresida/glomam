@@ -11,7 +11,6 @@ import VisitaVirtual from '../components/VisitaVirtual.jsx';
 import Pilares from '../components/Pilares.jsx';
 import Memorial from '../components/Memorial.jsx';
 import NossaHistoria from '../components/NossaHistoria.jsx';
-import StatsSection from '../components/StatsSection.jsx';
 import Lideranca from '../components/Lideranca.jsx';
 import Familias from '../components/Familias.jsx';
 import MapaLojas from '../components/MapaLojas.jsx';
@@ -53,7 +52,6 @@ export default function Home() {
         <NewsCards />
         <Objetivos />
         <Pilares />
-        <StatsSection />
         <Memorial />
         <Lideranca />
         <Familias />
