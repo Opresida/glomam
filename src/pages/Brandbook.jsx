@@ -751,7 +751,7 @@ section { padding: clamp(60px, 8vw, 100px) 0 }`}</pre>
                       <span className="bb-cv-cargo">Grão-Mestre · CIM 8023</span>
                     </div>
                     <div className="bb-cv-contacts">
-                      <span>secretaria@glomam.org.br</span>
+                      <span>glomam@glomam.org.br</span>
                       <span>Av. Prof. Nilton Lins, 1655 — Manaus, AM</span>
                       <span>CNPJ 04.405.007/0001-44</span>
                     </div>
@@ -790,7 +790,7 @@ section { padding: clamp(60px, 8vw, 100px) 0 }`}</pre>
                   <div className="bb-lh-header-right">
                     <span>Av. Prof. Nilton Lins, 1655</span>
                     <span>Flores — Manaus, AM</span>
-                    <span>secretaria@glomam.org.br</span>
+                    <span>glomam@glomam.org.br</span>
                   </div>
                 </div>
                 <div className="bb-lh-line" />
@@ -848,7 +848,7 @@ section { padding: clamp(60px, 8vw, 100px) 0 }`}</pre>
                         <p style={{ margin: 0, fontSize: 11, color: '#6b7280', lineHeight: '1.6' }}>
                           GLOMAM — Grande Loja Maçônica do Amazonas<br/>
                           Av. Prof. Nilton Lins, 1655 — Manaus, AM<br/>
-                          secretaria@glomam.org.br
+                          glomam@glomam.org.br
                         </p>
                         <p style={{ margin: '8px 0 0', fontFamily: "'Lora', Georgia, serif", fontStyle: 'italic', fontSize: 12, color: '#d3a54c', opacity: 0.7 }}>
                           Ad Gloriam et Honorem
@@ -881,7 +881,7 @@ section { padding: clamp(60px, 8vw, 100px) 0 }`}</pre>
       <p style="margin:0;font-size:11px;color:#6b7280;line-height:1.6">
         GLOMAM — Grande Loja Maçônica do Amazonas<br/>
         Av. Prof. Nilton Lins, 1655 — Manaus, AM<br/>
-        secretaria@glomam.org.br
+        glomam@glomam.org.br
       </p>
       <p style="margin:8px 0 0;font-family:'Lora',Georgia,serif;font-style:italic;font-size:12px;color:#d3a54c;opacity:0.7">
         Ad Gloriam et Honorem

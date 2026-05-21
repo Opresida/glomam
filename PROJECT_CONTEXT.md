@@ -16,6 +16,7 @@ Site institucional e intranet administrativa da Grande Loja Maçônica do Amazon
 - **Roteamento:** React Router DOM 7
 - **Animações:** Framer Motion 12 + CSS custom animations
 - **3D/WebGL:** Three.js 0.183.2
+- **Mapas:** Leaflet 1.x + react-leaflet + OpenStreetMap (sem API key, sem rate limit, sem cadastro)
 - **Estilização:** CSS puro com variáveis custom (sem Tailwind, sem CSS Modules)
 - **Hospedagem:** Netlify (static SPA)
 - **Ferramentas de IA:** Claude Code + RTK
@@ -27,7 +28,7 @@ Site institucional e intranet administrativa da Grande Loja Maçônica do Amazon
 - Pasta `src/components/`: seções da página pública e elementos globais (Header, Footer, Loader)
 - Pasta `src/pages/`: páginas completas — Home, Imprensa, Brandbook, AdminLogin, AdminIntranet + 8 subpáginas da intranet
 - Pasta `src/hooks/`: `useReveal.js` (Intersection Observer para animações de scroll)
-- Pasta `src/data/`: dados estáticos — `noticias.js` (artigos de imprensa)
+- Pasta `src/data/`: dados estáticos — `noticias.js`, `lojas.js`, `lojasCoords.js`, `photoDirectory.js`
 - Pasta `public/`: assets estáticos — logos SVG, imagens do palácio, favicon
 - **Sem backend, sem banco de dados** — aplicação 100% estática
 - **Estilos:** `index.css` centraliza todo o design system público; intranet tem `AdminIntranet.css` separado
@@ -78,6 +79,16 @@ Site institucional e intranet administrativa da Grande Loja Maçônica do Amazon
 - [x] useReveal hook (Intersection Observer)
 - [x] Deploy configurado no Netlify
 - [x] **Álbum de Eventos** — grade de álbuns, modal com grade de fotos, lightbox em tela cheia, download individual por foto ✓ *aprovado 2026-04-06*
+- [x] **Rotas institucionais** — `/principios`, `/judiciario`, `/legislativo`, `/lojas`, `/dispensario/quem-somos` ✓ *aprovado 2026-04-14*
+- [x] **Mapas interativos das Lojas** (Leaflet + OSM) na Home, com toggle Manaus/Interior ✓ *aprovado 2026-05-20*
+- [x] **Botão "Como Chegar?"** na rota `/lojas` com Google Maps + Waze + Uber (+ Apple Maps em iOS) ✓ *aprovado 2026-05-20*
+- [x] **Header transparente com blur ao scroll** + Hero reformulado + Welcome/Doação removidos ✓ *aprovado 2026-05-20*
+
+### Aguardando entrega do cliente
+- [ ] Foto definitiva do Hero
+- [ ] Logos das ordens paramaçônicas (DeMolay, Filhas de Jó, Estrela do Oriente, Escudeiros)
+- [ ] Confirmação de conta Business Instagram (pré-requisito para integração Graph API)
+- [ ] Revisão visual dos pinos do mapa de Manaus
 
 ### Pendente
 - [ ] Substituir fotos placeholder do Álbum de Eventos por fotos reais
@@ -85,9 +96,11 @@ Site institucional e intranet administrativa da Grande Loja Maçônica do Amazon
 - [ ] Autenticação real em `/admin`
 - [ ] Upload real de fotos no Álbum de Eventos
 - [ ] Integração real da Newsletter (Mailchimp/Resend)
-- [ ] Fotos reais dos Grão-Mestres no carrossel
+- [ ] Integração do Instagram → seção "Últimas Notícias" (Graph API + Netlify Function)
+- [ ] Cadastrar Lojas Nº 25 e Nº 32 (faltantes na sequência)
 - [ ] Link âncora `#album-eventos` no Header e Footer
 - [ ] Página de detalhe de notícia (`/imprensa/:slug`)
+- [ ] Páginas de detalhe para cada Loja (`/lojas/:numero`)
 - [ ] SEO — meta tags Open Graph dinâmicas
 - [ ] Lazy loading dos componentes pesados (Three.js)
 - [ ] Otimização de imagens para `.webp`
@@ -103,3 +116,4 @@ Site institucional e intranet administrativa da Grande Loja Maçônica do Amazon
 | `TODO.md` | Tarefas pendentes, melhorias e bugs conhecidos |
 | `ARCHITECTURE.md` | Estrutura de pastas, fluxo de dados e decisões arquiteturais |
 | `PROJECT_CONTEXT.md` | Este arquivo — visão geral consolidada, sempre atualizado |
+| `CLAUDE.md` | Pacote de contexto portátil para Claude Code (paleta, padrões, regras invioláveis) |

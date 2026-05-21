@@ -71,11 +71,12 @@ Deploy automático na **Netlify** via `netlify.toml`. Qualquer push na branch pr
 - **Roteamento:** React Router DOM 7
 - **Animações:** Framer Motion 12 + CSS custom animations
 - **3D/WebGL:** Three.js 0.183.2
+- **Mapas:** Leaflet 1.x + react-leaflet (OpenStreetMap, sem API key)
 - **Estilização:** CSS puro com variáveis custom (sem Tailwind, sem CSS Modules)
 - **Hospedagem:** Netlify (static SPA)
 - **Ferramentas de IA:** Claude Code + RTK
 
-> Apenas 6 dependências de produção — bundle leve e rápido.
+> Dependências de produção minimalistas — bundle leve e rápido.
 
 ---
 
@@ -293,7 +294,28 @@ AdminLogin.jsx
 - [x] **Componente WhatsAppBtn** reutilizável ✓ *aprovado 2026-04-14*
 - [x] **Script `generate-pdf.mjs`** — gera PDF do site com screenshots de todas as rotas (Playwright + pdf-lib) ✓ *aprovado 2026-04-14*
 
+### Atualização de 2026-05-20
+
+- [x] **Header transparente no topo** com transição para azul escuro + blur ao scroll
+- [x] **Hero reformulado** — copy nova "A Grande Loja mais antiga do Brasil", removidos stats e CTAs antigos
+- [x] **Hierarquia do logo invertida** no Header — "Grande Loja Maçônica do Amazonas" em destaque + sigla GLOMAM abaixo
+- [x] **Logo institucional atualizada** (nova URL) — aplicada no Header e Footer
+- [x] **Logo do Dispensário** adicionada na rota `/dispensario/quem-somos`
+- [x] **Seção `<WelcomeSection />` removida** da Home (img + label + texto)
+- [x] **Seção e rotas de Doação removidas** — `<ApoioProjetos />`, página `Doacao.jsx`, rota `/doar/:currency` e CSS órfão (~70 linhas em `index.css`)
+- [x] **Nova seção `<MapaLojas />`** na Home — mapas interativos com Leaflet + OpenStreetMap (toggle Manaus / Interior do Amazonas, 48 Lojas geolocalizadas, popup customizado no tema GLOMAM)
+- [x] **Botão "Como Chegar?"** em cada card da rota `/lojas` — modal com Google Maps + Waze + Uber (+ Apple Maps em iOS) usando lat/lng exatos
+- [x] **Fonte do "rito" das Lojas** trocada de Playfair uppercase 8px para Lora 15px itálica — melhor leitura para público idoso
+- [x] **Grid de Lojas corrigido** — `auto-fit` → `auto-fill` resolve bug do card único esticar quando filtrado
+- [x] **Email institucional** trocado para `glomam@glomam.org.br` em 6 ocorrências (Oriente + Brandbook)
+- [x] **`CLAUDE.md` portátil** na raiz do repo — pacote de contexto para Claude Code em qualquer máquina
+- [x] **Paleta corrigida em CONTEXT.md e PROJECT_CONTEXT.md** — antes referenciavam paleta antiga (gold marrom #b4975a) mesmo após migração para 9 tons
+
 ### Pendente
+- [ ] **Foto definitiva do Hero** (cliente vai enviar)
+- [ ] **Logos das ordens paramaçônicas** (cliente vai enviar — DeMolay, Filhas de Jó, Estrela do Oriente, Escudeiros)
+- [ ] **Revisão visual dos pinos do mapa** — cliente confirma quais Lojas estão fora do endereço exato (coords ajustáveis em `src/data/lojasCoords.js`)
+- [ ] **Integração Instagram → seção "Últimas Notícias"** — Graph API + Netlify Function (aguardando confirmação de conta Business + Página Facebook do cliente)
 - [ ] Substituir fotos placeholder do Álbum de Eventos por fotos reais
 - [ ] Adicionar fotos dos Irmãos do Legislativo (27 cards hoje usam iniciais)
 - [ ] Cadastrar Lojas Nº 25 e Nº 32 (faltantes na sequência)

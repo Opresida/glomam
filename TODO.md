@@ -6,9 +6,16 @@ Lista de tarefas pendentes, melhorias planejadas e bugs conhecidos.
 
 ## Em andamento
 
-- [ ] Aguardando cadastro das Lojas Nº 25 e Nº 32 (faltam na sequência numerada)
-- [ ] Aguardando número oficial do WhatsApp (atualmente placeholder em `WhatsAppBtn.jsx`)
-- [ ] Aguardando fotos dos Irmãos do Legislativo (27 cards usam iniciais como fallback)
+### Aguardando entrega do cliente
+- [ ] **Foto definitiva do Hero** — substituir `https://i.imgur.com/UMMFzmS.jpeg` em `src/components/Hero.jsx`
+- [ ] **Logos das ordens paramaçônicas** (DeMolay, Filhas de Jó, Estrela do Oriente, Escudeiros) — para usar em `src/components/Familias.jsx`
+- [ ] **Confirmação de conta Business no Instagram** + Página Facebook conectada — pré-requisito para integração da seção "Últimas Notícias" via Graph API
+- [ ] **Revisão visual dos pinos do mapa** — cliente confirma quais Lojas estão fora do endereço exato (coordenadas ajustáveis em `src/data/lojasCoords.js`)
+
+### Aguardando dados internos da GLOMAM
+- [ ] Cadastro das Lojas Nº 25 e Nº 32 (faltam na sequência numerada)
+- [ ] Número oficial do WhatsApp (atualmente placeholder em `WhatsAppBtn.jsx`)
+- [ ] Fotos dos Irmãos do Legislativo (27 cards usam iniciais como fallback)
 
 ---
 
@@ -104,3 +111,41 @@ Lista de tarefas pendentes, melhorias planejadas e bugs conhecidos.
 - [x] **Componente `WhatsAppBtn`** reutilizável com `cursor:pointer` e animação bounce
 - [x] **Script `scripts/generate-pdf.mjs`** — gera PDF do site com screenshots full-page de todas as rotas (Playwright + pdf-lib)
 - [x] Responsividade reforçada — grids com `minmax(min(Npx, 100%), 1fr)` para telas ≤320px
+
+### Atualização de 2026-05-20
+
+- [x] **`CLAUDE.md` portátil** na raiz do repo — pacote de contexto para Claude Code em qualquer máquina (preferências do usuário, paleta oficial, padrões, regras invioláveis)
+- [x] **Paleta corrigida em CONTEXT.md e PROJECT_CONTEXT.md** — ambos referenciavam paleta antiga (gold marrom `#b4975a`, slate `#1a2332`) mesmo após o commit que migrou para os 9 tons
+- [x] **Header transparente no topo** — transição suave para azul-escuro `#123b61` com `backdrop-filter: blur(14px)` quando `window.scrollY > 60`
+- [x] **Hero reformulado:**
+  - Copy nova: "**A Grande Loja** *mais antiga do Brasil*" (sem subtítulo, sem stats, sem CTAs)
+  - Mantida a animação de fade-up no título
+- [x] **Hierarquia do logo invertida** no Header — texto principal "Grande Loja Maçônica do Amazonas" (Playfair Display, branco) + sigla "GLOMAM" abaixo (Lora, gold, letter-spacing forte)
+- [x] **Responsividade do logo** ajustada em 768px/480px/360px — em 360px a sigla é ocultada para deixar só o nome completo
+- [x] **Logo institucional atualizada** — `https://i.imgur.com/0bVk0qx.png` aplicada em Header.jsx e Footer.jsx
+- [x] **Logo do Dispensário** adicionada na rota `/dispensario/quem-somos` (centralizada, drop-shadow, responsiva clamp 160-360px)
+- [x] **Seção `<WelcomeSection />` removida** da Home (e estilos `.welcome-*` órfãos limpos do CSS)
+- [x] **Seção e rotas de Doação removidas:**
+  - Componente `src/components/ApoioProjetos.jsx` (deletado)
+  - Página `src/pages/Doacao.jsx` (deletada)
+  - Rota `/doar/:currency` (removida de `App.jsx`)
+  - ~70 linhas de CSS `.ap-*` e `.doa-*` (removidas de `index.css`)
+- [x] **Nova seção `<MapaLojas />`** na Home (entre Famílias Paramaçônicas e FAQ):
+  - **Stack:** Leaflet 1.x + react-leaflet + OpenStreetMap (grátis, sem API key)
+  - **Toggle Manaus / Interior do Amazonas**
+  - 48 Lojas geolocalizadas em `src/data/lojasCoords.js`
+  - 28 cidades do interior (centros municipais — alta confiança)
+  - 21 Lojas em Manaus agrupadas por endereço (5 condomínios maçônicos compartilhados)
+  - Pinos custom em SVG no tema GLOMAM (gold + slate)
+  - Popup customizado com nome, endereço, link para Google Maps de cada Loja
+  - CSS dark-mode override do Leaflet (`.leaflet-popup-content-wrapper`, controles de zoom, attribution)
+- [x] **Botão "Como Chegar?"** em cada card da rota `/lojas`:
+  - Modal `src/components/ComoChegarModal.jsx`
+  - 3 opções universais (Google Maps + Waze + Uber)
+  - + Apple Maps detectado automaticamente em iOS
+  - Usa lat/lng exatos quando disponíveis, fallback endereço completo
+  - Mobile: vira bottom sheet (≤540px)
+  - Fecha com ESC, click fora ou X
+- [x] **Legibilidade do `loja-rito`** melhorada — Playfair uppercase `.5rem` letter-spacing `.32em` → Lora itálica `.92rem` letter-spacing `.02em` (público idoso)
+- [x] **Grid de Lojas corrigido** — `auto-fit` → `auto-fill` + `justify-content: center` resolve bug do card único esticando ao filtrar
+- [x] **Email institucional** trocado de `secretaria@glomam.org.br` para `glomam@glomam.org.br` em 6 ocorrências (1 em Oriente.jsx + 5 em Brandbook.jsx)

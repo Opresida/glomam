@@ -46,6 +46,7 @@ Instruções para o Claude Code ao trabalhar neste repositório. Este arquivo é
 
 - **React 19** + **Vite 8** + **React Router DOM 7**
 - **Framer Motion 12** + **Three.js 0.183** (escultura de partículas 3D)
+- **Leaflet 1.x + react-leaflet** + **OpenStreetMap** (mapas das Lojas)
 - **CSS puro** com variáveis custom (sem Tailwind, sem CSS Modules)
 - **Netlify** (deploy automático via push na `main`)
 - **Sem backend, sem banco de dados.** SPA estática.
@@ -146,16 +147,30 @@ Se `rtk` não estiver instalado na máquina atual, usar comandos normais e menci
 ## 🎯 Estado atual do projeto (snapshot 2026-05-20)
 
 ### Concluído
-- Design system completo (paleta oficial de 9 tons + tipografia Cinzel/Cormorant/Montserrat)
-- 16 seções da Home (Palácio, Hero, Pilares, Memorial, História, Novidades, Liderança, Depoimentos, Famílias Paramaçônicas, Projetos Sociais, Escultura 3D Three.js, FAQ, Newsletter UI, Oriente/Mapa, Footer)
-- Portal de Imprensa (`/imprensa`) com carrosseis por categoria
-- Brandbook (`/brandbook`) — cores, tipografia, UI system
-- Intranet Administrativa (`/admin/intranet`) com 8 módulos UI (Dashboard, Imprensa, Financeiro, Documentos, Eventos, Usuários, Newsletter, Candidatos) — **frontend apenas, sem persistência real**
+- Design system completo (paleta oficial de 9 tons + tipografia Playfair Display + Lora + Montserrat)
+- **Header transparente** com transição para azul-escuro + `backdrop-filter: blur(14px)` ao scroll
+- Hero com copy "A Grande Loja mais antiga do Brasil" (sem stats nem CTAs)
+- Hierarquia do logo invertida: "Grande Loja Maçônica do Amazonas" em destaque + sigla GLOMAM abaixo
+- Seções da Home (em ordem): Hero, Visita Virtual, Nossa História, Novidades, Objetivos, Pilares, Stats, Memorial, Liderança, Famílias Paramaçônicas, **MapaLojas (Leaflet)**, FAQ, Oriente
+- **Mapas interativos** das Lojas — toggle Manaus/Interior, 48 Lojas geolocalizadas, popup customizado
+- Rotas: `/principios`, `/judiciario`, `/legislativo`, `/lojas`, `/dispensario/quem-somos`, `/imprensa`, `/brandbook`, `/admin`, `/admin/intranet`
+- Rota `/lojas` com **botão "Como Chegar?"** (modal Google Maps + Waze + Uber + Apple Maps)
+- Portal de Imprensa, Brandbook, Intranet Administrativa (8 módulos UI, frontend apenas)
 - Álbum de Eventos com grade → modal → lightbox + download individual
-- Sistema de doação em 3 moedas (BRL/EUR/USD) — UI pronto para API
 - Deploy Netlify configurado
 
-### Pendente (ver TODO.md)
+### Removido recentemente (não recriar sem confirmação)
+- ❌ Seção Welcome (img + label "Bem-Vindo" + texto) — **removida em 2026-05-20**
+- ❌ Seção Apoio aos Projetos + página `/doar/:currency` — **removida em 2026-05-20**
+
+### Aguardando entrega do cliente
+- Foto definitiva do Hero (substitui `https://i.imgur.com/UMMFzmS.jpeg` em Hero.jsx)
+- Logos das ordens paramaçônicas (DeMolay, Filhas de Jó, Estrela do Oriente, Escudeiros) — para Familias.jsx
+- Confirmação de conta Business Instagram + Página Facebook conectada (pré-requisito Graph API)
+- Revisão visual dos pinos do mapa de Manaus (coords ajustáveis em `src/data/lojasCoords.js`)
+
+### Pendente (ver TODO.md para lista completa)
+- Integração Instagram → seção "Últimas Notícias" (Graph API + Netlify Function — planejada)
 - Backend/API para persistência real da Intranet
 - Autenticação real em `/admin`
 - Upload real de fotos no Álbum

@@ -5,11 +5,7 @@ export default function WelcomeSection() {
     <section id="bem-vindo" className="welcome-section">
       <div className="section-inner">
         <div className="welcome-grid reveal">
-          <div className="welcome-img">
-            <img src="https://raw.githubusercontent.com/Opresida/glomam/main/GLOMAM%20SVG%20EM%20ALTA.svg" alt="GLOMAM" />
-          </div>
           <div className="welcome-text">
-            <div className="section-label">Bem-Vindo</div>
             <h2>Seja Bem-Vindo à Grande Loja Maçônica do Amazonas</h2>
             <div className="divider"></div>
             <p>

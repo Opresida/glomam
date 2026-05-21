@@ -18,6 +18,13 @@ export default function DispensarioQuemSomos() {
         <div className="disp-hero-bg" aria-hidden="true" />
         <div className="section-inner disp-hero-inner">
           <div className="reveal">
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 'clamp(24px,3.5vw,40px)' }}>
+              <img
+                src="https://i.imgur.com/7PA7au5.png"
+                alt="Logo Dispensário Maçônico"
+                style={{ maxWidth: 'clamp(160px,28vw,360px)', width: '100%', height: 'auto', filter: 'drop-shadow(0 6px 20px rgba(0,0,0,.25))' }}
+              />
+            </div>
             <div className="section-label" style={{ justifyContent: 'center' }}>Dispensário Maçônico · Quem Somos</div>
             <h1 className="disp-hero-title">Um atendimento justo<br/><em>é a razão de nosso trabalho.</em></h1>
             <div className="jud-divider" style={{ margin: '28px auto 28px' }} />

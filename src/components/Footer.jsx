@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="section-inner">
           <div className="footer-grid">
             <div className="footer-col footer-brand">
-              <img src="https://i.imgur.com/Hi8vRw1.png" alt="Logo GLOMAM" className="footer-logo-img" />
+              <img src="https://i.imgur.com/0bVk0qx.png" alt="Logo GLOMAM" className="footer-logo-img" />
               <div className="footer-brand-name">GLOMAM</div>
               <div className="footer-brand-sub">Grande Loja Maçônica do Amazonas</div>
               <div className="footer-brand-since">Desde 1904</div>

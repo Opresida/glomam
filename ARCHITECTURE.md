@@ -41,11 +41,13 @@ glomam/
 │   ├── index.css              # Design system global: variáveis, reset, utilitários, estilos de todos os componentes públicos
 │   │
 │   ├── components/            # Seções e elementos reutilizáveis
-│   │   ├── Header.jsx         # Navegação fixa — links de âncora + React Router Links
+│   │   ├── Header.jsx         # Navegação fixa transparente → blur azul-escuro ao scroll
 │   │   ├── Footer.jsx
 │   │   ├── Loader.jsx         # Splash screen (mostra durante hydration)
 │   │   ├── ProgressBar.jsx    # Barra de progresso baseada em scroll
 │   │   ├── AlbumEventos.jsx   # Grade de álbuns → Modal → Lightbox + download
+│   │   ├── MapaLojas.jsx      # Leaflet + OSM — toggle Manaus/Interior + popup customizado
+│   │   ├── ComoChegarModal.jsx# Modal de navegação (Google Maps + Waze + Uber + Apple Maps)
 │   │   └── [demais seções]    # Hero, Pilares, Memorial, etc.
 │   │
 │   ├── pages/
@@ -67,7 +69,10 @@ glomam/
 │   │   └── useReveal.js       # Intersection Observer → adiciona .active em .reveal
 │   │
 │   └── data/
-│       └── noticias.js        # Array de artigos — consumido por Imprensa.jsx e Novidades.jsx
+│       ├── noticias.js        # Array de artigos — consumido por Imprensa.jsx e Novidades.jsx
+│       ├── lojas.js           # 48 Lojas filiadas com endereço, reuniões, contato
+│       ├── lojasCoords.js     # Coordenadas geográficas + helpers (getLojaCoords, lojasAgrupadasPorCoord)
+│       └── photoDirectory.js  # Diretório central de fotos com matching tolerante
 │
 ├── scripts/
 │   └── recolor-logo.mjs       # Script Node para gerar variantes de cor do SVG do logo
@@ -77,6 +82,7 @@ glomam/
 ├── TODO.md                    # Tarefas pendentes e bugs
 ├── ARCHITECTURE.md            # Este arquivo
 ├── PROJECT_CONTEXT.md         # Visão geral consolidada para IA e equipe
+├── CLAUDE.md                  # Pacote de contexto portátil para Claude Code
 ├── vite.config.js
 └── netlify.toml
 ```
@@ -133,6 +139,48 @@ AlbumEventos.jsx
       │
       └── downloadFoto(src, legenda)
             └── fetch(src) → blob → URL.createObjectURL → <a download> → click
+```
+
+### Mapa de Lojas — fluxo
+
+```
+MapaLojas.jsx (na Home, entre Famílias e FAQ)
+│
+├── Estado: view ('manaus' | 'interior')
+│
+├── lojasManaus() / lojasInterior() ← src/data/lojasCoords.js
+│     └── filtra src/data/lojas.js por loja.oriente
+│
+├── lojasAgrupadasPorCoord(lista)
+│     └── Map<"lat,lng", { coord, lojas[] }>
+│           agrupa Lojas que compartilham endereço físico
+│           (ex: 5 lojas no Condomínio Rio Solimões → 1 pino)
+│
+└── <MapContainer> (react-leaflet)
+      ├── <TileLayer> ← OpenStreetMap
+      └── <Marker icon={goldPinIcon}> ← SVG custom no tema GLOMAM
+            └── <Popup> ← lista de lojas no ponto + botão "Abrir no Google Maps"
+```
+
+### Modal "Como Chegar?" — fluxo
+
+```
+Lojas.jsx (rota /lojas)
+│
+├── Estado: lojaModal (null | Loja)
+│
+├── <LojaCard onComoChegar={setLojaModal}>
+│     └── botão "Como Chegar?" → onComoChegar(loja)
+│
+└── <ComoChegarModal loja={lojaModal} onClose={() => setLojaModal(null)}>
+      │
+      ├── getLojaCoords(loja) ← src/data/lojasCoords.js
+      │
+      ├── APPS = [Google Maps, Waze, Uber] (+ Apple Maps se isIOS())
+      │     └── cada app constrói URL com lat/lng quando disponível
+      │
+      └── Modal centralizado (desktop) / Bottom sheet (≤540px)
+            └── click no app → window.open(url, '_blank') → app abre
 ```
 
 ### Intranet — fluxo de navegação

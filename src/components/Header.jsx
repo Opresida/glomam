@@ -88,10 +88,10 @@ export default function Header() {
     <header id="header" className={shrunk ? 'shrunk' : ''}>
       <div className="nav-inner">
         <a href="#inicio" className="logo" onClick={(e) => handleLink('#inicio', e)}>
-          <img src="https://i.imgur.com/Hi8vRw1.png" alt="Logo GLOMAM" />
+          <img src="https://i.imgur.com/0bVk0qx.png" alt="Logo GLOMAM" />
           <div className="logo-text">
-            GLOMAM
-            <small>Grande Loja Maçônica do Amazonas</small>
+            Grande Loja Maçônica do Amazonas
+            <small>GLOMAM</small>
           </div>
         </a>
 

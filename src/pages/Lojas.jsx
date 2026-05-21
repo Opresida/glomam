@@ -3,9 +3,10 @@ import Header from '../components/Header.jsx';
 import Footer from '../components/Footer.jsx';
 import useReveal from '../hooks/useReveal.js';
 import WhatsAppBtn from '../components/WhatsAppBtn.jsx';
+import ComoChegarModal from '../components/ComoChegarModal.jsx';
 import { lojas } from '../data/lojas.js';
 
-function LojaCard({ loja, delay }) {
+function LojaCard({ loja, delay, onComoChegar }) {
   const [aberto, setAberto] = useState(false);
   const dCls = delay ? `reveal-d${delay}` : '';
   const numStr = String(loja.numero).padStart(2, '0');
@@ -37,6 +38,18 @@ function LojaCard({ loja, delay }) {
             <span className="loja-meta-value">{loja.fundacao}</span>
           </div>
         </div>
+
+        <button
+          type="button"
+          className="loja-como-chegar"
+          onClick={() => onComoChegar(loja)}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 22s-8-7.58-8-13a8 8 0 1 1 16 0c0 5.42-8 13-8 13z" />
+            <circle cx="12" cy="9" r="3" />
+          </svg>
+          <span>Como Chegar?</span>
+        </button>
 
         <button
           type="button"
@@ -98,6 +111,7 @@ export default function Lojas() {
   useReveal();
   const [busca, setBusca] = useState('');
   const [orienteFiltro, setOrienteFiltro] = useState('todos');
+  const [lojaModal, setLojaModal] = useState(null);
 
   const orientesDisponiveis = useMemo(() => {
     const set = new Set(lojas.map(l => l.oriente));
@@ -177,7 +191,12 @@ export default function Lojas() {
           ) : (
             <div className="lojas-grid">
               {filtradas.map((l, i) => (
-                <LojaCard key={l.numero} loja={l} delay={(i % 3) + 1} />
+                <LojaCard
+                  key={l.numero}
+                  loja={l}
+                  delay={(i % 3) + 1}
+                  onComoChegar={setLojaModal}
+                />
               ))}
             </div>
           )}
@@ -207,6 +226,8 @@ export default function Lojas() {
 
       <Footer />
       <WhatsAppBtn />
+
+      <ComoChegarModal loja={lojaModal} onClose={() => setLojaModal(null)} />
     </>
   );
 }
