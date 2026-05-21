@@ -17,29 +17,33 @@ Site institucional e intranet administrativa da Grande Loja Maçônica do Amazon
 ### Pré-requisitos
 
 - Node.js >= 18
-- npm ou pnpm
+- **pnpm** (obrigatório — projeto padronizado em pnpm, ver `netlify.toml`)
+
+Se não tiver pnpm, instale com: `corepack enable && corepack prepare pnpm@latest --activate` ou `npm install -g pnpm`.
 
 ### Instalação
 
 ```bash
 git clone https://github.com/Opresida/glomam.git
 cd glomam
-npm install
+pnpm install
 ```
 
 ### Rodar em desenvolvimento
 
 ```bash
-npm run dev
+pnpm dev
 # Acesse: http://localhost:5000
 ```
 
 ### Build para produção
 
 ```bash
-npm run build
-npm run preview   # preview local do build
+pnpm build
+pnpm preview   # preview local do build
 ```
+
+> ⚠️ **Não use `npm install` neste projeto** — vai criar um `package-lock.json` que conflita com o `pnpm-lock.yaml` usado pelo Netlify e quebra o deploy. O `package-lock.json` está no `.gitignore` por segurança.
 
 ### Deploy
 

@@ -78,15 +78,28 @@ E registrar o `id` como link de âncora no `Header.jsx`.
 
 ## 🚀 Como rodar localmente
 
+⚠️ **Projeto padronizado em pnpm** (obrigatório por causa do Netlify — `netlify.toml` usa `pnpm build` com frozen-lockfile). Nunca rode `npm install` aqui — cria `package-lock.json` que conflita.
+
 ```bash
 cd glomam
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
+
+Se o pnpm não estiver instalado: `corepack enable && corepack prepare pnpm@latest --activate` ou `npm install -g pnpm`.
 
 Server sobe em `http://localhost:5000`. **Não abrir Simple Browser** — apenas avisar a URL ao Humberto.
 
 Para derrubar: matar o processo do terminal (ou pelo PID se ficou órfão).
+
+### Adicionando dependências
+
+```bash
+pnpm add <pacote>          # produção
+pnpm add -D <pacote>       # dev
+```
+
+Depois do add, commite o `package.json` **E** o `pnpm-lock.yaml` no mesmo commit — senão o Netlify quebra.
 
 ---
 
@@ -135,7 +148,7 @@ O Humberto usa `rtk` como prefixo padrão pra economizar tokens em saída de com
 ```bash
 rtk git status        # em vez de git status
 rtk git diff          # em vez de git diff
-rtk npm run dev       # em vez de npm run dev
+rtk pnpm dev          # em vez de pnpm dev
 rtk grep <pattern>    # em vez de grep
 rtk ls <path>         # em vez de ls
 ```
