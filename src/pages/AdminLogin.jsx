@@ -29,7 +29,7 @@ export default function AdminLogin() {
           <div className="admin-login-card">
             <div className="admin-login-logo-wrap">
               <img
-                src="https://i.imgur.com/2Lwr0pd.png"
+                src="https://i.imgur.com/0bVk0qx.png"
                 alt="GLOMAM"
                 className="admin-login-logo"
               />
