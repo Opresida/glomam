@@ -83,10 +83,10 @@ Site institucional e intranet administrativa da Grande Loja Maçônica do Amazon
 - [x] **Mapas interativos das Lojas** (Leaflet + OSM) na Home, com toggle Manaus/Interior ✓ *aprovado 2026-05-20*
 - [x] **Botão "Como Chegar?"** na rota `/lojas` com Google Maps + Waze + Uber (+ Apple Maps em iOS) ✓ *aprovado 2026-05-20*
 - [x] **Header transparente com blur ao scroll** + Hero reformulado + Welcome/Doação removidos ✓ *aprovado 2026-05-20*
+- [x] **Logos oficiais das ordens paramaçônicas** integradas em `Familias.jsx` (DeMolay, Filhas de Jó, Estrela do Oriente, Escudeiros) — brasões PNG em `public/ordem-*.png`, classe `.fc-icon-logo` ✓ *aprovado 2026-05-25*
+- [x] **Vídeo institucional no Hero** — `public/hero-glomam.mp4` substitui a imagem de fundo (autoplay/muted/loop/playsinline, poster como fallback, overlay diagonal preservado) ✓ *aprovado 2026-05-25*
 
 ### Aguardando entrega do cliente
-- [ ] Foto definitiva do Hero
-- [ ] Logos das ordens paramaçônicas (DeMolay, Filhas de Jó, Estrela do Oriente, Escudeiros)
 - [ ] Confirmação de conta Business Instagram (pré-requisito para integração Graph API)
 - [ ] Revisão visual dos pinos do mapa de Manaus
 

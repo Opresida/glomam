@@ -7,9 +7,10 @@ Lista de tarefas pendentes, melhorias planejadas e bugs conhecidos.
 ## Em andamento
 
 ### Aguardando entrega do cliente
-- [ ] **Foto definitiva do Hero** — substituir `https://i.imgur.com/UMMFzmS.jpeg` em `src/components/Hero.jsx`
-- [ ] **Logos das ordens paramaçônicas** (DeMolay, Filhas de Jó, Estrela do Oriente, Escudeiros) — para usar em `src/components/Familias.jsx`
-- [ ] **Confirmação de conta Business no Instagram** + Página Facebook conectada — pré-requisito para integração da seção "Últimas Notícias" via Graph API
+- [ ] **Token IG_ACCESS_TOKEN + IG_USER_ID** — configurar no Netlify (Site settings → Environment variables) e Build Hook pingado por cron-job.org a cada 6h. Ver README seção "Integração Instagram"
+  - **Status 2026-05-25:** app `GLOMAM feed` criado no Meta for Developers (FB App ID `1025115713522309`, IG App ID `4304571463128427`). Caso de uso "Gerenciar mensagens e conteúdo no Instagram" configurado, mas usa o fluxo NOVO **Instagram API with Instagram Login** (`graph.instagram.com`, não `graph.facebook.com`).
+  - **Parado em:** passo A da página "Personalizar caso de uso" — falta clicar **"Add all required permissions"** (instagram_business_basic + manage_comments + business_manage_messages), depois adicionar `@glomam` como Testador na aba **Funções do app → Funções**, e por fim clicar "Adicionar conta" no quadro 2 pra gerar o token.
+  - **TODO Claude:** quando o token chegar, ajustar `scripts/fetch-instagram.mjs` pra usar endpoint `https://graph.instagram.com/v22.0/me/media` (em vez do `graph.facebook.com/{ig-user-id}/media`) e renomear permissão pra `instagram_business_basic`. ~10 linhas de mudança.
 - [ ] **Revisão visual dos pinos do mapa** — cliente confirma quais Lojas estão fora do endereço exato (coordenadas ajustáveis em `src/data/lojasCoords.js`)
 
 ### Aguardando dados internos da GLOMAM
@@ -111,6 +112,13 @@ Lista de tarefas pendentes, melhorias planejadas e bugs conhecidos.
 - [x] **Componente `WhatsAppBtn`** reutilizável com `cursor:pointer` e animação bounce
 - [x] **Script `scripts/generate-pdf.mjs`** — gera PDF do site com screenshots full-page de todas as rotas (Playwright + pdf-lib)
 - [x] Responsividade reforçada — grids com `minmax(min(Npx, 100%), 1fr)` para telas ≤320px
+
+### Atualização de 2026-05-25
+
+- [x] **Logos das ordens paramaçônicas integradas** em `src/components/Familias.jsx` — DeMolay, Filhas de Jó, Estrela do Oriente, Escudeiros agora exibem o brasão oficial PNG (`public/ordem-*.png`) em vez do SVG genérico, com nova classe `.fc-icon-logo` (clamp 56-78px, drop-shadow sutil) ✓ *aprovado 2026-05-25*
+- [x] **Vídeo institucional no Hero** — substituída a imagem de fundo (`https://i.imgur.com/UMMFzmS.jpeg`) por `public/hero-glomam.mp4` em `src/components/Hero.jsx` (autoplay, muted, loop, playsinline, poster mantido como fallback). Overlay diagonal preservado com opacidade ajustada (.70/.78) pra manter legibilidade do título sobre vídeo em movimento. Nova classe `.hero-banner-video` (object-fit cover, z-index 0) ✓ *aprovado 2026-05-25*
+- [x] **Otimização do vídeo Hero** — re-encode H.264 CRF 28 / 30fps / sem áudio: 7.23 MB → 4.42 MB (-39%) ✓ *aprovado 2026-05-25*
+- [x] **Infra de integração Instagram (build-time)** — `scripts/fetch-instagram.mjs` puxa últimos 3 posts via Graph API no `prebuild`, grava `src/data/instagram.json`. `Novidades.jsx` consome o JSON e faz fallback automático pra `data/noticias.js` se vazio. Soft-abort sem env vars não quebra build. Token long-lived é auto-refreshed e novo valor é logado no build. Falta apenas configurar `IG_USER_ID` + `IG_ACCESS_TOKEN` no Netlify e webhook de cron (ver README seção "Integração Instagram") ✓ *aprovado 2026-05-25*
 
 ### Atualização de 2026-05-20
 

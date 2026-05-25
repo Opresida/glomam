@@ -51,6 +51,105 @@ Deploy automático na **Netlify** via `netlify.toml`. Qualquer push na branch pr
 
 ---
 
+## Integração Instagram (seção Novidades)
+
+A seção **Novidades** da Home consome **os 3 posts mais recentes do `@glomam`** automaticamente. O fetch acontece no `prebuild` (build-time, não runtime), garantindo:
+
+- Zero token no cliente
+- Zero latência (HTML já vem com os posts)
+- Zero custo de function
+
+### Fluxo
+
+```
+[cron-job.org a cada 6h]
+        ↓ HTTP POST
+[Netlify Build Hook]
+        ↓ dispara
+[pnpm build]
+        ↓ prebuild
+[scripts/fetch-instagram.mjs]
+        ↓ Graph API
+[src/data/instagram.json]
+        ↓ import estático
+[Novidades.jsx → carrossel]
+```
+
+Se a Graph API falhar OU as env vars não estiverem definidas, o build **não quebra**: `Novidades.jsx` faz fallback automático pro conteúdo estático em `src/data/noticias.js`.
+
+### Setup (one-time)
+
+#### 1. Obter `IG_USER_ID`
+
+A conta `@glomam` precisa ser **Business** ou **Creator** e estar **conectada a uma Página do Facebook**. Para descobrir o ID numérico:
+
+```bash
+# Substituir {fb-page-id} pelo ID da Página FB conectada ao @glomam
+# Substituir {short-token} por qualquer token de usuário do Meta Business Suite (mesmo de curta duração)
+curl "https://graph.facebook.com/v22.0/{fb-page-id}?fields=instagram_business_account&access_token={short-token}"
+```
+
+A resposta traz `{ "instagram_business_account": { "id": "1789..." } }`. Esse `id` é o **IG_USER_ID**.
+
+#### 2. Gerar `IG_ACCESS_TOKEN` long-lived (60 dias)
+
+1. Acessar [Meta for Developers](https://developers.facebook.com/) → criar/usar app tipo *Business*
+2. Adicionar produto **Instagram Graph API** ou usar **Facebook Login for Business**
+3. Em **Graph API Explorer** → selecionar permissões `instagram_basic`, `pages_show_list`, `pages_read_engagement`, `instagram_manage_insights`
+4. Gerar User Token de curta duração → trocar por long-lived:
+
+```bash
+curl "https://graph.facebook.com/v22.0/oauth/access_token?\
+grant_type=fb_exchange_token&\
+client_id={app-id}&\
+client_secret={app-secret}&\
+fb_exchange_token={short-lived-token}"
+```
+
+A resposta traz `access_token` que vale **60 dias**. Esse é o **IG_ACCESS_TOKEN**.
+
+> 🔄 **Auto-refresh:** o script `fetch-instagram.mjs` chama `refresh_access_token` em todo build bem-sucedido e **loga o novo token no console do Netlify**. Quando faltarem ~10 dias pra expirar, copiar o token logado e atualizar no Netlify.
+
+#### 3. Configurar no Netlify
+
+Site settings → **Build & deploy** → **Environment** → **Environment variables**:
+
+| Key | Value |
+|---|---|
+| `IG_USER_ID` | (do passo 1) |
+| `IG_ACCESS_TOKEN` | (do passo 2) |
+
+Salvar e fazer um deploy manual pra testar (Trigger deploy → Deploy site).
+
+#### 4. Agendar build a cada 6h
+
+Site settings → **Build & deploy** → **Build hooks** → **Add build hook**:
+- Name: `Instagram Refresh`
+- Branch: `main`
+- Copiar a URL gerada (`https://api.netlify.com/build_hooks/...`)
+
+Depois, em [cron-job.org](https://cron-job.org) (grátis):
+- Criar conta
+- New cronjob → URL = build hook URL, Method = POST
+- Schedule: a cada 6h (`0 */6 * * *`)
+- Save
+
+Pronto. A cada 6h o site re-builda com os posts mais recentes do IG. Posts ficam visíveis em até ~7 min após postagem (build leva ~2 min + janela do cron).
+
+### Rodar o fetch localmente (debug)
+
+```bash
+# Criar .env (ignorado pelo git) ou exportar inline:
+IG_USER_ID=... IG_ACCESS_TOKEN=... pnpm ig:fetch
+
+# Output esperado:
+#   [ig-fetch:ok] 3 posts gravados em src/data/instagram.json
+```
+
+Sem as env vars o script aborta com warning, **sem quebrar o build**.
+
+---
+
 ## Rotas principais
 
 | Rota | Descrição |
@@ -314,10 +413,10 @@ AdminLogin.jsx
 - [x] **Email institucional** trocado para `glomam@glomam.org.br` em 6 ocorrências (Oriente + Brandbook)
 - [x] **`CLAUDE.md` portátil** na raiz do repo — pacote de contexto para Claude Code em qualquer máquina
 - [x] **Paleta corrigida em CONTEXT.md e PROJECT_CONTEXT.md** — antes referenciavam paleta antiga (gold marrom #b4975a) mesmo após migração para 9 tons
+- [x] **Logos oficiais das ordens paramaçônicas** integradas em `Familias.jsx` (DeMolay, Filhas de Jó, Estrela do Oriente, Escudeiros) — brasões em `public/ordem-*.png` *(aprovado 2026-05-25)*
+- [x] **Vídeo institucional no Hero** — `public/hero-glomam.mp4` (autoplay/muted/loop/playsinline + poster fallback) substitui a imagem de fundo *(aprovado 2026-05-25)*
 
 ### Pendente
-- [ ] **Foto definitiva do Hero** (cliente vai enviar)
-- [ ] **Logos das ordens paramaçônicas** (cliente vai enviar — DeMolay, Filhas de Jó, Estrela do Oriente, Escudeiros)
 - [ ] **Revisão visual dos pinos do mapa** — cliente confirma quais Lojas estão fora do endereço exato (coords ajustáveis em `src/data/lojasCoords.js`)
 - [ ] **Integração Instagram → seção "Últimas Notícias"** — Graph API + Netlify Function (aguardando confirmação de conta Business + Página Facebook do cliente)
 - [ ] Substituir fotos placeholder do Álbum de Eventos por fotos reais

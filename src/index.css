@@ -127,8 +127,9 @@ h2{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,3.5vw,2.8rem);lin
 }
 
 /* ══ HERO BANNER ══ */
-.hero-banner{position:relative;min-height:65vh;display:flex;align-items:center;justify-content:center;background-size:cover;background-position:center;background-repeat:no-repeat;padding-top:var(--nav-h)}
-.hero-banner-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,85,135,.85) 0%,rgba(22,29,52,.75) 100%)}
+.hero-banner{position:relative;min-height:65vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--slate);padding-top:var(--nav-h)}
+.hero-banner-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none}
+.hero-banner-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(135deg,rgba(0,85,135,.7) 0%,rgba(22,29,52,.78) 100%)}
 .hero-banner-content{position:relative;z-index:2;text-align:center;max-width:800px;padding:clamp(40px,8vw,80px) clamp(16px,5vw,40px)}
 .hero-banner-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,5vw,3.5rem);line-height:1.15;color:var(--white);margin-bottom:20px;animation:fadeUp .9s var(--ease) .5s both}
 .hero-banner-title .gold{color:var(--gold)}
@@ -260,6 +261,7 @@ h1 .gold{color:var(--gold)}
 .familia-card.flipped .fc-back{transform:translateY(0);opacity:1}
 .fc-num{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4.5vw,4rem);color:rgba(44,62,80,.04);line-height:1;margin-bottom:10px}
 .fc-icon-svg{width:34px;height:34px;stroke:var(--gold);stroke-width:1.5;fill:none;margin-bottom:14px}
+.fc-icon-logo{width:clamp(56px,7vw,78px);height:clamp(56px,7vw,78px);object-fit:contain;margin-bottom:14px;filter:drop-shadow(0 2px 6px rgba(22,29,52,.12))}
 .fc-title{font-family:'Playfair Display',serif;font-size:clamp(.84rem,1.4vw,.98rem);letter-spacing:.08em;color:var(--slate);margin-bottom:10px}
 .fc-desc{font-size:clamp(.82rem,1.1vw,.92rem);color:#9ca3af;line-height:1.7;flex:1}
 .fc-tag{font-size:.5rem;letter-spacing:.2em;color:var(--gold);font-weight:700;text-transform:uppercase;margin-top:auto;padding-top:14px}
@@ -542,6 +544,9 @@ h1 .gold{color:var(--gold)}
 .nov-card-img{position:relative;height:clamp(160px,18vw,220px);background-size:cover;background-position:center;overflow:hidden}
 .nov-card-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(10,12,16,.55) 100%)}
 .nov-card-tag{position:absolute;bottom:12px;left:14px;font-size:.42rem;letter-spacing:.28em;text-transform:uppercase;font-weight:700;color:var(--white);background:var(--gold);padding:3px 10px}
+.nov-card-tag--ig{background:linear-gradient(135deg,#f58529 0%,#dd2a7b 50%,#8134af 100%)}
+.nov-card-link{display:block;text-decoration:none;color:inherit;height:100%}
+.nov-card-link:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 .nov-card-body{padding:clamp(14px,2vw,22px)}
 .nov-card-date{font-size:.46rem;letter-spacing:.16em;color:var(--gold);font-weight:600;margin-bottom:8px;text-transform:uppercase}
 .nov-card-title{font-family:'Playfair Display',serif;font-size:clamp(.78rem,1.2vw,.95rem);color:var(--slate);line-height:1.4;margin-bottom:10px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;transition:color .3s}

@@ -1,16 +1,19 @@
 import React, { useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { noticias } from '../data/noticias.js';
+import instagramPosts from '../data/instagram.json';
 
-const items = noticias.filter(n => n.destaque || n.categoria === 'Institucional');
+const fallbackItems = noticias.filter(n => n.destaque || n.categoria === 'Institucional');
+const items = Array.isArray(instagramPosts) && instagramPosts.length > 0 ? instagramPosts : fallbackItems;
 const doubled = [...items, ...items];
 
 function NovidadeCard({ noticia }) {
-  return (
+  const isInstagram = noticia._source === 'instagram';
+  const inner = (
     <div className="nov-card">
       <div className="nov-card-img" style={{ backgroundImage: `url(${noticia.imagem})` }}>
         <div className="nov-card-overlay" />
-        <span className="nov-card-tag">{noticia.categoria}</span>
+        <span className={`nov-card-tag${isInstagram ? ' nov-card-tag--ig' : ''}`}>{noticia.categoria}</span>
       </div>
       <div className="nov-card-body">
         <p className="nov-card-date">{noticia.data}</p>
@@ -19,6 +22,15 @@ function NovidadeCard({ noticia }) {
       </div>
     </div>
   );
+
+  if (isInstagram && noticia.permalink) {
+    return (
+      <a href={noticia.permalink} target="_blank" rel="noopener noreferrer" className="nov-card-link" aria-label={`Abrir publicação no Instagram: ${noticia.titulo}`}>
+        {inner}
+      </a>
+    );
+  }
+  return inner;
 }
 
 export default function Novidades() {

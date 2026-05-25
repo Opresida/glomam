@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "vite --host 0.0.0.0 --port 5000",
-    "build": "vite build",
+    "build": "node scripts/fetch-instagram.mjs && vite build",
+    "ig:fetch": "node scripts/fetch-instagram.mjs",
     "preview": "vite preview",
     "pdf:setup": "npm install --no-save playwright pdf-lib && npx playwright install chromium",
     "pdf": "node scripts/generate-pdf.mjs"
