@@ -15,6 +15,11 @@ Lista de tarefas pendentes, melhorias planejadas e bugs conhecidos.
   - Build Hook + cron-job.org rodando a cada 6h (test run respondeu 200 OK em 506ms)
   - `scripts/fetch-instagram.mjs` ajustado pra `graph.instagram.com` — puxa 3 posts reais do `@glomam_oficial`
   - Auto-refresh do token: novo valor logado no build, atualizar manualmente no Netlify a cada ~50 dias
+- [x] **Botão "Atualizar agora" do Feed IG na Intranet** ✓ *aprovado 2026-05-26*
+  - Card "Feed do Instagram" em `/admin/intranet → Imprensa` mostra contagem de posts, data do último, próximos rebuilds automáticos
+  - Botão `↻ Atualizar agora` dispara o Netlify Build Hook via `VITE_NETLIFY_BUILD_HOOK_URL` (POST)
+  - Estados loading/success/error com banner colorido inline
+  - Pendente: configurar `VITE_NETLIFY_BUILD_HOOK_URL` no Netlify (mesma URL do cron-job.org)
 - [ ] **Revisão visual dos pinos do mapa** — cliente confirma quais Lojas estão fora do endereço exato (coordenadas ajustáveis em `src/data/lojasCoords.js`)
 
 ### Aguardando dados internos da GLOMAM

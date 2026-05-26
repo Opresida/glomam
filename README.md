@@ -53,7 +53,7 @@ Deploy automático na **Netlify** via `netlify.toml`. Qualquer push na branch pr
 
 ## Integração Instagram (seção Novidades)
 
-A seção **Novidades** da Home consome **os 3 posts mais recentes do `@glomam`** automaticamente. O fetch acontece no `prebuild` (build-time, não runtime), garantindo:
+A seção **Novidades** da Home consome **os 3 posts mais recentes do `@glomam_oficial`** automaticamente. O fetch acontece no build (não runtime), garantindo:
 
 - Zero token no cliente
 - Zero latência (HTML já vem com os posts)
@@ -62,79 +62,53 @@ A seção **Novidades** da Home consome **os 3 posts mais recentes do `@glomam`*
 ### Fluxo
 
 ```
-[cron-job.org a cada 6h]
-        ↓ HTTP POST
-[Netlify Build Hook]
+[cron-job.org a cada 6h]                  [Botão "Atualizar agora"
+        ↓ HTTP POST                        em /admin/intranet]
+[Netlify Build Hook] ←─────────────────────────┘
         ↓ dispara
 [pnpm build]
-        ↓ prebuild
+        ↓
 [scripts/fetch-instagram.mjs]
-        ↓ Graph API
+        ↓ https://graph.instagram.com/v22.0/{user-id}/media
 [src/data/instagram.json]
         ↓ import estático
 [Novidades.jsx → carrossel]
 ```
 
-Se a Graph API falhar OU as env vars não estiverem definidas, o build **não quebra**: `Novidades.jsx` faz fallback automático pro conteúdo estático em `src/data/noticias.js`.
+Se a Instagram API falhar OU as env vars não estiverem definidas, o build **não quebra**: `Novidades.jsx` faz fallback automático pro conteúdo estático em `src/data/noticias.js`.
 
-### Setup (one-time)
+### Setup (one-time, já feito em 2026-05-26)
 
-#### 1. Obter `IG_USER_ID`
+A integração usa o fluxo **Instagram API with Instagram Login** (não FB Graph), via app `GLOMAM feed` no Meta for Developers (IG App ID `4304571463128427`).
 
-A conta `@glomam` precisa ser **Business** ou **Creator** e estar **conectada a uma Página do Facebook**. Para descobrir o ID numérico:
+1. **App no Meta for Developers** — caso de uso "Gerenciar mensagens e conteúdo no Instagram" com permissões `instagram_business_basic`, `instagram_manage_comments`, `instagram_business_manage_messages`
+2. **Conta `@glomam_oficial`** adicionada como Testador do Instagram (em Funções do app); convite aceito via `instagram.com/accounts/manage_access/`
+3. **Token long-lived gerado** clicando "Adicionar conta" em "Personalizar caso de uso → Gerar tokens de acesso"
+4. **Auto-refresh:** o script chama `https://graph.instagram.com/refresh_access_token` em todo build bem-sucedido e loga o novo token. **A cada ~50 dias**, abrir um build no Netlify, copiar o novo token e atualizar `IG_ACCESS_TOKEN`.
 
-```bash
-# Substituir {fb-page-id} pelo ID da Página FB conectada ao @glomam
-# Substituir {short-token} por qualquer token de usuário do Meta Business Suite (mesmo de curta duração)
-curl "https://graph.facebook.com/v22.0/{fb-page-id}?fields=instagram_business_account&access_token={short-token}"
-```
+### Variáveis de ambiente
 
-A resposta traz `{ "instagram_business_account": { "id": "1789..." } }`. Esse `id` é o **IG_USER_ID**.
+Configurar em **Netlify → Site settings → Environment variables**:
 
-#### 2. Gerar `IG_ACCESS_TOKEN` long-lived (60 dias)
+| Key | Valor | Onde usar |
+|---|---|---|
+| `IG_USER_ID` | `17841421232942920` | Build (lido pelo script) |
+| `IG_ACCESS_TOKEN` | Token `IGAA...` long-lived | Build (lido pelo script) |
+| `VITE_NETLIFY_BUILD_HOOK_URL` | URL do Build Hook (ver abaixo) | Client (botão na intranet) |
 
-1. Acessar [Meta for Developers](https://developers.facebook.com/) → criar/usar app tipo *Business*
-2. Adicionar produto **Instagram Graph API** ou usar **Facebook Login for Business**
-3. Em **Graph API Explorer** → selecionar permissões `instagram_basic`, `pages_show_list`, `pages_read_engagement`, `instagram_manage_insights`
-4. Gerar User Token de curta duração → trocar por long-lived:
+### Cron a cada 6h
 
-```bash
-curl "https://graph.facebook.com/v22.0/oauth/access_token?\
-grant_type=fb_exchange_token&\
-client_id={app-id}&\
-client_secret={app-secret}&\
-fb_exchange_token={short-lived-token}"
-```
+**Build Hook:** Netlify → Site settings → Build & deploy → Build hooks → Add build hook (Name `Instagram Refresh`, Branch `main`). Copia a URL e cola na variável `VITE_NETLIFY_BUILD_HOOK_URL` e no cron-job.org.
 
-A resposta traz `access_token` que vale **60 dias**. Esse é o **IG_ACCESS_TOKEN**.
+**Cron-job.org** (grátis): criar conta → Create cronjob → URL = Build Hook URL, **Request method: POST** (na aba ADVANCED), Time zone America/Manaus, Every 6 hours.
 
-> 🔄 **Auto-refresh:** o script `fetch-instagram.mjs` chama `refresh_access_token` em todo build bem-sucedido e **loga o novo token no console do Netlify**. Quando faltarem ~10 dias pra expirar, copiar o token logado e atualizar no Netlify.
+> ⚠️ Build Hook só aceita POST e **sem auth** — não ativar "Requires HTTP authentication".
 
-#### 3. Configurar no Netlify
+### Refresh manual via Intranet
 
-Site settings → **Build & deploy** → **Environment** → **Environment variables**:
+A página `/admin/intranet → Imprensa` tem um card "Feed do Instagram" com botão **"↻ Atualizar agora"** que dispara o Build Hook na hora. Útil quando o cliente posta algo e quer ver no site sem esperar o próximo ciclo de 6h.
 
-| Key | Value |
-|---|---|
-| `IG_USER_ID` | (do passo 1) |
-| `IG_ACCESS_TOKEN` | (do passo 2) |
-
-Salvar e fazer um deploy manual pra testar (Trigger deploy → Deploy site).
-
-#### 4. Agendar build a cada 6h
-
-Site settings → **Build & deploy** → **Build hooks** → **Add build hook**:
-- Name: `Instagram Refresh`
-- Branch: `main`
-- Copiar a URL gerada (`https://api.netlify.com/build_hooks/...`)
-
-Depois, em [cron-job.org](https://cron-job.org) (grátis):
-- Criar conta
-- New cronjob → URL = build hook URL, Method = POST
-- Schedule: a cada 6h (`0 */6 * * *`)
-- Save
-
-Pronto. A cada 6h o site re-builda com os posts mais recentes do IG. Posts ficam visíveis em até ~7 min após postagem (build leva ~2 min + janela do cron).
+> O URL do Build Hook fica embutido no bundle JS (necessário pra fetch do client). Como `/admin/intranet` não tem auth real, considere "semi-secreto". Max risco se vazar: builds desperdiçados (Netlify free tier tem 300 min/mês).
 
 ### Rodar o fetch localmente (debug)
 
