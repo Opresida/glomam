@@ -7,10 +7,14 @@ Lista de tarefas pendentes, melhorias planejadas e bugs conhecidos.
 ## Em andamento
 
 ### Aguardando entrega do cliente
-- [ ] **Token IG_ACCESS_TOKEN + IG_USER_ID** — configurar no Netlify (Site settings → Environment variables) e Build Hook pingado por cron-job.org a cada 6h. Ver README seção "Integração Instagram"
-  - **Status 2026-05-25:** app `GLOMAM feed` criado no Meta for Developers (FB App ID `1025115713522309`, IG App ID `4304571463128427`). Caso de uso "Gerenciar mensagens e conteúdo no Instagram" configurado, mas usa o fluxo NOVO **Instagram API with Instagram Login** (`graph.instagram.com`, não `graph.facebook.com`).
-  - **Parado em:** passo A da página "Personalizar caso de uso" — falta clicar **"Add all required permissions"** (instagram_business_basic + manage_comments + business_manage_messages), depois adicionar `@glomam` como Testador na aba **Funções do app → Funções**, e por fim clicar "Adicionar conta" no quadro 2 pra gerar o token.
-  - **TODO Claude:** quando o token chegar, ajustar `scripts/fetch-instagram.mjs` pra usar endpoint `https://graph.instagram.com/v22.0/me/media` (em vez do `graph.facebook.com/{ig-user-id}/media`) e renomear permissão pra `instagram_business_basic`. ~10 linhas de mudança.
+- [x] **Integração Instagram (Novidades) — totalmente automatizada** ✓ *aprovado 2026-05-26*
+  - App `GLOMAM feed` criado no Meta for Developers (FB App ID `1025115713522309`, IG App ID `4304571463128427`)
+  - Fluxo **Instagram API with Instagram Login** (endpoint `graph.instagram.com`) configurado
+  - Conta `@glomam_oficial` adicionada como Testadora do Instagram, convite aceito
+  - `IG_USER_ID=17841421232942920` + `IG_ACCESS_TOKEN` configurados no Netlify
+  - Build Hook + cron-job.org rodando a cada 6h (test run respondeu 200 OK em 506ms)
+  - `scripts/fetch-instagram.mjs` ajustado pra `graph.instagram.com` — puxa 3 posts reais do `@glomam_oficial`
+  - Auto-refresh do token: novo valor logado no build, atualizar manualmente no Netlify a cada ~50 dias
 - [ ] **Revisão visual dos pinos do mapa** — cliente confirma quais Lojas estão fora do endereço exato (coordenadas ajustáveis em `src/data/lojasCoords.js`)
 
 ### Aguardando dados internos da GLOMAM

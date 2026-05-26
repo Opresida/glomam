@@ -51,7 +51,7 @@ function formatDate(iso) {
 }
 
 async function fetchPosts() {
-  const url = new URL(`https://graph.facebook.com/${GRAPH_VERSION}/${IG_USER_ID}/media`);
+  const url = new URL(`https://graph.instagram.com/${GRAPH_VERSION}/${IG_USER_ID}/media`);
   url.searchParams.set('fields', 'id,caption,media_type,media_url,thumbnail_url,permalink,timestamp,children{media_url,thumbnail_url,media_type}');
   url.searchParams.set('limit', String(POSTS_LIMIT));
   url.searchParams.set('access_token', IG_ACCESS_TOKEN);
@@ -59,18 +59,18 @@ async function fetchPosts() {
   const res = await fetch(url, { method: 'GET' });
   if (!res.ok) {
     const body = await res.text();
-    throw new Error(`Graph API ${res.status}: ${body.slice(0, 500)}`);
+    throw new Error(`Instagram API ${res.status}: ${body.slice(0, 500)}`);
   }
   const json = await res.json();
   if (!json.data || !Array.isArray(json.data)) {
-    throw new Error(`Resposta inesperada da Graph API: ${JSON.stringify(json).slice(0, 500)}`);
+    throw new Error(`Resposta inesperada da Instagram API: ${JSON.stringify(json).slice(0, 500)}`);
   }
   return json.data;
 }
 
 async function refreshToken() {
   try {
-    const url = new URL(`https://graph.facebook.com/${GRAPH_VERSION}/refresh_access_token`);
+    const url = new URL(`https://graph.instagram.com/refresh_access_token`);
     url.searchParams.set('grant_type', 'ig_refresh_token');
     url.searchParams.set('access_token', IG_ACCESS_TOKEN);
     const res = await fetch(url);
