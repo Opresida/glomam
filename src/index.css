@@ -129,7 +129,7 @@ h2{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,3.5vw,2.8rem);lin
 /* ══ HERO BANNER ══ */
 .hero-banner{position:relative;min-height:65vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--slate);padding-top:var(--nav-h)}
 .hero-banner-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none}
-.hero-banner-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(135deg,rgba(0,85,135,.7) 0%,rgba(22,29,52,.78) 100%)}
+.hero-banner-overlay{position:absolute;inset:0;z-index:1;background:rgba(0,0,0,.28)}
 .hero-banner-content{position:relative;z-index:2;text-align:center;max-width:800px;padding:clamp(40px,8vw,80px) clamp(16px,5vw,40px)}
 .hero-banner-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,5vw,3.5rem);line-height:1.15;color:var(--white);margin-bottom:20px;animation:fadeUp .9s var(--ease) .5s both}
 .hero-banner-title .gold{color:var(--gold)}
