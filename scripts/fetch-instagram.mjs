@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUTPUT_PATH = join(__dirname, '..', 'src', 'data', 'instagram.json');
 const GRAPH_VERSION = 'v22.0';
-const POSTS_LIMIT = 3;
+const POSTS_LIMIT = 50;
 
 const IG_USER_ID = process.env.IG_USER_ID;
 const IG_ACCESS_TOKEN = process.env.IG_ACCESS_TOKEN;

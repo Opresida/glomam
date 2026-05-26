@@ -2,23 +2,34 @@ import React, { useRef, useEffect, useState } from 'react';
 import Header from '../components/Header.jsx';
 import Footer from '../components/Footer.jsx';
 import useReveal from '../hooks/useReveal.js';
-import { noticias, categorias } from '../data/noticias.js';
+import { noticias as fallbackNoticias, categorias as fallbackCategorias } from '../data/noticias.js';
+import instagramPosts from '../data/instagram.json';
+
+const igPosts = Array.isArray(instagramPosts) ? instagramPosts : [];
+const usingInstagram = igPosts.length > 0;
+
+const allItems = usingInstagram ? igPosts : fallbackNoticias;
+const principal = allItems[0];
+const secundarias = allItems.slice(1, 3);
+const resto = allItems.slice(3);
 
 function HeroDestaque() {
-  const principal = noticias.find(n => n.destaque);
-  const secundarias = noticias.filter(n => n.destaque && n.id !== principal.id).slice(0, 2);
+  if (!principal) return null;
+  const handleClick = (item) => {
+    if (item.permalink) window.open(item.permalink, '_blank', 'noopener,noreferrer');
+  };
 
   return (
     <section className="imp-hero reveal">
       <div className="section-inner">
         <div className="section-label">Imprensa</div>
-        <h2 style={{ marginBottom: '36px' }}>Notícias em Destaque</h2>
+        <h2 style={{ marginBottom: '36px' }}>{usingInstagram ? 'Publicações em Destaque' : 'Notícias em Destaque'}</h2>
         <div className="imp-hero-grid">
-          <button className="imp-hero-main reveal imp-link-btn" aria-label={principal.titulo}>
+          <button className="imp-hero-main reveal imp-link-btn" aria-label={principal.titulo} onClick={() => handleClick(principal)}>
             <div className="imp-hero-main-img" style={{ backgroundImage: `url(${principal.imagem})` }}>
               <div className="imp-hero-overlay" />
               <div className="imp-hero-main-content">
-                <span className="imp-cat-tag">{principal.categoria}</span>
+                <span className={`imp-cat-tag${principal._source === 'instagram' ? ' imp-cat-tag--ig' : ''}`}>{principal.categoria}</span>
                 <h3 className="imp-hero-main-title">{principal.titulo}</h3>
                 <p className="imp-hero-main-date">{principal.data}</p>
                 <p className="imp-hero-main-resumo">{principal.resumo}</p>
@@ -27,11 +38,11 @@ function HeroDestaque() {
           </button>
           <div className="imp-hero-side">
             {secundarias.map((n, i) => (
-              <button key={n.id} className={`imp-hero-sec reveal reveal-d${i + 1} imp-link-btn`} aria-label={n.titulo}>
+              <button key={n.id} className={`imp-hero-sec reveal reveal-d${i + 1} imp-link-btn`} aria-label={n.titulo} onClick={() => handleClick(n)}>
                 <div className="imp-hero-sec-img" style={{ backgroundImage: `url(${n.imagem})` }}>
                   <div className="imp-hero-overlay" />
                   <div className="imp-hero-sec-content">
-                    <span className="imp-cat-tag imp-cat-tag--sm">{n.categoria}</span>
+                    <span className={`imp-cat-tag imp-cat-tag--sm${n._source === 'instagram' ? ' imp-cat-tag--ig' : ''}`}>{n.categoria}</span>
                     <h4 className="imp-hero-sec-title">{n.titulo}</h4>
                     <p className="imp-hero-sec-date">{n.data}</p>
                   </div>
@@ -46,11 +57,14 @@ function HeroDestaque() {
 }
 
 function NewsCard({ noticia }) {
+  const handleClick = () => {
+    if (noticia.permalink) window.open(noticia.permalink, '_blank', 'noopener,noreferrer');
+  };
   return (
-    <button className="imp-news-card imp-link-btn" aria-label={noticia.titulo}>
+    <button className="imp-news-card imp-link-btn" aria-label={noticia.titulo} onClick={handleClick}>
       <div className="imp-news-card-img" style={{ backgroundImage: `url(${noticia.imagem})` }} />
       <div className="imp-news-card-body">
-        <span className="imp-cat-tag imp-cat-tag--sm">{noticia.categoria}</span>
+        <span className={`imp-cat-tag imp-cat-tag--sm${noticia._source === 'instagram' ? ' imp-cat-tag--ig' : ''}`}>{noticia.categoria}</span>
         <h4 className="imp-news-card-title">{noticia.titulo}</h4>
         <p className="imp-news-card-date">{noticia.data}</p>
       </div>
@@ -110,11 +124,46 @@ function InfiniteCarousel({ items }) {
   );
 }
 
-function CategoriasSection() {
+function groupByMonth(items) {
+  const groups = new Map();
+  for (const item of items) {
+    const parts = (item.data || '').split(' ');
+    if (parts.length < 3) continue;
+    const key = `${parts[1]} ${parts[2]}`;
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(item);
+  }
+  return Array.from(groups.entries()).map(([label, items]) => ({ label, items }));
+}
+
+function ArquivoSection() {
+  const groups = groupByMonth(resto);
+  if (groups.length === 0) return null;
+
+  return (
+    <section className="imp-arquivo reveal">
+      <div className="section-inner">
+        <div className="section-label">Arquivo</div>
+        <h2 className="imp-arquivo-title">Histórico de Publicações</h2>
+        <div className="divider" style={{ marginBottom: '40px' }} />
+        {groups.map(({ label, items }) => (
+          <div key={label} className="imp-arquivo-group reveal">
+            <h3 className="imp-arquivo-month">{label}</h3>
+            <div className="imp-arquivo-grid">
+              {items.map((n) => <NewsCard key={n.id} noticia={n} />)}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function CategoriasFallback() {
   return (
     <>
-      {categorias.map((cat, idx) => {
-        const items = noticias.filter(n => n.categoria === cat);
+      {fallbackCategorias.map((cat, idx) => {
+        const items = fallbackNoticias.filter(n => n.categoria === cat);
         if (items.length === 0) return null;
         const isDark = idx % 2 === 1;
         return (
@@ -214,7 +263,7 @@ export default function Imprensa() {
       <main className="imp-page">
         <div className="imp-page-top" />
         <HeroDestaque />
-        <CategoriasSection />
+        {usingInstagram ? <ArquivoSection /> : <CategoriasFallback />}
         <Newsletter />
       </main>
       <Footer />

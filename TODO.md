@@ -20,6 +20,12 @@ Lista de tarefas pendentes, melhorias planejadas e bugs conhecidos.
   - Botão `↻ Atualizar agora` dispara o Netlify Build Hook via `VITE_NETLIFY_BUILD_HOOK_URL` (POST)
   - Estados loading/success/error com banner colorido inline
   - Pendente: configurar `VITE_NETLIFY_BUILD_HOOK_URL` no Netlify (mesma URL do cron-job.org)
+- [x] **Home + /imprensa consomem feed Instagram (histórico amplo)** ✓ *aprovado 2026-05-26*
+  - `scripts/fetch-instagram.mjs` agora puxa **50 posts** (~1 ano de conteúdo da `@glomam_oficial`)
+  - **`NewsCards.jsx` (Home → "Últimas Notícias")** reescrito pra usar os 3 primeiros posts do IG (fallback automático pra `noticias.js`). Badge gradient IG, link "Ver no Instagram →" abre `permalink` em nova aba
+  - **`Imprensa.jsx` (rota `/imprensa`)** reescrita pra mostrar **todos os 50 posts**: hero com 1 principal + 2 secundárias + nova `ArquivoSection` agrupando o resto por mês/ano. Cards são botões que abrem o permalink do IG em nova aba
+  - **Botão de refresh manual no Home** ativado via hash secreto `#sync` na URL (ex: `glomam.com.br/#sync`). Visitantes comuns não veem. Dispara o Build Hook na hora
+  - **`Novidades.jsx` deletado** (componente órfão, duplicava NewsCards) + ~40 linhas de CSS `.nov-*` órfão removidas
 - [ ] **Revisão visual dos pinos do mapa** — cliente confirma quais Lojas estão fora do endereço exato (coordenadas ajustáveis em `src/data/lojasCoords.js`)
 
 ### Aguardando dados internos da GLOMAM
