@@ -74,7 +74,7 @@ export default function BrandbookGate() {
       <div className="bb-gate-deco" aria-hidden="true" />
       <div className="bb-gate-card">
         <div className="bb-gate-logo">
-          <img src="/icon-512.png" alt="GLOMAM" width="80" height="80" />
+          <img src="/logo-glomam-transparent.png" alt="GLOMAM" width="80" height="80" />
         </div>
         <div className="bb-gate-head">
           <p className="bb-gate-label">Acesso Restrito</p>
