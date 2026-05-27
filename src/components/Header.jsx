@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+
+const ROTAS_HEADER_SOLIDO = ['/imprensa'];
 
 const menuItems = [
   { label: 'Home', link: '/' },
@@ -41,12 +43,15 @@ const menuItems = [
 ];
 
 export default function Header() {
-  const [shrunk, setShrunk] = useState(false);
+  const location = useLocation();
+  const forcarSolido = ROTAS_HEADER_SOLIDO.includes(location.pathname);
+  const [scrollShrunk, setScrollShrunk] = useState(false);
   const [open, setOpen] = useState(false);
   const [openSubs, setOpenSubs] = useState({});
+  const shrunk = forcarSolido || scrollShrunk;
 
   useEffect(() => {
-    const onScroll = () => setShrunk(window.scrollY > 60);
+    const onScroll = () => setScrollShrunk(window.scrollY > 60);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
