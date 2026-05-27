@@ -559,6 +559,89 @@
   letter-spacing: .06em;
 }
 
+/* ══════════════════════ GATE DE LOGIN ══════════════════════ */
+.bb-gate {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #161d34 0%, #172d4b 60%, #123b61 100%);
+  display: flex; align-items: center; justify-content: center;
+  padding: 40px 20px; position: relative; overflow: hidden;
+}
+.bb-gate-deco {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(circle at top right, rgba(211,165,76,.12) 0%, transparent 50%),
+    radial-gradient(circle at bottom left, rgba(0,85,135,.25) 0%, transparent 55%);
+}
+.bb-gate-card {
+  position: relative; z-index: 2;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(211,165,76,.18);
+  backdrop-filter: blur(12px);
+  padding: clamp(36px, 5vw, 56px) clamp(28px, 4vw, 56px);
+  max-width: 460px; width: 100%;
+  box-shadow: 0 24px 60px rgba(0,0,0,.4);
+}
+.bb-gate-logo {
+  display: flex; justify-content: center; margin-bottom: 28px;
+}
+.bb-gate-logo img {
+  width: clamp(64px, 10vw, 88px); height: auto;
+  filter: drop-shadow(0 4px 16px rgba(0,0,0,.4));
+}
+.bb-gate-head { text-align: center; margin-bottom: 32px; }
+.bb-gate-label {
+  font-family: 'Lora', serif; font-style: italic;
+  font-size: .82rem; letter-spacing: .26em;
+  text-transform: uppercase; color: var(--gold);
+  margin: 0 0 14px;
+}
+.bb-gate-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 3vw, 2rem);
+  font-weight: 500; color: var(--white);
+  margin: 0 0 16px; letter-spacing: -.005em;
+}
+.bb-gate-desc {
+  font-family: 'Lora', serif; font-size: .92rem;
+  line-height: 1.6; color: rgba(255,255,255,.72);
+  margin: 0;
+}
+.bb-gate-form { display: flex; flex-direction: column; gap: 16px; }
+.bb-gate-form label { display: flex; flex-direction: column; gap: 6px; }
+.bb-gate-form label span {
+  font-family: 'Lora', serif; font-style: italic;
+  font-size: .78rem; letter-spacing: .04em;
+  color: rgba(255,255,255,.62);
+}
+.bb-gate-form input {
+  font-family: 'Montserrat', sans-serif;
+  font-size: .94rem; color: var(--white);
+  background: rgba(0,0,0,.25);
+  border: 1px solid rgba(211,165,76,.22);
+  padding: 12px 14px;
+  transition: border-color .25s, background .25s;
+  width: 100%; outline: none;
+}
+.bb-gate-form input:focus {
+  border-color: var(--gold);
+  background: rgba(0,0,0,.4);
+}
+.bb-gate-error {
+  font-family: 'Lora', serif; font-size: .82rem;
+  color: #ffb3b8; background: rgba(220,53,69,.15);
+  border-left: 3px solid #c93644; padding: 10px 14px;
+  margin-top: 4px;
+}
+.bb-gate-submit { margin-top: 12px; text-align: center; }
+.bb-gate-submit:disabled { opacity: .55; cursor: wait; }
+.bb-gate-help {
+  font-family: 'Lora', serif; font-size: .78rem;
+  text-align: center; color: rgba(255,255,255,.5);
+  margin: 28px 0 0; line-height: 1.6;
+}
+.bb-gate-help a { color: var(--gold); text-decoration: none; transition: opacity .25s; }
+.bb-gate-help a:hover { opacity: .8; }
+
 /* Gerador de Cartão / Assinatura (form + preview) */
 .bb-gen-wrap {
   display: grid; grid-template-columns: 1fr 1.4fr;

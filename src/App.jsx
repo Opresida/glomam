@@ -4,7 +4,7 @@ import Home from './pages/Home.jsx';
 import Imprensa from './pages/Imprensa.jsx';
 import AdminLogin from './pages/AdminLogin.jsx';
 import AdminIntranet from './pages/AdminIntranet.jsx';
-import Brandbook from './pages/Brandbook.jsx';
+import BrandbookGate from './components/BrandbookGate.jsx';
 import Principios from './pages/Principios.jsx';
 import Judiciario from './pages/Judiciario.jsx';
 import Legislativo from './pages/Legislativo.jsx';
@@ -19,7 +19,7 @@ export default function App() {
         <Route path="/imprensa" element={<Imprensa />} />
         <Route path="/admin" element={<AdminLogin />} />
         <Route path="/admin/intranet" element={<AdminIntranet />} />
-        <Route path="/brandbook" element={<Brandbook />} />
+        <Route path="/brandbook" element={<BrandbookGate />} />
         <Route path="/principios" element={<Principios />} />
         <Route path="/judiciario" element={<Judiciario />} />
         <Route path="/legislativo" element={<Legislativo />} />
