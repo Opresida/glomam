@@ -824,7 +824,7 @@ section { padding: clamp(60px, 8vw, 100px) 0 }`}</pre>
             <div className="bb-gen-wrap">
               <div className="bb-gen-form">
                 <label><span>Nome completo</span><input value={pessoa.nome} onChange={(e) => setPessoa(p => ({ ...p, nome: e.target.value }))} placeholder="Tufi Salim Jorge Filho" /></label>
-                <label><span>Cargo</span><input value={pessoa.cargo} onChange={(e) => setPessoa(p => ({ ...p, cargo: e.target.value }))} placeholder="Grão-Mestre" /></label>
+                <label><span>Função</span><input value={pessoa.cargo} onChange={(e) => setPessoa(p => ({ ...p, cargo: e.target.value }))} placeholder="Grão-Mestre" /></label>
                 <label><span>CIM</span><input value={pessoa.cim} onChange={(e) => setPessoa(p => ({ ...p, cim: e.target.value }))} placeholder="8023" /></label>
                 <label><span>Email</span><input type="email" value={pessoa.email} onChange={(e) => setPessoa(p => ({ ...p, email: e.target.value }))} placeholder="nome@glomam.org.br" /></label>
                 <label><span>Telefone</span><input value={pessoa.telefone} onChange={(e) => setPessoa(p => ({ ...p, telefone: e.target.value }))} placeholder="+55 (92) 99999-0000" /></label>
