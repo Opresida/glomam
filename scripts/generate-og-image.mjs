@@ -12,12 +12,16 @@
  */
 
 import { chromium } from 'playwright';
-import { writeFile } from 'node:fs/promises';
+import { writeFile, readFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const OUTPUT_PATH = join(__dirname, '..', 'public', 'og-image.png');
+const LOGO_PATH = join(__dirname, '..', 'public', 'logo-glomam-transparent.png');
+
+const logoBase64 = (await readFile(LOGO_PATH)).toString('base64');
+const logoDataUrl = `data:image/png;base64,${logoBase64}`;
 
 const html = `<!doctype html>
 <html>
@@ -56,11 +60,12 @@ const html = `<!doctype html>
     pointer-events: none;
   }
   .logo {
-    width: 130px;
-    height: 130px;
+    width: 160px;
+    height: 160px;
     margin-bottom: 36px;
-    filter: drop-shadow(0 4px 24px rgba(0,0,0,.4));
+    filter: drop-shadow(0 6px 28px rgba(0,0,0,.5));
     z-index: 2;
+    object-fit: contain;
   }
   .title {
     font-size: 78px;
@@ -106,7 +111,7 @@ const html = `<!doctype html>
 </style>
 </head>
 <body>
-  <img class="logo" src="http://localhost:5000/icon-512.png" alt="GLOMAM" />
+  <img class="logo" src="${logoDataUrl}" alt="GLOMAM" />
   <h1 class="title">A Grande Loja<br><em>mais antiga do Brasil</em></h1>
   <div class="divider"></div>
   <p class="subtitle">GLOMAM · Grande Loja Maçônica do Amazonas</p>
