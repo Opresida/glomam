@@ -890,6 +890,25 @@ section { padding: clamp(60px, 8vw, 100px) 0 }`}</pre>
   </tr>
 </table>`}</pre>
             </details>
+
+            {/* ── IMAGEM DE COMPARTILHAMENTO (OG) ── */}
+            <h3 className="bb-h3">Imagem de Compartilhamento</h3>
+            <p className="bb-desc">Imagem Open Graph (1200 × 630 px) exibida automaticamente nas prévias de links da GLOMAM no WhatsApp, Facebook, LinkedIn, Twitter/X, Telegram e demais redes sociais.</p>
+            <div className="bb-og-wrap">
+              <div className="bb-og-preview">
+                <img src="/og-image.png" alt="Prévia da imagem de compartilhamento — A Grande Loja mais antiga do Brasil" />
+              </div>
+              <div className="bb-og-meta">
+                <div className="bb-og-specs">
+                  <div><span>Dimensões</span><strong>1200 × 630 px</strong></div>
+                  <div><span>Formato</span><strong>PNG</strong></div>
+                  <div><span>Uso</span><strong>Open Graph · Twitter Card</strong></div>
+                </div>
+                <a href="/og-image.png" download="glomam-open-graph.png" className="btn-primary bb-og-download">
+                  <span>↓ Baixar Imagem</span>
+                </a>
+              </div>
+            </div>
           </div>
         </section>
       )}

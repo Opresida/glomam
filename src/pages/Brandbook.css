@@ -558,6 +558,40 @@
   letter-spacing: .06em;
 }
 
+/* Imagem Open Graph (compartilhamento social) */
+.bb-og-wrap {
+  display: grid; grid-template-columns: 1.6fr 1fr;
+  gap: clamp(20px,3vw,40px); align-items: center;
+  margin: 16px 0 56px; padding: clamp(20px,3vw,32px);
+  background: var(--white);
+  box-shadow: 0 4px 24px rgba(0,0,0,.06);
+}
+.bb-og-preview {
+  position: relative; overflow: hidden;
+  border: 1px solid rgba(44,62,80,.08);
+  box-shadow: 0 8px 32px rgba(22,29,52,.18);
+  aspect-ratio: 1200/630;
+}
+.bb-og-preview img { width: 100%; height: 100%; display: block; object-fit: cover; }
+.bb-og-meta { display: flex; flex-direction: column; gap: clamp(18px,2.5vw,28px); }
+.bb-og-specs { display: flex; flex-direction: column; gap: 14px; }
+.bb-og-specs > div {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding-bottom: 10px; border-bottom: 1px solid rgba(44,62,80,.08);
+}
+.bb-og-specs span {
+  font-family: 'Lora', serif; font-size: .78rem; color: rgba(44,62,80,.55);
+  letter-spacing: .04em; font-style: italic;
+}
+.bb-og-specs strong {
+  font-family: 'Playfair Display', serif; font-size: .92rem;
+  color: var(--slate); font-weight: 500; letter-spacing: .02em;
+}
+.bb-og-download { align-self: stretch; text-align: center; }
+@media(max-width:768px){
+  .bb-og-wrap { grid-template-columns: 1fr; }
+}
+
 /* Assinatura de email */
 .bb-email-sig-wrap {
   display: flex; justify-content: center; margin-bottom: 24px;
