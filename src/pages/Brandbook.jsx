@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 import './Brandbook.css';
 
 /* ── Logos oficiais ── */
@@ -44,6 +46,93 @@ const SPACING = [4, 8, 12, 16, 24, 32, 48, 64, 96, 120];
 export default function Brandbook() {
   const [activeTab, setActiveTab] = useState('logo');
   const [copiedColor, setCopiedColor] = useState(null);
+
+  /* ── Gerador de cartão e assinatura ── */
+  const [pessoa, setPessoa] = useState({
+    nome: 'Tufi Salim Jorge Filho',
+    cargo: 'Grão-Mestre',
+    cim: '8023',
+    email: 'tufi@glomam.org.br',
+    telefone: '+55 (92) 99999-0000',
+  });
+  const [pdfStatus, setPdfStatus] = useState({ kind: 'idle', msg: '' });
+  const [copyStatus, setCopyStatus] = useState({ kind: 'idle', msg: '' });
+  const cardFrenteRef = useRef(null);
+  const cardVersoRef = useRef(null);
+
+  const slugifyNome = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+  async function baixarCartaoPDF() {
+    if (!cardFrenteRef.current || !cardVersoRef.current) return;
+    setPdfStatus({ kind: 'loading', msg: 'Gerando PDF...' });
+    try {
+      const opts = { scale: 4, backgroundColor: null, useCORS: true, logging: false };
+      const frente = await html2canvas(cardFrenteRef.current, opts);
+      const verso = await html2canvas(cardVersoRef.current, opts);
+
+      const pdf = new jsPDF({ orientation: 'landscape', unit: 'mm', format: [90, 50] });
+      pdf.addImage(frente.toDataURL('image/png'), 'PNG', 0, 0, 90, 50, undefined, 'FAST');
+      pdf.addPage([90, 50], 'landscape');
+      pdf.addImage(verso.toDataURL('image/png'), 'PNG', 0, 0, 90, 50, undefined, 'FAST');
+      pdf.save(`cartao-glomam-${slugifyNome(pessoa.nome) || 'sem-nome'}.pdf`);
+
+      setPdfStatus({ kind: 'success', msg: 'PDF baixado com sucesso. Pronto para a gráfica.' });
+      setTimeout(() => setPdfStatus({ kind: 'idle', msg: '' }), 3500);
+    } catch (e) {
+      setPdfStatus({ kind: 'error', msg: `Erro ao gerar PDF: ${e.message}` });
+    }
+  }
+
+  function assinaturaHTML(p) {
+    return `<table cellpadding="0" cellspacing="0" style="font-family:'Montserrat',Arial,sans-serif;max-width:520px">
+  <tr>
+    <td style="padding-right:20px;border-right:2px solid #d3a54c;vertical-align:top">
+      <div style="width:70px;height:70px;border-radius:50%;background:#161d34;text-align:center;line-height:70px">
+        <img src="https://i.imgur.com/XVkyVtV.png" alt="GLOMAM" width="54" style="vertical-align:middle"/>
+      </div>
+    </td>
+    <td style="padding-left:20px;vertical-align:top">
+      <p style="margin:0;font-family:'Playfair Display',Georgia,serif;font-size:15px;font-weight:700;color:#161d34;letter-spacing:0.08em">
+        ${p.nome}
+      </p>
+      <p style="margin:2px 0 0;font-size:11px;color:#d3a54c;letter-spacing:0.15em;text-transform:uppercase;font-weight:600">
+        ${p.cargo} · CIM ${p.cim}
+      </p>
+      <div style="width:100%;height:1px;background:rgba(211,165,76,0.2);margin:10px 0"></div>
+      <p style="margin:0;font-size:11px;color:#6b7280;line-height:1.6">
+        GLOMAM — Grande Loja Maçônica do Amazonas<br/>
+        Av. Prof. Nilton Lins, 1655 — Manaus, AM<br/>
+        ${p.email} · ${p.telefone}
+      </p>
+      <p style="margin:8px 0 0;font-family:'Lora',Georgia,serif;font-style:italic;font-size:12px;color:#d3a54c;opacity:0.7">
+        Ad Gloriam et Honorem
+      </p>
+    </td>
+  </tr>
+</table>`;
+  }
+
+  async function copiarAssinatura() {
+    try {
+      await navigator.clipboard.writeText(assinaturaHTML(pessoa));
+      setCopyStatus({ kind: 'success', msg: 'Código HTML copiado. Cole no editor de assinatura do seu email.' });
+      setTimeout(() => setCopyStatus({ kind: 'idle', msg: '' }), 3500);
+    } catch (e) {
+      setCopyStatus({ kind: 'error', msg: `Falha ao copiar: ${e.message}` });
+    }
+  }
+
+  function baixarAssinaturaHTML() {
+    const blob = new Blob([assinaturaHTML(pessoa)], { type: 'text/html;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `assinatura-glomam-${slugifyNome(pessoa.nome) || 'sem-nome'}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
@@ -729,45 +818,61 @@ section { padding: clamp(60px, 8vw, 100px) 0 }`}</pre>
             </div>
 
             {/* ── CARTÃO DE VISITA ── */}
-            <h3 className="bb-h3">Cartão de Visita</h3>
-            <p className="bb-desc">Formato 90×50mm — Frente e verso.</p>
-            <div className="bb-material-wrap">
-              {/* Frente */}
-              <div className="bb-card-visita bb-card-frente">
-                <div className="bb-cv-border">
-                  <div className="bb-cv-corner bb-cv-tl" /><div className="bb-cv-corner bb-cv-tr" />
-                  <div className="bb-cv-corner bb-cv-bl" /><div className="bb-cv-corner bb-cv-br" />
-                  <div className="bb-cv-content">
-                    <div className="bb-cv-top">
-                      <img className="bb-cv-symbol" src={LOGO_NAVY} alt="GLOMAM" width="40" height="40" />
-                      <div className="bb-cv-brand">
-                        <span className="bb-cv-logo">GLOMAM</span>
-                        <span className="bb-cv-sub">Grande Loja Maçônica do Amazonas</span>
+            <h3 className="bb-h3">Cartão de Visita Personalizado</h3>
+            <p className="bb-desc">Preencha os dados abaixo e clique em <strong>"Baixar PDF"</strong>. O arquivo gerado é em formato 90×50mm pronto para envio à gráfica.</p>
+
+            <div className="bb-gen-wrap">
+              <div className="bb-gen-form">
+                <label><span>Nome completo</span><input value={pessoa.nome} onChange={(e) => setPessoa(p => ({ ...p, nome: e.target.value }))} placeholder="Tufi Salim Jorge Filho" /></label>
+                <label><span>Cargo</span><input value={pessoa.cargo} onChange={(e) => setPessoa(p => ({ ...p, cargo: e.target.value }))} placeholder="Grão-Mestre" /></label>
+                <label><span>CIM</span><input value={pessoa.cim} onChange={(e) => setPessoa(p => ({ ...p, cim: e.target.value }))} placeholder="8023" /></label>
+                <label><span>Email</span><input type="email" value={pessoa.email} onChange={(e) => setPessoa(p => ({ ...p, email: e.target.value }))} placeholder="nome@glomam.org.br" /></label>
+                <label><span>Telefone</span><input value={pessoa.telefone} onChange={(e) => setPessoa(p => ({ ...p, telefone: e.target.value }))} placeholder="+55 (92) 99999-0000" /></label>
+                <button type="button" className="btn-primary bb-gen-action" onClick={baixarCartaoPDF} disabled={pdfStatus.kind === 'loading'}>
+                  <span>{pdfStatus.kind === 'loading' ? 'Gerando…' : '↓ Baixar Cartão (PDF)'}</span>
+                </button>
+                {pdfStatus.kind !== 'idle' && (
+                  <div className={`bb-gen-msg bb-gen-msg--${pdfStatus.kind}`}>{pdfStatus.msg}</div>
+                )}
+              </div>
+              <div className="bb-gen-preview">
+                <p className="bb-gen-preview-label">Pré-visualização — Frente</p>
+                <div className="bb-card-visita bb-card-frente" ref={cardFrenteRef}>
+                  <div className="bb-cv-border">
+                    <div className="bb-cv-corner bb-cv-tl" /><div className="bb-cv-corner bb-cv-tr" />
+                    <div className="bb-cv-corner bb-cv-bl" /><div className="bb-cv-corner bb-cv-br" />
+                    <div className="bb-cv-content">
+                      <div className="bb-cv-top">
+                        <img className="bb-cv-symbol" src={LOGO_NAVY} alt="GLOMAM" width="40" height="40" crossOrigin="anonymous" />
+                        <div className="bb-cv-brand">
+                          <span className="bb-cv-logo">GLOMAM</span>
+                          <span className="bb-cv-sub">Grande Loja Maçônica do Amazonas</span>
+                        </div>
                       </div>
-                    </div>
-                    <div className="bb-cv-line" />
-                    <div className="bb-cv-person">
-                      <span className="bb-cv-name">Tufi Salim Jorge Filho</span>
-                      <span className="bb-cv-cargo">Grão-Mestre · CIM 8023</span>
-                    </div>
-                    <div className="bb-cv-contacts">
-                      <span>glomam@glomam.org.br</span>
-                      <span>Av. Prof. Nilton Lins, 1655 — Manaus, AM</span>
-                      <span>CNPJ 04.405.007/0001-44</span>
+                      <div className="bb-cv-line" />
+                      <div className="bb-cv-person">
+                        <span className="bb-cv-name">{pessoa.nome || '—'}</span>
+                        <span className="bb-cv-cargo">{pessoa.cargo || '—'} · CIM {pessoa.cim || '—'}</span>
+                      </div>
+                      <div className="bb-cv-contacts">
+                        <span>{pessoa.email || '—'}</span>
+                        <span>{pessoa.telefone || '—'}</span>
+                        <span>Av. Prof. Nilton Lins, 1655 — Manaus, AM</span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              {/* Verso */}
-              <div className="bb-card-visita bb-card-verso">
-                <div className="bb-cv-border bb-cv-dark">
-                  <div className="bb-cv-corner bb-cv-tl" /><div className="bb-cv-corner bb-cv-tr" />
-                  <div className="bb-cv-corner bb-cv-bl" /><div className="bb-cv-corner bb-cv-br" />
-                  <div className="bb-cv-back-content">
-                    <img src={LOGO_GOLD} alt="GLOMAM" width="72" height="72" />
-                    <span className="bb-cv-back-logo">GLOMAM</span>
-                    <span className="bb-cv-back-motto">Ad Gloriam et Honorem</span>
-                    <span className="bb-cv-back-year">Est. 1904</span>
+                <p className="bb-gen-preview-label">Pré-visualização — Verso</p>
+                <div className="bb-card-visita bb-card-verso" ref={cardVersoRef}>
+                  <div className="bb-cv-border bb-cv-dark">
+                    <div className="bb-cv-corner bb-cv-tl" /><div className="bb-cv-corner bb-cv-tr" />
+                    <div className="bb-cv-corner bb-cv-bl" /><div className="bb-cv-corner bb-cv-br" />
+                    <div className="bb-cv-back-content">
+                      <img src={LOGO_GOLD} alt="GLOMAM" width="72" height="72" crossOrigin="anonymous" />
+                      <span className="bb-cv-back-logo">GLOMAM</span>
+                      <span className="bb-cv-back-motto">Ad Gloriam et Honorem</span>
+                      <span className="bb-cv-back-year">Est. 1904</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -825,8 +930,8 @@ section { padding: clamp(60px, 8vw, 100px) 0 }`}</pre>
             </div>
 
             {/* ── ASSINATURA DE EMAIL ── */}
-            <h3 className="bb-h3">Assinatura de Email</h3>
-            <p className="bb-desc">Template HTML inline-styled para compatibilidade universal com clientes de email.</p>
+            <h3 className="bb-h3">Assinatura de Email Personalizada</h3>
+            <p className="bb-desc">Usa os mesmos dados do cartão de visita. Clique em <strong>"Copiar HTML"</strong> e cole no editor de assinatura do Gmail, Outlook ou Apple Mail.</p>
             <div className="bb-email-sig-wrap">
               <div className="bb-email-sig">
                 <table cellPadding="0" cellSpacing="0" style={{ fontFamily: "'Montserrat', Arial, sans-serif", maxWidth: 520 }}>
@@ -839,16 +944,16 @@ section { padding: clamp(60px, 8vw, 100px) 0 }`}</pre>
                       </td>
                       <td style={{ paddingLeft: 20, verticalAlign: 'top' }}>
                         <p style={{ margin: 0, fontFamily: "'Playfair Display', Georgia, serif", fontSize: 15, fontWeight: 700, color: '#161d34', letterSpacing: '0.08em' }}>
-                          Tufi Salim Jorge Filho
+                          {pessoa.nome || '—'}
                         </p>
                         <p style={{ margin: '2px 0 0', fontSize: 11, color: '#d3a54c', letterSpacing: '0.15em', textTransform: 'uppercase', fontWeight: 600 }}>
-                          Grão-Mestre · CIM 8023
+                          {pessoa.cargo || '—'} · CIM {pessoa.cim || '—'}
                         </p>
                         <div style={{ width: '100%', height: 1, background: 'rgba(211,165,76,0.2)', margin: '10px 0' }} />
                         <p style={{ margin: 0, fontSize: 11, color: '#6b7280', lineHeight: '1.6' }}>
                           GLOMAM — Grande Loja Maçônica do Amazonas<br/>
                           Av. Prof. Nilton Lins, 1655 — Manaus, AM<br/>
-                          glomam@glomam.org.br
+                          {pessoa.email || '—'} · {pessoa.telefone || '—'}
                         </p>
                         <p style={{ margin: '8px 0 0', fontFamily: "'Lora', Georgia, serif", fontStyle: 'italic', fontSize: 12, color: '#d3a54c', opacity: 0.7 }}>
                           Ad Gloriam et Honorem
@@ -860,35 +965,22 @@ section { padding: clamp(60px, 8vw, 100px) 0 }`}</pre>
               </div>
             </div>
 
+            <div className="bb-gen-actions">
+              <button type="button" className="btn-primary" onClick={copiarAssinatura}>
+                <span>📋 Copiar HTML</span>
+              </button>
+              <button type="button" className="btn-outline-light bb-btn-dark" onClick={baixarAssinaturaHTML}>
+                Baixar .html
+              </button>
+            </div>
+            {copyStatus.kind !== 'idle' && (
+              <div className={`bb-gen-msg bb-gen-msg--${copyStatus.kind}`} style={{ maxWidth: 520, margin: '12px auto 0' }}>{copyStatus.msg}</div>
+            )}
+
             {/* Código da assinatura */}
-            <details className="bb-code-toggle">
-              <summary>Ver código HTML da assinatura</summary>
-              <pre className="bb-code-block">{`<table cellpadding="0" cellspacing="0" style="font-family:'Montserrat',Arial,sans-serif;max-width:520px">
-  <tr>
-    <td style="padding-right:20px;border-right:2px solid #d3a54c;vertical-align:top">
-      <div style="width:70px;height:70px;border-radius:50%;background:#161d34;text-align:center;line-height:70px">
-        <img src="https://i.imgur.com/XVkyVtV.png" alt="GLOMAM" width="54" style="vertical-align:middle"/>
-      </div>
-    </td>
-    <td style="padding-left:20px;vertical-align:top">
-      <p style="margin:0;font-family:'Playfair Display',Georgia,serif;font-size:15px;font-weight:700;color:#161d34;letter-spacing:0.08em">
-        Nome do Irmão
-      </p>
-      <p style="margin:2px 0 0;font-size:11px;color:#d3a54c;letter-spacing:0.15em;text-transform:uppercase;font-weight:600">
-        Cargo · CIM 0000
-      </p>
-      <div style="width:100%;height:1px;background:rgba(211,165,76,0.2);margin:10px 0"></div>
-      <p style="margin:0;font-size:11px;color:#6b7280;line-height:1.6">
-        GLOMAM — Grande Loja Maçônica do Amazonas<br/>
-        Av. Prof. Nilton Lins, 1655 — Manaus, AM<br/>
-        glomam@glomam.org.br
-      </p>
-      <p style="margin:8px 0 0;font-family:'Lora',Georgia,serif;font-style:italic;font-size:12px;color:#d3a54c;opacity:0.7">
-        Ad Gloriam et Honorem
-      </p>
-    </td>
-  </tr>
-</table>`}</pre>
+            <details className="bb-code-toggle" style={{ marginTop: 28 }}>
+              <summary>Ver código HTML gerado</summary>
+              <pre className="bb-code-block">{assinaturaHTML(pessoa)}</pre>
             </details>
 
             {/* ── IMAGEM DE COMPARTILHAMENTO (OG) ── */}

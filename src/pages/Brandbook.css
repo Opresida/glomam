@@ -558,6 +558,64 @@
   letter-spacing: .06em;
 }
 
+/* Gerador de Cartão / Assinatura (form + preview) */
+.bb-gen-wrap {
+  display: grid; grid-template-columns: 1fr 1.4fr;
+  gap: clamp(20px,3vw,40px); align-items: start;
+  margin: 16px 0 56px; padding: clamp(20px,3vw,32px);
+  background: var(--white);
+  box-shadow: 0 4px 24px rgba(0,0,0,.06);
+}
+.bb-gen-form { display: flex; flex-direction: column; gap: 14px; }
+.bb-gen-form label {
+  display: flex; flex-direction: column; gap: 5px;
+}
+.bb-gen-form label span {
+  font-family: 'Lora', serif; font-size: .78rem;
+  letter-spacing: .04em; color: rgba(44,62,80,.62);
+  font-style: italic;
+}
+.bb-gen-form input {
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: .92rem; color: var(--slate);
+  background: var(--bg);
+  border: 1px solid rgba(44,62,80,.12);
+  padding: 10px 14px;
+  transition: border-color .25s, background .25s;
+  width: 100%; outline: none;
+}
+.bb-gen-form input:focus {
+  border-color: var(--gold);
+  background: var(--white);
+}
+.bb-gen-action { margin-top: 8px; text-align: center; }
+.bb-gen-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 12px; }
+.bb-btn-dark {
+  color: var(--slate) !important;
+  border-color: var(--slate) !important;
+}
+.bb-btn-dark:hover {
+  background: var(--slate) !important;
+  color: var(--white) !important;
+}
+.bb-gen-msg {
+  font-family: 'Lora', serif; font-size: .82rem;
+  padding: 10px 14px; border-radius: 3px; margin-top: 4px;
+  text-align: center;
+}
+.bb-gen-msg--loading { background: rgba(0,85,135,.08); color: var(--blue); border-left: 3px solid var(--blue); }
+.bb-gen-msg--success { background: rgba(34,139,34,.08); color: #1a6b1a; border-left: 3px solid #1a6b1a; }
+.bb-gen-msg--error { background: rgba(220,53,69,.08); color: #a02530; border-left: 3px solid #a02530; }
+.bb-gen-preview { display: flex; flex-direction: column; gap: 18px; align-items: center; }
+.bb-gen-preview-label {
+  font-family: 'Lora', serif; font-size: .72rem;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(44,62,80,.45); margin: 0;
+}
+@media(max-width:900px){
+  .bb-gen-wrap { grid-template-columns: 1fr; }
+}
+
 /* Imagem Open Graph (compartilhamento social) */
 .bb-og-wrap {
   display: grid; grid-template-columns: 1.6fr 1fr;
