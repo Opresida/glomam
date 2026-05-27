@@ -63,6 +63,12 @@ header.shrunk{background:rgba(18,59,97,.82);backdrop-filter:blur(14px);-webkit-b
 /* CTA Login */
 .nav-cta{padding:7px 18px!important;border:1px solid var(--gold)!important;color:var(--gold)!important;font-family:'Playfair Display',serif;transition:background .3s,color .3s!important;border-radius:3px;margin-left:8px}
 .nav-cta:hover{background:var(--gold)!important;color:var(--white)!important}
+.nav-social{display:flex;align-items:center;gap:6px;margin-left:12px}
+.nav-social-link{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;color:var(--gold);border:1px solid transparent;border-radius:3px;transition:color .3s,border-color .3s,background .3s;text-decoration:none}
+.nav-social-link:hover{color:var(--white);border-color:var(--gold);background:rgba(211,165,76,.12)}
+.nav-drawer-social{display:flex;gap:18px;padding:24px clamp(16px,5vw,40px);border-top:1px solid rgba(255,255,255,.08)}
+.nav-drawer-social .nav-social-link{width:42px;height:42px;color:var(--gold);border:1px solid rgba(211,165,76,.4)}
+.nav-drawer-social .nav-social-link:hover{color:var(--white);background:rgba(211,165,76,.18);border-color:var(--gold)}
 
 /* Hamburger */
 .nav-burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;background:none;border:none;cursor:pointer;padding:4px;z-index:1100}
@@ -946,7 +952,7 @@ a.disp-contato-valor:hover{color:var(--gold)}
 .lojas-search input{flex:1;background:transparent;border:none;outline:none;color:var(--white);font-family:'Lora',serif;font-size:.95rem}
 .lojas-search input::placeholder{color:rgba(255,255,255,.4);font-style:italic}
 .lojas-filtros{display:flex;flex-wrap:wrap;gap:8px}
-.lojas-filtro{padding:8px 16px;background:transparent;border:1px solid rgba(211,165,76,.2);color:rgba(255,255,255,.72);font-family:'Playfair Display',serif;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:all .3s}
+.lojas-filtro{padding:10px 18px;background:transparent;border:1px solid rgba(211,165,76,.2);color:rgba(255,255,255,.72);font-family:'Lora',serif;font-size:.92rem;letter-spacing:.02em;font-style:italic;font-weight:500;cursor:pointer;transition:all .3s}
 .lojas-filtro:hover{border-color:rgba(211,165,76,.5);color:var(--white)}
 .lojas-filtro.active{background:var(--gold);border-color:var(--gold);color:var(--slate)}
 .lojas-count{font-family:'Playfair Display',serif;font-size:.58rem;letter-spacing:.32em;text-transform:uppercase;color:rgba(211,165,76,.7)}

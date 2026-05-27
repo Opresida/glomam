@@ -87,27 +87,6 @@ export default function VisitaVirtual() {
           </div>
         </div>
 
-        <div className="vv-cta reveal reveal-d3">
-          <div className="vv-cta-divider" />
-          <p className="vv-cta-eyebrow">Do virtual ao sagrado</p>
-          <h3 className="vv-cta-title">Pronto para cruzar os portais?</h3>
-          <p className="vv-cta-text">
-            A visita virtual é apenas o primeiro passo. O verdadeiro encontro com a Ordem acontece
-            presencialmente, no silêncio do Templo. Agende uma visita presencial e conheça de perto
-            a arquitetura, os símbolos e os Irmãos que dão vida à GLOMAM.
-          </p>
-          <div className="vv-cta-btns">
-            <a href="#oriente" className="btn-primary"><span>Agendar Visita Presencial</span></a>
-            <a
-              href={`https://www.youtube.com/watch?v=${VIDEO_ID}`}
-              target="_blank"
-              rel="noreferrer"
-              className="btn-outline-light"
-            >
-              Assistir no YouTube
-            </a>
-          </div>
-        </div>
       </div>
     </section>
   );

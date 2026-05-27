@@ -132,6 +132,20 @@ export default function Header() {
               )}
             </div>
           ))}
+          <div className="nav-social">
+            <a href="https://www.instagram.com/glomam_oficial/" target="_blank" rel="noopener noreferrer" aria-label="Instagram da GLOMAM" className="nav-social-link">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
+            <a href="https://www.facebook.com/oficialglomam" target="_blank" rel="noopener noreferrer" aria-label="Facebook da GLOMAM" className="nav-social-link">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                <path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.51 1.49-3.9 3.78-3.9 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.77l-.44 2.89h-2.33v6.99A10 10 0 0 0 22 12Z" />
+              </svg>
+            </a>
+          </div>
           <Link to="/admin" className="nav-cta">Login</Link>
         </div>
 
@@ -189,6 +203,20 @@ export default function Header() {
         ))}
         <div className="nav-drawer-item">
           <Link to="/admin" onClick={closeDrawer}>Login</Link>
+        </div>
+        <div className="nav-drawer-social">
+          <a href="https://www.instagram.com/glomam_oficial/" target="_blank" rel="noopener noreferrer" aria-label="Instagram da GLOMAM" className="nav-social-link">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="5" />
+              <circle cx="12" cy="12" r="4" />
+              <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+            </svg>
+          </a>
+          <a href="https://www.facebook.com/oficialglomam" target="_blank" rel="noopener noreferrer" aria-label="Facebook da GLOMAM" className="nav-social-link">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+              <path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.51 1.49-3.9 3.78-3.9 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.77l-.44 2.89h-2.33v6.99A10 10 0 0 0 22 12Z" />
+            </svg>
+          </a>
         </div>
       </nav>
     </header>
