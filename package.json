@@ -6,6 +6,7 @@
     "dev": "vite --host 0.0.0.0 --port 5000",
     "build": "node scripts/fetch-instagram.mjs && vite build",
     "ig:fetch": "node scripts/fetch-instagram.mjs",
+    "og:generate": "node scripts/generate-og-image.mjs",
     "preview": "vite preview",
     "pdf:setup": "npm install --no-save playwright pdf-lib && npx playwright install chromium",
     "pdf": "node scripts/generate-pdf.mjs"
@@ -20,5 +21,8 @@
     "react-router-dom": "^7.14.0",
     "three": "^0.183.2",
     "vite": "^8.0.3"
+  },
+  "devDependencies": {
+    "playwright": "^1.60.0"
   }
 }
