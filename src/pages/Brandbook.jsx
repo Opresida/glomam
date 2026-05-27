@@ -66,7 +66,11 @@ export default function Brandbook() {
     if (!cardFrenteRef.current || !cardVersoRef.current) return;
     setPdfStatus({ kind: 'loading', msg: 'Gerando PDF...' });
     try {
-      const opts = { scale: 4, backgroundColor: null, useCORS: true, logging: false };
+      const imgs = [...cardFrenteRef.current.querySelectorAll('img'), ...cardVersoRef.current.querySelectorAll('img')];
+      await Promise.all(imgs.map(img => img.complete ? Promise.resolve() : new Promise(res => { img.onload = res; img.onerror = res; })));
+      await new Promise(r => setTimeout(r, 150));
+
+      const opts = { scale: 4, backgroundColor: null, useCORS: true, allowTaint: true, logging: false };
       const frente = await html2canvas(cardFrenteRef.current, opts);
       const verso = await html2canvas(cardVersoRef.current, opts);
 
@@ -843,7 +847,7 @@ section { padding: clamp(60px, 8vw, 100px) 0 }`}</pre>
                     <div className="bb-cv-corner bb-cv-bl" /><div className="bb-cv-corner bb-cv-br" />
                     <div className="bb-cv-content">
                       <div className="bb-cv-top">
-                        <img className="bb-cv-symbol" src={LOGO_NAVY} alt="GLOMAM" width="40" height="40" crossOrigin="anonymous" />
+                        <img className="bb-cv-symbol" src="/icon-512.png" alt="GLOMAM" width="40" height="40" />
                         <div className="bb-cv-brand">
                           <span className="bb-cv-logo">GLOMAM</span>
                           <span className="bb-cv-sub">Grande Loja Maçônica do Amazonas</span>
@@ -868,7 +872,7 @@ section { padding: clamp(60px, 8vw, 100px) 0 }`}</pre>
                     <div className="bb-cv-corner bb-cv-tl" /><div className="bb-cv-corner bb-cv-tr" />
                     <div className="bb-cv-corner bb-cv-bl" /><div className="bb-cv-corner bb-cv-br" />
                     <div className="bb-cv-back-content">
-                      <img src={LOGO_GOLD} alt="GLOMAM" width="72" height="72" crossOrigin="anonymous" />
+                      <img src="/logo-glomam-transparent.png" alt="GLOMAM" width="72" height="72" />
                       <span className="bb-cv-back-logo">GLOMAM</span>
                       <span className="bb-cv-back-motto">Ad Gloriam et Honorem</span>
                       <span className="bb-cv-back-year">Est. 1904</span>
