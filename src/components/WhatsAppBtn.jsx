@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function WhatsAppBtn({ href = 'https://wa.me/5592999999999', label = 'Falar no WhatsApp' }) {
+export default function WhatsAppBtn({ href = 'https://wa.me/559236220034', label = 'Falar no WhatsApp' }) {
   return (
     <a href={href} target="_blank" rel="noreferrer" className="wa-btn" aria-label={label}>
       <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24">

@@ -35,7 +35,7 @@ export const noticias = [
     data: '20 Mar 2026',
     resumo: 'Em ação conjunta com as Lojas filiadas, a GLOMAM distribuiu cestas básicas e material escolar a mais de 200 famílias em bairros periféricos da capital amazonense.',
     imagem: 'https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=800&q=80',
-    destaque: false,
+    destaque: true,
   },
   {
     id: 5,
@@ -44,7 +44,7 @@ export const noticias = [
     data: '15 Mar 2026',
     resumo: 'O evento, sediado na sede da Grande Loja, contou com palestrantes renomados que debateram a responsabilidade do maçom perante a sociedade contemporânea.',
     imagem: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80',
-    destaque: false,
+    destaque: true,
   },
   {
     id: 6,
@@ -53,7 +53,7 @@ export const noticias = [
     data: '08 Mar 2026',
     resumo: 'A visita reforçou os vínculos de amizade e regularidade entre as duas jurisdições, com a realização de trabalhos em conjunto e troca de experiências administrativas.',
     imagem: 'https://images.unsplash.com/photo-1577495508048-b635879837f1?w=800&q=80',
-    destaque: false,
+    destaque: true,
   },
   {
     id: 7,
@@ -62,7 +62,7 @@ export const noticias = [
     data: '01 Mar 2026',
     resumo: 'A Secretaria da Grande Loja torna público o edital que rege o processo eleitoral para renovação dos cargos do Grande Oriente, com prazo de inscrição até 30 de abril.',
     imagem: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80',
-    destaque: false,
+    destaque: true,
   },
   {
     id: 8,

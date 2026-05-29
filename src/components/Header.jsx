@@ -34,7 +34,7 @@ const menuItems = [
   },
   { label: 'Lojas', link: '/lojas' },
   {
-    label: 'Dispensários',
+    label: 'Dispensário',
     children: [
       { label: 'Site Dispensário', link: 'https://www.glomamdispensario.org/', external: true },
       { label: 'Quem Somos', link: '/dispensario/quem-somos' },
