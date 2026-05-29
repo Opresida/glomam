@@ -23,6 +23,7 @@ const masters = [
   { name: 'Átila Atala Tuma', term: '2010-2013', photo: 'https://i.imgur.com/Z8DZtrf.jpeg' },
   { name: 'Elzio Duarte Alecrim', term: '2013-2016', photo: 'https://i.imgur.com/PUTJSNL.jpeg' },
   { name: 'Fernando Ferreira Lima', term: '2016-2019', photo: 'https://i.imgur.com/FjDdkMM.png' },
+  { name: 'Marcelo Barbosa Peixoto', term: '2019-2025', photo: 'https://i.imgur.com/V8gVai6.png' },
 ];
 
 export default function Memorial() {
