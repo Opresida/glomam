@@ -15,6 +15,7 @@ import Lideranca from '../components/Lideranca.jsx';
 import Familias from '../components/Familias.jsx';
 import MapaLojas from '../components/MapaLojas.jsx';
 import FAQ from '../components/FAQ.jsx';
+import Iniciacao from '../components/Iniciacao.jsx';
 import Oriente from '../components/Oriente.jsx';
 import useReveal from '../hooks/useReveal.js';
 import WhatsAppBtn from '../components/WhatsAppBtn.jsx';
@@ -57,6 +58,7 @@ export default function Home() {
         <Familias />
         <MapaLojas />
         <FAQ />
+        <Iniciacao />
         <Oriente />
       </main>
       <Footer />

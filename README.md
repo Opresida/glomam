@@ -128,7 +128,7 @@ Sem as env vars o script aborta com warning, **sem quebrar o build**.
 
 | Rota | Descrição |
 |------|-----------|
-| `/` | Página institucional (17 seções) |
+| `/` | Página institucional (18 seções) |
 | `/principios` | Princípios Maçônicos — 3 blocos (Síntese, Ser Maçom, Nossas Finalidades) |
 | `/judiciario` | Judiciário GLOMAM — Procuradoria, Corregedoria, Juízes, Secretaria |
 | `/legislativo` | Legislativo GLOMAM — 27 Grandes Oficiais |
@@ -264,6 +264,7 @@ index.html
                       ├── <AlbumEventos /> — estado local (albumAberto, fotoAtiva)
                       ├── <EsculturaParticulas /> — Three.js WebGL
                       ├── <FAQ /> — estado local (openIndex)
+                      ├── <Iniciacao /> — FAQ exclusiva + form Netlify (Declaração de Interesse)
                       ├── <Newsletter /> — estado local (email, enviado)
                       └── <Oriente /> — estático + Google Maps iframe
 ```
@@ -389,6 +390,7 @@ AdminLogin.jsx
 - [x] **Paleta corrigida em CONTEXT.md e PROJECT_CONTEXT.md** — antes referenciavam paleta antiga (gold marrom #b4975a) mesmo após migração para 9 tons
 - [x] **Logos oficiais das ordens paramaçônicas** integradas em `Familias.jsx` (DeMolay, Filhas de Jó, Estrela do Oriente, Escudeiros) — brasões em `public/ordem-*.png` *(aprovado 2026-05-25)*
 - [x] **Vídeo institucional no Hero** — `public/hero-glomam.mp4` (autoplay/muted/loop/playsinline + poster fallback) substitui a imagem de fundo *(aprovado 2026-05-25)*
+- [x] **Ordem paramaçônica "Abelhinhas" + seção "Torne-se um Maçom"** — 5º card em `Familias.jsx` (logo Colmeia As Amazonas, grade 4→5 col) e nova `Iniciacao.jsx` antes do rodapé: FAQ exclusiva (6 tópicos) + formulário "Declaração de Interesse" via Netlify Forms (`iniciacao-macom`) *(aprovado 2026-06-03)*
 
 ### Pendente
 - [ ] **Revisão visual dos pinos do mapa** — cliente confirma quais Lojas estão fora do endereço exato (coords ajustáveis em `src/data/lojasCoords.js`)

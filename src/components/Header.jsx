@@ -10,7 +10,7 @@ const menuItems = [
     children: [
       { label: 'Nossa História', link: '#nossa-historia' },
       { label: 'Paramaçônicos', link: '#familias' },
-      { label: 'Quero ser um Maçom', link: '#faq-section' },
+      { label: 'Quero ser um Maçom', link: '#iniciacao' },
     ],
   },
   {

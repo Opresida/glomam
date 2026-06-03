@@ -6,6 +6,13 @@ Lista de tarefas pendentes, melhorias planejadas e bugs conhecidos.
 
 ## Em andamento
 
+### Concluído recentemente
+- [x] **Ordem paramaçônica "Abelhinhas" + seção "Torne-se um Maçom"** ✓ *aprovado 2026-06-03*
+  - 5º card em `Familias.jsx` (logo Colmeia As Amazonas → `public/ordem-abelhinhas.png`), grade `.familias-grid` 4→5 colunas (+ `.reveal-d4`)
+  - Nova seção `Iniciacao.jsx` antes do rodapé (Home, entre FAQ e Oriente): FAQ exclusiva de 6 tópicos + formulário "Declaração de Interesse" (Nome, Endereço, Telefone, Mídia Social, motivo c/ limite 600 chars)
+  - Envio via **Netlify Forms** (`iniciacao-macom`): form de detecção oculto no `index.html` + submit AJAX no componente. Link "Quero ser um Maçom" do Header repontado p/ `#iniciacao`
+  - **Pendente (ação do Humberto):** após o 1º deploy, ativar notificação de e-mail do form no painel Netlify → **graomestre@glomam.org.br**
+
 ### Aguardando entrega do cliente
 - [x] **Integração Instagram (Novidades) — totalmente automatizada** ✓ *aprovado 2026-05-26*
   - App `GLOMAM feed` criado no Meta for Developers (FB App ID `1025115713522309`, IG App ID `4304571463128427`)

@@ -91,6 +91,21 @@ export default function Familias() {
               <div className="fc-back-glyph">E</div>
             </div>
           </div>
+          <div className="familia-card reveal reveal-d4">
+            <div className="fc-front">
+              <div className="fc-num">05</div>
+              <img className="fc-icon-logo" src="/ordem-abelhinhas.png" alt="Brasão das Abelhinhas — Colmeia As Amazonas" loading="lazy" />
+              <div className="fc-title">Abelhinhas</div>
+              <p className="fc-desc">Programa das Filhas de Jó para meninas de 6 a 10 anos — a Colmeia dos primeiros passos em equipe, oratória e amizade.</p>
+              <div className="fc-tag">Feminino · 6–10 anos</div>
+            </div>
+            <div className="fc-back">
+              <div className="fc-title">Abelhinhas</div>
+              <p className="fc-desc">Na Colmeia, cada Abelhinha cultiva o amor pelo aprendizado, pelo serviço e pela fraternidade, preparando-se com carinho para ingressar nas Filhas de Jó.</p>
+              <div className="fc-tag">1ª Colmeia em 1988</div>
+              <div className="fc-back-glyph">A</div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

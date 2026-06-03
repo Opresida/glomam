@@ -2,7 +2,7 @@
 
 ## Visão Geral
 
-Site institucional e intranet administrativa da Grande Loja Maçônica do Amazonas (GLOMAM), potência maçônica regular fundada em 1904, Manaus/AM. O projeto combina um portal público de 16 seções interativas com um painel de gestão organizacional completo.
+Site institucional e intranet administrativa da Grande Loja Maçônica do Amazonas (GLOMAM), potência maçônica regular fundada em 1904, Manaus/AM. O projeto combina um portal público de 18 seções interativas com um painel de gestão organizacional completo.
 
 **URL de produção:** Netlify (deploy automático via push na main)
 **Ambiente de dev:** `http://localhost:5000`
@@ -85,6 +85,7 @@ Site institucional e intranet administrativa da Grande Loja Maçônica do Amazon
 - [x] **Header transparente com blur ao scroll** + Hero reformulado + Welcome/Doação removidos ✓ *aprovado 2026-05-20*
 - [x] **Logos oficiais das ordens paramaçônicas** integradas em `Familias.jsx` (DeMolay, Filhas de Jó, Estrela do Oriente, Escudeiros) — brasões PNG em `public/ordem-*.png`, classe `.fc-icon-logo` ✓ *aprovado 2026-05-25*
 - [x] **Vídeo institucional no Hero** — `public/hero-glomam.mp4` substitui a imagem de fundo (autoplay/muted/loop/playsinline, poster como fallback, overlay diagonal preservado) ✓ *aprovado 2026-05-25*
+- [x] **Ordem paramaçônica "Abelhinhas"** — 5º card em `Familias.jsx` (logo Colmeia As Amazonas em `public/ordem-abelhinhas.png`, grade 4→5 colunas) + **Seção "Torne-se um Maçom"** (`Iniciacao.jsx`, antes do rodapé): FAQ exclusiva de 6 tópicos + formulário "Declaração de Interesse" via Netlify Forms (`iniciacao-macom`) → graomestre@glomam.org.br ✓ *aprovado 2026-06-03*
 
 ### Aguardando entrega do cliente
 - [ ] Confirmação de conta Business Instagram (pré-requisito para integração Graph API)
@@ -96,6 +97,7 @@ Site institucional e intranet administrativa da Grande Loja Maçônica do Amazon
 - [ ] Autenticação real em `/admin`
 - [ ] Upload real de fotos no Álbum de Eventos
 - [ ] Integração real da Newsletter (Mailchimp/Resend)
+- [ ] **Ativar notificação de e-mail do form `iniciacao-macom`** no painel Netlify → graomestre@glomam.org.br (form só é detectado após o 1º deploy)
 - [ ] Integração do Instagram → seção "Últimas Notícias" (Graph API + Netlify Function)
 - [ ] Cadastrar Lojas Nº 25 e Nº 32 (faltantes na sequência)
 - [ ] Link âncora `#album-eventos` no Header e Footer
