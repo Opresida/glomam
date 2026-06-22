@@ -37,11 +37,12 @@ const track2 = [
   { photo: 'https://i.imgur.com/cp8Qw3m.png', alt: 'Jocélio Cardoso', role: 'Gr. Sec. de Integração Inst. Adj.', name: 'Jocélio B. Cardoso' },
 ];
 
-function ExecCard({ photo, alt, role, name }) {
+function ExecCard({ photo, role, name }) {
+  // Foto enquadrada no rosto (recorte 1:1); cargo e nome vêm como legenda nítida.
   return (
     <div className="exec-card">
       <div className="exec-photo">
-        <img src={photo} alt={alt} />
+        <img src={photo} alt={name} />
       </div>
       <div className="exec-role">{role}</div>
       <div className="exec-name">{name}</div>

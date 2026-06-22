@@ -36,21 +36,32 @@ function googleMapsUrl(endereco, cidade) {
   return `https://www.google.com/maps/search/?api=1&query=${query}`;
 }
 
+function enderecoLinha(endereco) {
+  const num =
+    endereco.numero && endereco.numero !== 'S/N' && endereco.numero !== 'S/Nº'
+      ? `, ${endereco.numero}`
+      : '';
+  return `${endereco.logradouro}${num}`;
+}
+
 function PopupContent({ lojasNoPonto }) {
-  return (
-    <div className="mapa-popup">
-      {lojasNoPonto.map((loja, idx) => (
-        <div key={loja.numero} className={idx > 0 ? 'mapa-popup-item mapa-popup-item-sep' : 'mapa-popup-item'}>
-          <div className="mapa-popup-numero">Nº {loja.numero}</div>
-          <h4 className="mapa-popup-nome">{loja.nome}</h4>
+  // Condomínio maçônico: várias Lojas no mesmo endereço.
+  // Mostra UM único link do Maps (o prédio é o mesmo) + as informações de cada Loja.
+  const condominio = lojasNoPonto.length > 1;
+  const principal = lojasNoPonto[0];
+
+  if (condominio) {
+    return (
+      <div className="mapa-popup">
+        <div className="mapa-popup-cond-head">
+          <div className="mapa-popup-cond-label">Condomínio Maçônico · {lojasNoPonto.length} Lojas</div>
           <p className="mapa-popup-endereco">
-            {loja.endereco.logradouro}
-            {loja.endereco.numero && loja.endereco.numero !== 'S/N' && loja.endereco.numero !== 'S/Nº' && `, ${loja.endereco.numero}`}
+            {enderecoLinha(principal.endereco)}
             <br/>
-            {loja.endereco.bairro} · {loja.oriente}
+            {principal.endereco.bairro} · {principal.oriente}
           </p>
           <a
-            href={googleMapsUrl(loja.endereco, loja.oriente)}
+            href={googleMapsUrl(principal.endereco, principal.oriente)}
             target="_blank"
             rel="noreferrer"
             className="mapa-popup-link"
@@ -58,7 +69,37 @@ function PopupContent({ lojasNoPonto }) {
             Abrir no Google Maps ↗
           </a>
         </div>
-      ))}
+        <ul className="mapa-popup-lista">
+          {lojasNoPonto.map((loja) => (
+            <li key={loja.numero} className="mapa-popup-lista-item">
+              <span className="mapa-popup-lista-num">Nº {loja.numero}</span>
+              <span className="mapa-popup-lista-nome">{loja.nome}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mapa-popup">
+      <div className="mapa-popup-item">
+        <div className="mapa-popup-numero">Nº {principal.numero}</div>
+        <h4 className="mapa-popup-nome">{principal.nome}</h4>
+        <p className="mapa-popup-endereco">
+          {enderecoLinha(principal.endereco)}
+          <br/>
+          {principal.endereco.bairro} · {principal.oriente}
+        </p>
+        <a
+          href={googleMapsUrl(principal.endereco, principal.oriente)}
+          target="_blank"
+          rel="noreferrer"
+          className="mapa-popup-link"
+        >
+          Abrir no Google Maps ↗
+        </a>
+      </div>
     </div>
   );
 }
@@ -82,7 +123,14 @@ export default function MapaLojas() {
     : { center: [-4.0, -63.5], zoom: 6, key: 'interior' };
 
   const pinosAtuais = view === 'manaus' ? pinosManaus : pinosInterior;
-  const totalLojas = pinosAtuais.reduce((sum, p) => sum + p.lojas.length, 0);
+
+  // Total geral de Lojas no estado (Manaus + interior) — exibido sem detalhar municípios.
+  const totalGeral = useMemo(
+    () =>
+      pinosManaus.reduce((s, p) => s + p.lojas.length, 0) +
+      pinosInterior.reduce((s, p) => s + p.lojas.length, 0),
+    [pinosManaus, pinosInterior]
+  );
 
   return (
     <section id="onde-estamos" className="mapa-section">
@@ -93,7 +141,7 @@ export default function MapaLojas() {
           <div className="divider" style={{ margin: '16px auto 22px' }} />
           <p className="mapa-sub">
             A jurisdição da GLOMAM se estende por todo o estado do Amazonas, com
-            <strong> {totalLojas} {view === 'manaus' ? 'Lojas em Manaus' : `Lojas em ${pinosInterior.length} municípios do interior`}</strong>.
+            <strong> {totalGeral} Lojas</strong> filiadas.
           </p>
         </div>
 
@@ -139,7 +187,7 @@ export default function MapaLojas() {
                 position={[ponto.coord.lat, ponto.coord.lng]}
                 icon={goldPinIcon}
               >
-                <Popup>
+                <Popup maxHeight={300} autoPan={true}>
                   <PopupContent lojasNoPonto={ponto.lojas} />
                 </Popup>
               </Marker>

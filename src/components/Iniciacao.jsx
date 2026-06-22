@@ -88,12 +88,8 @@ export default function Iniciacao() {
       <div className="section-inner">
         <div className="reveal" style={{ textAlign: 'center' }}>
           <div className="section-label" style={{ justifyContent: 'center' }}>O Caminho da Iniciação</div>
-          <h2>Torne-se um Maçom</h2>
+          <h2>Como se tornar um Maçom</h2>
           <div className="divider" style={{ margin: '16px auto 0' }}></div>
-          <p className="ini-intro">
-            A Maçonaria não convida — ela recebe. Conheça abaixo tudo o que envolve ser um maçom e,
-            ao se identificar com nossos princípios, manifeste seu interesse.
-          </p>
         </div>
 
         <div className="ini-grid">

@@ -10,7 +10,6 @@ const menuItems = [
     children: [
       { label: 'Nossa História', link: '#nossa-historia' },
       { label: 'Paramaçônicos', link: '#familias' },
-      { label: 'Quero ser um Maçom', link: '#iniciacao' },
     ],
   },
   {
@@ -25,21 +24,13 @@ const menuItems = [
   {
     label: 'Administração',
     children: [
-      { label: 'Governantes', link: '#lideranca' },
-      { label: 'Executivos', link: '#lideranca' },
-      { label: 'Legislativos', link: '/legislativo' },
+      { label: 'Legislativo', link: '/legislativo' },
       { label: 'Judiciário', link: '/judiciario' },
-      { label: 'Grandes Comissões', link: '#lideranca' },
     ],
   },
+  { label: 'Como se tornar um Maçom', link: '#iniciacao' },
   { label: 'Lojas', link: '/lojas' },
-  {
-    label: 'Dispensário',
-    children: [
-      { label: 'Site Dispensário', link: 'https://www.glomamdispensario.org/', external: true },
-      { label: 'Quem Somos', link: '/dispensario/quem-somos' },
-    ],
-  },
+  { label: 'Dispensário', link: 'https://www.glomamdispensario.org/', external: true },
 ];
 
 export default function Header() {
@@ -75,11 +66,21 @@ export default function Header() {
       }
       const el = document.querySelector(link);
       if (el) {
-        const top = el.offsetTop - 80;
+        // posição real no documento, descontando a altura do header fixo
+        const top = el.getBoundingClientRect().top + window.scrollY - 84;
         window.scrollTo({ top, behavior: 'smooth' });
       }
     } else {
       closeDrawer();
+    }
+  };
+
+  // Clicar em "Home" estando na própria home rola suavemente para o começo
+  const handleHome = (e) => {
+    closeDrawer();
+    if (window.location.pathname === '/') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -128,12 +129,18 @@ export default function Header() {
                     )}
                   </div>
                 </>
+              ) : item.external ? (
+                <a href={item.link} target="_blank" rel="noreferrer" className="external">
+                  {item.label}
+                </a>
+              ) : item.link === '/' ? (
+                <Link to="/" onClick={handleHome}>{item.label}</Link>
               ) : item.link.startsWith('#') ? (
                 <a href={item.link} onClick={(e) => handleLink(item.link, e)}>
                   {item.label}
                 </a>
               ) : (
-                <Link to={item.link}>{item.label}</Link>
+                <Link to={item.link} onClick={closeDrawer}>{item.label}</Link>
               )}
             </div>
           ))}
@@ -195,6 +202,14 @@ export default function Header() {
                   )}
                 </div>
               </>
+            ) : item.external ? (
+              <a href={item.link} target="_blank" rel="noreferrer" onClick={closeDrawer}>
+                {item.label} ↗
+              </a>
+            ) : item.link === '/' ? (
+              <Link to="/" onClick={handleHome}>
+                {item.label}
+              </Link>
             ) : item.link.startsWith('#') ? (
               <a href={item.link} onClick={(e) => handleLink(item.link, e)}>
                 {item.label}

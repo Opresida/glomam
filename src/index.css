@@ -40,7 +40,7 @@ img,svg{display:block;max-width:100%}
 header{position:fixed;top:0;width:100%;z-index:1000;background:transparent;transition:background .4s,box-shadow .4s,backdrop-filter .4s;box-shadow:none;backdrop-filter:blur(0);-webkit-backdrop-filter:blur(0)}
 header.shrunk{background:rgba(18,59,97,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 2px 16px rgba(0,0,0,.25)}
 .nav-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:var(--nav-h);padding:0 clamp(16px,4vw,40px)}
-.logo{display:flex;align-items:center;gap:12px;text-decoration:none;flex-shrink:0}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;flex-shrink:0;margin-right:clamp(20px,4vw,56px)}
 .logo img{height:50px;width:auto}
 .logo-text{font-family:'Playfair Display',serif;font-size:clamp(.72rem,1.4vw,.95rem);font-weight:700;letter-spacing:.06em;color:var(--white);line-height:1.05}
 .logo-text small{display:block;font-size:.7rem;letter-spacing:.28em;opacity:.85;font-weight:700;margin-top:4px;color:var(--gold)}
@@ -269,7 +269,7 @@ h1 .gold{color:var(--gold)}
 .masters-track-wrap{overflow:hidden}
 .masters-track{display:flex;gap:clamp(10px,1.8vw,24px);transition:transform .7s var(--ease);will-change:transform}
 .master-card{flex:0 0 clamp(120px,18vw,160px);text-align:center}
-.master-portrait{width:100%;aspect-ratio:3/4;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);position:relative;overflow:hidden;margin-bottom:11px;transition:border-color .4s}
+.master-portrait{width:100%;aspect-ratio:3/4;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);position:relative;overflow:hidden;margin-bottom:11px;transition:border-color .4s;filter:grayscale(100%)}
 .master-portrait::before{content:'';position:absolute;top:7px;left:7px;right:7px;bottom:7px;border:1px solid rgba(211,165,76,.13);transition:border-color .4s}
 .master-portrait::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(211,165,76,.1) 100%);opacity:0;transition:opacity .4s}
 .master-card:hover .master-portrait{border-color:rgba(211,165,76,.4)}
@@ -415,13 +415,13 @@ h1 .gold{color:var(--gold)}
 .gov-card{text-align:center;position:relative}
 .gov-card.gov-main{width:clamp(140px,18vw,200px)}
 .gov-card.gov-vigilante{width:clamp(120px,15vw,170px)}
-.gov-portrait{width:100%;aspect-ratio:3/4;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);position:relative;overflow:hidden;margin-bottom:clamp(10px,1.5vw,16px);transition:border-color .4s}
+.gov-portrait{width:100%;aspect-ratio:1/1;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);position:relative;overflow:hidden;margin-bottom:clamp(10px,1.5vw,16px);transition:border-color .4s}
 .gov-portrait::before{content:'';position:absolute;top:7px;left:7px;right:7px;bottom:7px;border:1px solid rgba(211,165,76,.22);pointer-events:none;transition:border-color .4s;z-index:1}
 .gov-portrait::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(211,165,76,.14) 100%);opacity:0;transition:opacity .4s;z-index:1}
 .gov-card:hover .gov-portrait{border-color:rgba(211,165,76,.55)}
 .gov-card:hover .gov-portrait::before{border-color:rgba(211,165,76,.4)}
 .gov-card:hover .gov-portrait::after{opacity:1}
-.gov-portrait img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+.gov-portrait img{width:100%;height:100%;object-fit:cover;object-position:center 16%;display:block}
 .gov-rank{font-family:'Playfair Display',serif;font-size:.48rem;letter-spacing:.28em;color:var(--gold);text-transform:uppercase;margin-bottom:5px;line-height:1.4}
 .gov-cim{font-size:.44rem;letter-spacing:.18em;color:rgba(211,165,76,.55);margin-bottom:5px;font-family:'Playfair Display',serif}
 .gov-name{font-family:'Playfair Display',serif;font-size:clamp(.6rem,1.1vw,.76rem);color:rgba(255,255,255,.88);letter-spacing:.06em;text-transform:uppercase;line-height:1.5}
@@ -439,11 +439,11 @@ h1 .gold{color:var(--gold)}
 .exec-track-wrap:hover .exec-track{animation-play-state:paused}
 .exec-card{flex:0 0 clamp(110px,14vw,160px);background:rgba(255,255,255,.03);border:1px solid rgba(211,165,76,.16);padding:clamp(10px,1.4vw,18px) clamp(8px,1vw,14px);text-align:center;transition:border-color .3s}
 .exec-card:hover{border-color:rgba(211,165,76,.5)}
-.exec-photo{width:100%;aspect-ratio:3/4;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);position:relative;overflow:hidden;margin-bottom:clamp(7px,1vw,12px);transition:border-color .4s}
+.exec-photo{width:100%;aspect-ratio:1/1;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);position:relative;overflow:hidden;margin-bottom:clamp(7px,1vw,12px);transition:border-color .4s}
 .exec-photo::before{content:'';position:absolute;top:5px;left:5px;right:5px;bottom:5px;border:1px solid rgba(211,165,76,.18);pointer-events:none;z-index:1}
 .exec-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(211,165,76,.12) 100%);z-index:1}
 .exec-card:hover .exec-photo{border-color:rgba(211,165,76,.45)}
-.exec-photo img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+.exec-photo img{width:100%;height:100%;object-fit:cover;object-position:center 16%;display:block}
 .exec-role{font-family:'Playfair Display',serif;font-size:.4rem;letter-spacing:.14em;color:var(--gold);text-transform:uppercase;margin-bottom:4px;line-height:1.45}
 .exec-name{font-size:clamp(.55rem,.85vw,.7rem);color:rgba(255,255,255,.65);letter-spacing:.03em;line-height:1.4}
 .lid-separator{width:60px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto clamp(32px,5vw,56px)}
@@ -1100,6 +1100,17 @@ a.disp-contato-valor:hover{color:var(--gold)}
 .mapa-popup-endereco{font-family:'Lora',serif;font-size:.85rem;color:rgba(255,255,255,.72);line-height:1.55;margin:0 0 10px}
 .mapa-popup-link{display:inline-block;font-family:'Playfair Display',serif;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(211,165,76,.4);padding-bottom:2px;transition:all .3s}
 .mapa-popup-link:hover{color:var(--white);border-bottom-color:var(--white)}
+
+/* Condomínio maçônico (várias Lojas no mesmo endereço): 1 link do Maps + lista das Lojas */
+.mapa-popup-cond-head{padding-bottom:12px;margin-bottom:12px;border-bottom:1px solid rgba(211,165,76,.22)}
+.mapa-popup-cond-label{font-family:'Playfair Display',serif;font-size:.56rem;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;opacity:.9}
+.mapa-popup-lista{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+.mapa-popup-lista-item{display:flex;flex-direction:column;gap:2px;padding-left:12px;border-left:2px solid rgba(211,165,76,.35)}
+.mapa-popup-lista-num{font-family:'Playfair Display',serif;font-size:.5rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);opacity:.8}
+.mapa-popup-lista-nome{font-family:'Lora',serif;font-size:.9rem;color:rgba(255,255,255,.85);line-height:1.35}
+/* Garante rolagem dentro do popup quando há muitas Lojas (corrige o corte das de baixo) */
+.leaflet-popup-content{max-height:none}
+.leaflet-popup-scrolled{border-top:1px solid rgba(211,165,76,.18);border-bottom:1px solid rgba(211,165,76,.18)}
 
 /* Controles de zoom mais legíveis */
 .leaflet-control-zoom a{background:#161d34!important;color:var(--gold)!important;border:1px solid rgba(211,165,76,.3)!important;font-weight:600!important}

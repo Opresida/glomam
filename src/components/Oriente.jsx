@@ -33,7 +33,7 @@ export default function Oriente() {
               </div>
             </div>
             <div style={{ marginTop: '32px' }}>
-              <a href="https://wa.me/559236220034" target="_blank" rel="noreferrer" className="btn-primary" style={{ display: 'inline-block' }}><span>Entrar em Contacto</span></a>
+              <a href="https://wa.me/559236220034" target="_blank" rel="noreferrer" className="btn-primary" style={{ display: 'inline-block' }}><span>Entrar em Contato</span></a>
             </div>
           </div>
           <div className="map-wrap reveal reveal-d1">
