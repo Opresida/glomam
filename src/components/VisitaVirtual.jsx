@@ -12,7 +12,7 @@ export default function VisitaVirtual() {
       <div className="section-inner">
         <div className="vv-header reveal">
           <div className="section-label" style={{ justifyContent: 'center' }}>Experiência Imersiva</div>
-          <h2 className="vv-titulo">Visita Virtual ao Grande Templo</h2>
+          <h2 className="vv-titulo">Visita ao Palácio Maçônico</h2>
           <div className="divider" style={{ margin: '18px auto 22px' }} />
           <p className="vv-sub">
             Sobrevoe a sede histórica da GLOMAM no coração de Manaus e conheça, em primeira mão,
@@ -28,7 +28,7 @@ export default function VisitaVirtual() {
                 type="button"
                 className="vv-thumb"
                 onClick={() => setPlaying(true)}
-                aria-label="Assistir à visita virtual do Grande Templo Maçônico"
+                aria-label="Assistir à visita ao Palácio Maçônico"
                 style={{ backgroundImage: `url(${THUMB})` }}
               >
                 <div className="vv-thumb-overlay" />
@@ -46,7 +46,7 @@ export default function VisitaVirtual() {
             ) : (
               <iframe
                 src={`https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&rel=0&modestbranding=1`}
-                title="Visita Virtual — Grande Templo Maçônico GLOMAM"
+                title="Visita ao Palácio Maçônico GLOMAM"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
               />
