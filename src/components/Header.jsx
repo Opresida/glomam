@@ -84,6 +84,15 @@ export default function Header() {
     }
   };
 
+  // Clicar em um link de rota (ex.: "Lojas", "Princípios") estando já naquela
+  // rota rola suavemente para o topo — mudança de rota é tratada pelo ScrollToTop.
+  const handleRoute = (to) => {
+    closeDrawer();
+    if (location.pathname === to) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   const ChevronDown = () => (
     <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="M3 4.5L6 7.5L9 4.5" />
@@ -122,7 +131,7 @@ export default function Header() {
                           {child.label}
                         </a>
                       ) : (
-                        <Link key={j} to={child.link} onClick={closeDrawer}>
+                        <Link key={j} to={child.link} onClick={() => handleRoute(child.link)}>
                           {child.label}
                         </Link>
                       )
@@ -140,7 +149,7 @@ export default function Header() {
                   {item.label}
                 </a>
               ) : (
-                <Link to={item.link} onClick={closeDrawer}>{item.label}</Link>
+                <Link to={item.link} onClick={() => handleRoute(item.link)}>{item.label}</Link>
               )}
             </div>
           ))}
@@ -195,7 +204,7 @@ export default function Header() {
                         {child.label}
                       </a>
                     ) : (
-                      <Link key={j} to={child.link} onClick={closeDrawer}>
+                      <Link key={j} to={child.link} onClick={() => handleRoute(child.link)}>
                         {child.label}
                       </Link>
                     )
@@ -215,7 +224,7 @@ export default function Header() {
                 {item.label}
               </a>
             ) : (
-              <Link to={item.link} onClick={closeDrawer}>
+              <Link to={item.link} onClick={() => handleRoute(item.link)}>
                 {item.label}
               </Link>
             )}
