@@ -203,27 +203,6 @@ export default function Lojas() {
         </div>
       </section>
 
-      <section className="jud-cta">
-        <div className="section-inner" style={{ textAlign: 'center' }}>
-          <div className="jud-divider" style={{ margin: '0 auto 28px' }} />
-          <p className="jud-cta-eyebrow">Faça parte desta irmandade</p>
-          <h3 className="jud-cta-title">Você está pronto para dar o próximo passo?</h3>
-          <p className="jud-cta-text">
-            Da primeira Loja instalada no Oriente de Manaus em 1872 até as iniciações mais recentes,
-            cada Loja carrega uma parte da história da GLOMAM e do Amazonas maçônico. Se você sente
-            o chamado da Luz, o Templo tem uma vaga reservada para você.
-          </p>
-          <a
-            href="/#faq-section"
-            className="btn-primary"
-            style={{ marginTop: 'clamp(24px,4vw,40px)', padding: 'clamp(14px,2vw,18px) clamp(42px,6vw,72px)' }}
-          >
-            <span>Quero Ser Maçom</span>
-          </a>
-          <div style={{ width: '44px', height: '1px', background: 'var(--gold)', margin: 'clamp(28px,4vw,44px) auto 0', opacity: '.3' }} />
-        </div>
-      </section>
-
       <Footer />
       <WhatsAppBtn />
 
