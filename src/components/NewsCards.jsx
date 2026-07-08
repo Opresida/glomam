@@ -4,7 +4,22 @@ import { noticias as fallbackNoticias } from '../data/noticias.js';
 import instagramPosts from '../data/instagram.json';
 
 const fallbackItems = fallbackNoticias.filter(n => n.destaque);
-const igItems = Array.isArray(instagramPosts) ? instagramPosts.slice(0, 12) : [];
+
+// Ordena por data decrescente (post mais recente primeiro). O formato é "DD Mmm YYYY"
+// (ex.: "27 Mai 2026"). Garante que o primeiro card, da esquerda pra direita, seja
+// sempre a publicação mais atual — mesmo que o JSON venha fora de ordem.
+const MESES_PT = { Jan:0, Fev:1, Mar:2, Abr:3, Mai:4, Jun:5, Jul:6, Ago:7, Set:8, Out:9, Nov:10, Dez:11 };
+function dataParaTempo(str) {
+  if (typeof str !== 'string') return 0;
+  const [dia, mes, ano] = str.trim().split(/\s+/);
+  const m = MESES_PT[mes];
+  if (m === undefined || !dia || !ano) return 0;
+  return new Date(Number(ano), m, Number(dia)).getTime();
+}
+
+const igItems = (Array.isArray(instagramPosts) ? [...instagramPosts] : [])
+  .sort((a, b) => dataParaTempo(b.data) - dataParaTempo(a.data))
+  .slice(0, 12);
 const items = igItems.length > 0 ? igItems : fallbackItems;
 const isInstagramFeed = igItems.length > 0;
 
