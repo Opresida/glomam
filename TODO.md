@@ -7,6 +7,10 @@ Lista de tarefas pendentes, melhorias planejadas e bugs conhecidos.
 ## Em andamento
 
 ### Concluído recentemente
+- [x] **Abas "Legislativo" e "Judiciário" ocultas do menu** ✓ *2026-07-08*
+  - Bloco "Administração" (único que continha essas abas) comentado em `src/components/Header.jsx`
+  - **CSS, páginas e rotas mantidos intactos** (`/legislativo`, `/judiciario`, `Legislativo.jsx`, `Judiciario.jsx`, estilos `.jud-*`) para reaproveitamento futuro
+  - Para reexibir: descomentar o bloco `Administração` em `Header.jsx`
 - [x] **Ordem paramaçônica "Abelhinhas" + seção "Torne-se um Maçom"** ✓ *aprovado 2026-06-03*
   - 5º card em `Familias.jsx` (logo Colmeia As Amazonas → `public/ordem-abelhinhas.png`), grade `.familias-grid` 4→5 colunas (+ `.reveal-d4`)
   - Nova seção `Iniciacao.jsx` antes do rodapé (Home, entre FAQ e Oriente): FAQ exclusiva de 6 tópicos + formulário "Declaração de Interesse" (Nome, Endereço, Telefone, Mídia Social, motivo c/ limite 600 chars)

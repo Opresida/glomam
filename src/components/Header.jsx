@@ -21,13 +21,16 @@ const menuItems = [
       { label: 'Perguntas e Respostas', link: '#faq-section' },
     ],
   },
-  {
-    label: 'Administração',
-    children: [
-      { label: 'Legislativo', link: '/legislativo' },
-      { label: 'Judiciário', link: '/judiciario' },
-    ],
-  },
+  // OCULTO (2026-07-08 — pedido do Humberto): aba "Administração" (Legislativo + Judiciário)
+  // removida do menu. Rotas (/legislativo, /judiciario), páginas e CSS mantidos intactos
+  // para reaproveitamento futuro. Para reexibir, basta descomentar o bloco abaixo.
+  // {
+  //   label: 'Administração',
+  //   children: [
+  //     { label: 'Legislativo', link: '/legislativo' },
+  //     { label: 'Judiciário', link: '/judiciario' },
+  //   ],
+  // },
   { label: 'Como se tornar um Maçom', link: '#iniciacao' },
   { label: 'Lojas', link: '/lojas' },
   { label: 'Dispensário', link: 'https://www.glomamdispensario.org/', external: true },
