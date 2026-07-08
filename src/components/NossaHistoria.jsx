@@ -50,7 +50,7 @@ export default function NossaHistoria() {
         <div className="nh-cta-block reveal">
           <div className="nh-cta-ornament"></div>
           <p className="nh-cta-sub">Faça parte desta história</p>
-          <a href="#oriente" className="btn-primary" style={{ padding: 'clamp(14px,2vw,18px) clamp(42px,6vw,72px)' }}><span>Quero Ser Maçom</span></a>
+          <a href="#oriente" className="btn-primary" style={{ padding: 'clamp(14px,2vw,18px) clamp(42px,6vw,72px)' }}><span>Como se tornar um Maçom</span></a>
         </div>
       </div>
     </section>

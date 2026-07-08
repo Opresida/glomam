@@ -123,7 +123,7 @@ export default function Iniciacao() {
             <div className="ini-form-card">
               <div className="ini-form-head">
                 <div className="section-label" style={{ justifyContent: 'flex-start' }}>Declaração de Interesse</div>
-                <h3 className="ini-form-title">Quero ser Maçom</h3>
+                <h3 className="ini-form-title">Como se tornar um Maçom</h3>
               </div>
 
               <div className="ini-important">

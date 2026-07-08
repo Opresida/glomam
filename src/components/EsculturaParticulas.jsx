@@ -226,7 +226,7 @@ export default function EsculturaParticulas() {
           a porta está aberta.
         </p>
         <a href="#oriente" className="esc-cta-btn">
-          <span>Quero Ser Maçom</span>
+          <span>Como se tornar um Maçom</span>
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
             <line x1="2" y1="8" x2="14" y2="8" />
             <polyline points="9,3 14,8 9,13" />

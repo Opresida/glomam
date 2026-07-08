@@ -127,7 +127,7 @@ export default function Principios() {
             Se os princípios acima ressoam em seu íntimo, talvez o Templo já tenha
             uma vaga reservada para você.
           </p>
-          <a href="/#faq-section" className="btn-primary"><span>Quero Ser Maçom</span></a>
+          <a href="/#faq-section" className="btn-primary"><span>Como se tornar um Maçom</span></a>
         </div>
       </section>
 
