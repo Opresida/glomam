@@ -10,10 +10,12 @@ import Judiciario from './pages/Judiciario.jsx';
 import Legislativo from './pages/Legislativo.jsx';
 import Lojas from './pages/Lojas.jsx';
 import DispensarioQuemSomos from './pages/DispensarioQuemSomos.jsx';
+import ScrollToTop from './components/ScrollToTop.jsx';
 
 export default function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/imprensa" element={<Imprensa />} />
