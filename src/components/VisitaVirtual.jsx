@@ -68,16 +68,6 @@ export default function VisitaVirtual() {
           <div className="vv-info-card">
             <div className="vv-info-icon" aria-hidden="true">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="3" y="4" width="18" height="18" rx="2" />
-                <path d="M16 2v4M8 2v4M3 10h18" />
-              </svg>
-            </div>
-            <h4>Primeiro Contato</h4>
-            <p>Para aspirantes, é o convite inicial — conheça o espaço sagrado antes mesmo de cruzar seus portais.</p>
-          </div>
-          <div className="vv-info-card">
-            <div className="vv-info-icon" aria-hidden="true">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M20 10c0 7-8 12-8 12s-8-5-8-12a8 8 0 0116 0z" />
                 <circle cx="12" cy="10" r="3" />
               </svg>
