@@ -125,7 +125,7 @@
   width: auto;
   flex: 0 1 auto;
 }
-.damas-logo--damas { mix-blend-mode: multiply; } /* funde a "caixa" clara do JPG no creme */
+.damas-logo--damas { mix-blend-mode: normal; } /* PNG oficial transparente (i.imgur.com) */
 .damas-hero-titulo {
   font-family: 'Playfair Display', serif;
   font-weight: 600;
