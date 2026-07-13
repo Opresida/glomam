@@ -75,7 +75,7 @@ export default function DamasDaFraternidade() {
     endereco: '',
     instagram: '',
     'voce-e': '',
-    oriente: '',
+    municipio: '',
     loja: '',
     profissao: '',
     'primeira-dama': '',
@@ -342,8 +342,8 @@ export default function DamasDaFraternidade() {
 
                       <div className="damas-field-row">
                         <label className="damas-field">
-                          <span>Oriente</span>
-                          <input type="text" name="oriente" value={form.oriente} onChange={handleChange} placeholder="Cidade / Oriente" />
+                          <span>Município</span>
+                          <input type="text" name="municipio" value={form.municipio} onChange={handleChange} placeholder="Sua cidade" />
                         </label>
                         <label className="damas-field">
                           <span>Qual a Loja</span>
@@ -406,16 +406,10 @@ export default function DamasDaFraternidade() {
             {fase === 'pagamento' && (
               <div className="damas-fase">
                 <Losangos />
-                <div className="damas-fase-check">
-                  <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4">
-                    <circle cx="12" cy="12" r="10" />
-                    <polyline points="8 12 11 15 16 9" />
-                  </svg>
-                </div>
-                <h2 className="damas-secao-titulo">Inscrição recebida!</h2>
+                <h2 className="damas-secao-titulo">Realize o pagamento</h2>
                 <p className="damas-secao-sub">
-                  Agora conclua o pagamento do passaporte (<strong>{evento.passaporte.valorFormatado}</strong>) via
-                  PIX. Escaneie o QR Code ou copie a chave abaixo.
+                  Para <strong>confirmar sua inscrição</strong>, realize o pagamento do passaporte
+                  (<strong>{evento.passaporte.valorFormatado}</strong>) via PIX. Escaneie o QR Code ou copie a chave abaixo.
                 </p>
 
                 <div className="damas-pix-card">
@@ -434,7 +428,7 @@ export default function DamasDaFraternidade() {
                 <button type="button" className="damas-submit damas-fase-cta" onClick={confirmarPagamento}>
                   <span>Confirmo o pagamento</span>
                 </button>
-                <p className="damas-fase-hint">Clique acima após realizar o PIX para enviar seu comprovante.</p>
+                <p className="damas-fase-hint">Confirme sua inscrição após realizar o pagamento.</p>
               </div>
             )}
 
@@ -442,10 +436,16 @@ export default function DamasDaFraternidade() {
             {fase === 'comprovante' && (
               <div className="damas-fase">
                 <Losangos />
-                <h2 className="damas-secao-titulo">Falta pouco, Cunhada!</h2>
+                <div className="damas-fase-check">
+                  <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="8 12 11 15 16 9" />
+                  </svg>
+                </div>
+                <h2 className="damas-secao-titulo">Inscrição realizada com sucesso!</h2>
                 <p className="damas-secao-sub">
-                  Para <strong>garantir sua vaga</strong>, envie o comprovante do PIX pelo WhatsApp. Será uma
-                  alegria receber você no Chá das Acácias!
+                  Que alegria contar com você, Cunhada! Para finalizar, <strong>envie o comprovante</strong> do
+                  PIX pelo WhatsApp e entre no nosso grupo do evento. Será uma alegria receber você no Chá das Acácias!
                 </p>
 
                 <div className="damas-fase-actions">
