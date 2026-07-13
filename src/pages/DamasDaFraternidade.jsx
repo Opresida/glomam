@@ -183,7 +183,7 @@ export default function DamasDaFraternidade() {
           <div className="damas-hero-inner">
             <div className="damas-logos reveal">
               <img className="damas-logo damas-logo--damas" src="/damas-da-fraternidade.jpg" alt="Damas da Fraternidade" />
-              <img className="damas-logo damas-logo--glomam" src="/logo-glomam-original.svg" alt="GLOMAM — Grande Loja Maçônica do Amazonas" />
+              <img className="damas-logo damas-logo--glomam" src="/logo-glomam-navy.png" alt="GLOMAM — Grande Loja Maçônica do Amazonas" />
             </div>
             <Losangos />
             <h1 className="damas-hero-titulo reveal">
