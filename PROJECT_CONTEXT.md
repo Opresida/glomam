@@ -86,6 +86,7 @@ Site institucional e intranet administrativa da Grande Loja Maçônica do Amazon
 - [x] **Logos oficiais das ordens paramaçônicas** integradas em `Familias.jsx` (DeMolay, Filhas de Jó, Estrela do Oriente, Escudeiros) — brasões PNG em `public/ordem-*.png`, classe `.fc-icon-logo` ✓ *aprovado 2026-05-25*
 - [x] **Vídeo institucional no Hero** — `public/hero-glomam.mp4` substitui a imagem de fundo (autoplay/muted/loop/playsinline, poster como fallback, overlay diagonal preservado) ✓ *aprovado 2026-05-25*
 - [x] **Ordem paramaçônica "Abelhinhas"** — 5º card em `Familias.jsx` (logo Colmeia As Amazonas em `public/ordem-abelhinhas.png`, grade 4→5 colunas) + **Seção "Torne-se um Maçom"** (`Iniciacao.jsx`, antes do rodapé): FAQ exclusiva de 6 tópicos + formulário "Declaração de Interesse" via Netlify Forms (`iniciacao-macom`) → graomestre@glomam.org.br ✓ *aprovado 2026-06-03*
+- [x] **Landing "Chá das Acácias"** (`/damasdafraternidade`) — evento das Damas da Fraternidade. Página com Header/Footer do site + paleta e loader próprios do evento, animação de letras nos títulos, formulário de inscrição (nome, email, Instagram, telefone + É Acácia?, Oriente, Loja, Profissão, 1ª Dama?) via Netlify Forms (`inscricao-cha-acacias`), **QR Code PIX gerado no front** (BR Code EMV, sem API) e modal pós-inscrição (comprovante + grupo WhatsApp + como chegar). Dados centralizados em `src/data/chaDasAcacias.js`
 
 ### Aguardando entrega do cliente
 - [ ] Confirmação de conta Business Instagram (pré-requisito para integração Graph API)

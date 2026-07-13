@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-const ROTAS_HEADER_SOLIDO = ['/imprensa'];
+const ROTAS_HEADER_SOLIDO = ['/imprensa', '/damasdafraternidade'];
 
 const menuItems = [
   { label: 'Home', link: '/' },

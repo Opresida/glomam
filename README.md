@@ -134,6 +134,7 @@ Sem as env vars o script aborta com warning, **sem quebrar o build**.
 | `/legislativo` | Legislativo GLOMAM — 27 Grandes Oficiais |
 | `/lojas` | Lojas filiadas — 50 cadastradas com busca e filtro por Oriente |
 | `/dispensario/quem-somos` | Dispensário Maçônico — carta de apresentação |
+| `/damasdafraternidade` | Landing do evento "Chá das Acácias" (Damas da Fraternidade) — inscrição + PIX |
 | `/imprensa` | Portal de notícias |
 | `/brandbook` | Manual de identidade visual |
 | `/admin` | Login administrativo |

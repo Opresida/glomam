@@ -10,6 +10,7 @@ import Judiciario from './pages/Judiciario.jsx';
 import Legislativo from './pages/Legislativo.jsx';
 import Lojas from './pages/Lojas.jsx';
 import DispensarioQuemSomos from './pages/DispensarioQuemSomos.jsx';
+import DamasDaFraternidade from './pages/DamasDaFraternidade.jsx';
 import ScrollToTop from './components/ScrollToTop.jsx';
 
 export default function App() {
@@ -27,6 +28,7 @@ export default function App() {
         <Route path="/legislativo" element={<Legislativo />} />
         <Route path="/lojas" element={<Lojas />} />
         <Route path="/dispensario/quem-somos" element={<DispensarioQuemSomos />} />
+        <Route path="/damasdafraternidade" element={<DamasDaFraternidade />} />
       </Routes>
     </BrowserRouter>
   );

@@ -7,6 +7,19 @@ Lista de tarefas pendentes, melhorias planejadas e bugs conhecidos.
 ## Em andamento
 
 ### Concluído recentemente
+- [x] **Landing "Chá das Acácias" — `/damasdafraternidade`** ✓ *2026-07-13*
+  - Página do evento das Damas da Fraternidade (Header/Footer do site + `ROTAS_HEADER_SOLIDO`)
+  - Identidade própria do evento: paleta escopada em `.damas-*` (creme/navy/gold, **sem tocar nas 9 globais**), tipografia do trio oficial
+  - **Loader próprio** (`DamasLoader.jsx`) + **animação de letras** (`LetrasReveal.jsx`) nos títulos
+  - Formulário de inscrição via Netlify Forms `inscricao-cha-acacias` (form oculto em `index.html`): nome, email, Instagram, telefone + É Acácia?, Oriente, Loja, Profissão, 1ª Dama?
+  - **QR Code PIX no front** (`src/utils/pix.js` — BR Code EMV + CRC16, sem API) via `qrcode.react`, valor R$ 100,00 embutido + botão "copia e cola"
+  - **Modal pós-inscrição** (`DamasConfirmacaoModal.jsx`): comprovante WhatsApp + grupo + como chegar (Google Maps/Waze/Uber)
+  - Dados centralizados em `src/data/chaDasAcacias.js`
+  - **Pendente (ação do Humberto):**
+    - Após o 1º deploy, ativar no painel Netlify a notificação do form `inscricao-cha-acacias` → **damasdafraternidadeglomam@gmail.com**
+    - Trocar placeholders de WhatsApp em `chaDasAcacias.js`: `numeroComprovante` (envio do comprovante) e `grupoUrl` (link do grupo)
+    - Tratar a logo (JPG) para PNG transparente se quiser remover a leve "caixa" no hero
+    - Integração **Brevo** (automação de e-mail de confirmação) — estruturar em Stack depois
 - [x] **Abas "Legislativo" e "Judiciário" ocultas do menu** ✓ *2026-07-08*
   - Bloco "Administração" (único que continha essas abas) comentado em `src/components/Header.jsx`
   - **CSS, páginas e rotas mantidos intactos** (`/legislativo`, `/judiciario`, `Legislativo.jsx`, `Judiciario.jsx`, estilos `.jud-*`) para reaproveitamento futuro
