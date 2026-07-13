@@ -7,6 +7,11 @@ Lista de tarefas pendentes, melhorias planejadas e bugs conhecidos.
 ## Em andamento
 
 ### Concluído recentemente
+- [x] **Thumb (Open Graph) exclusiva do Chá das Acácias** ✓ *2026-07-13*
+  - Imagem `public/og-cha-das-acacias.png` (1200×630, mesmo padrão da `og-image.png`) — paleta e tipografia do evento
+  - **Pré-render por rota** (`scripts/gen-og-routes.mjs`, ligado no `build`): gera `dist/damasdafraternidade/index.html` com meta OG/Twitter do evento — necessário porque robôs de link não executam JS numa SPA
+  - `netlify.toml`: redirect explícito `/damasdafraternidade → /damasdafraternidade/index.html` antes do catch-all SPA
+  - Para novas rotas com thumb própria: adicionar item em `ROTAS` no script + regra no `netlify.toml`
 - [x] **Landing "Chá das Acácias" — `/damasdafraternidade`** ✓ *2026-07-13*
   - Página do evento das Damas da Fraternidade (Header/Footer do site + `ROTAS_HEADER_SOLIDO`)
   - Identidade própria do evento: paleta escopada em `.damas-*` (creme/navy/gold, **sem tocar nas 9 globais**), tipografia do trio oficial

@@ -2,6 +2,13 @@
   command = "pnpm build"
   publish = "dist"
 
+# Rotas com HTML pré-renderizado (Open Graph próprio, gerado por scripts/gen-og-routes.mjs).
+# Precisa vir ANTES do catch-all para servir a thumb/meta exclusiva aos robôs de link.
+[[redirects]]
+  from = "/damasdafraternidade"
+  to = "/damasdafraternidade/index.html"
+  status = 200
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
