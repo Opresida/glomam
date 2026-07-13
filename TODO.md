@@ -7,6 +7,11 @@ Lista de tarefas pendentes, melhorias planejadas e bugs conhecidos.
 ## Em andamento
 
 ### Concluído recentemente
+- [x] **Chá das Acácias — formulário em etapas + fluxo de pagamento em fases** ✓ *2026-07-13*
+  - Formulário dividido em **2 etapas** (stepper): (1) dados pessoais — nome, data de nascimento, e-mail, telefone, endereço, Instagram; (2) sobre você — "Você é: Acácia / Amiga das Acácias" (radio), Oriente, Loja, Profissão, 1ª Dama, **áreas de interesse em ajudar** (checkboxes: Serviço Social, Medicina, Psicologia/Psiquiatria, Educação, Eventos, Outros + campo livre)
+  - **Fluxo em fases:** pagamento (QR PIX) só aparece **após enviar** o formulário; botão "Enviar comprovante no WhatsApp" só aparece **após clicar "Confirmo o pagamento"**
+  - Modal de confirmação substituído por fases inline (`DamasConfirmacaoModal.jsx` removido)
+  - Novos campos espelhados no form oculto do Netlify (`index.html`)
 - [x] **Thumb (Open Graph) exclusiva do Chá das Acácias** ✓ *2026-07-13*
   - Imagem `public/og-cha-das-acacias.png` (1200×630, mesmo padrão da `og-image.png`) — paleta e tipografia do evento
   - **Pré-render por rota** (`scripts/gen-og-routes.mjs`, ligado no `build`): gera `dist/damasdafraternidade/index.html` com meta OG/Twitter do evento — necessário porque robôs de link não executam JS numa SPA

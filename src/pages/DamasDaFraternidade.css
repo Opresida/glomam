@@ -365,95 +365,164 @@
   margin: 14px 0 0;
 }
 
-/* ---------- MODAL de confirmação ---------- */
-.damas-modal-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 100000;
-  background: rgba(20, 28, 50, 0.6);
-  backdrop-filter: blur(4px);
+/* ---------- Stepper (etapas) ---------- */
+.damas-stepper {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
-  animation: fadeIn 0.25s var(--ease);
+  gap: 12px;
+  margin: 22px 0 8px;
 }
-.damas-modal {
-  position: relative;
-  width: 100%;
-  max-width: 480px;
-  max-height: 90vh;
-  overflow-y: auto;
-  background: var(--damas-cream);
+.damas-step-dot {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--damas-muted);
+  background: #fff;
+  border: 1px solid var(--damas-line);
+  transition: all 0.3s var(--ease);
+}
+.damas-step-dot.on { background: var(--damas-navy); color: #fff; border-color: var(--damas-navy); }
+.damas-step-bar { width: 60px; height: 2px; background: var(--damas-line); transition: background 0.3s var(--ease); }
+.damas-step-bar.on { background: var(--damas-gold); }
+.damas-step-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  color: var(--damas-gold);
+  margin-bottom: 30px;
+}
+
+/* ---------- Etapas / navegação ---------- */
+.damas-etapa { animation: fadeUp 0.4s var(--ease); }
+.damas-field-legend {
+  display: block;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--damas-navy);
+  margin-bottom: 10px;
+}
+.damas-form-nav { margin-top: 8px; }
+.damas-form-nav--dupla { display: flex; gap: 14px; align-items: stretch; }
+.damas-form-nav--dupla .damas-submit { flex: 1; margin-top: 0; }
+.damas-btn-voltar {
+  flex: 0 0 auto;
+  border: 1px solid rgba(26, 44, 90, 0.2);
+  background: #fff;
+  color: var(--damas-navy);
+}
+.damas-btn-voltar:hover { background: #fff; border-color: var(--damas-navy); }
+
+/* radios "Você é" */
+.damas-radio-group { display: flex; gap: 12px; flex-wrap: wrap; }
+.damas-radio {
+  flex: 1 1 auto;
+  min-width: 160px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  background: #fff;
+  border: 1px solid rgba(26, 44, 90, 0.16);
+  border-radius: 10px;
+  padding: 13px 16px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.92rem;
+  color: var(--damas-ink);
+  transition: border-color 0.25s var(--ease), background 0.25s var(--ease);
+}
+.damas-radio input { accent-color: var(--damas-navy); width: 17px; height: 17px; }
+.damas-radio.on { border-color: var(--damas-gold); background: #fffdf6; }
+
+/* checkboxes "áreas de interesse" */
+.damas-check-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.damas-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  background: #fff;
+  border: 1px solid rgba(26, 44, 90, 0.16);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  color: var(--damas-ink);
+  transition: border-color 0.25s var(--ease), background 0.25s var(--ease);
+}
+.damas-check input { accent-color: var(--damas-navy); width: 16px; height: 16px; }
+.damas-check.on { border-color: var(--damas-gold); background: #fffdf6; }
+
+/* ---------- Fases (pagamento / comprovante) ---------- */
+.damas-fase {
+  text-align: center;
+  background: linear-gradient(180deg, #fffdf8, #f6efe2);
   border: 1px solid var(--damas-line);
   border-radius: 18px;
-  padding: clamp(28px, 5vw, 44px);
-  text-align: center;
-  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.3);
-  animation: fadeUp 0.35s var(--ease);
+  padding: clamp(30px, 5vw, 52px);
+  box-shadow: 0 20px 50px rgba(26, 44, 90, 0.08);
+  animation: fadeUp 0.5s var(--ease);
 }
-.damas-modal-close {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  background: transparent;
-  border: none;
-  color: var(--damas-muted);
-  cursor: pointer;
-  padding: 4px;
-}
-.damas-modal-close:hover { color: var(--damas-navy); }
-.damas-modal-icon { color: var(--damas-gold); margin-bottom: 6px; }
-.damas-modal-titulo {
-  font-family: 'Playfair Display', serif;
-  color: var(--damas-navy);
-  font-size: 1.6rem;
-  margin: 0 0 12px;
-}
-.damas-modal-texto {
+.damas-fase .damas-losangos { margin-bottom: 18px; }
+.damas-fase-check { color: var(--damas-gold); margin-bottom: 8px; }
+.damas-fase .damas-pix-card { box-shadow: none; margin-top: 8px; }
+.damas-fase-cta { max-width: 340px; margin: 30px auto 0; }
+.damas-fase-hint {
   font-family: 'Lora', serif;
-  color: var(--damas-ink);
-  line-height: 1.6;
-  margin: 0 0 22px;
+  font-size: 0.86rem;
+  color: var(--damas-muted);
+  margin-top: 12px;
 }
-.damas-modal-actions { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
-.damas-modal-btn {
+.damas-fase-actions { display: flex; flex-direction: column; gap: 12px; max-width: 420px; margin: 4px auto 0; }
+.damas-fase-btn {
   display: block;
   text-decoration: none;
   text-align: center;
   font-family: 'Montserrat', sans-serif;
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   font-weight: 500;
-  padding: 13px 18px;
+  padding: 15px 20px;
   border-radius: 10px;
   transition: transform 0.2s var(--ease), filter 0.2s var(--ease);
 }
-.damas-modal-btn:hover { transform: translateY(-1px); filter: brightness(1.05); }
-.damas-modal-btn--primary { background: #25d366; color: #fff; }
-.damas-modal-btn--group { background: var(--damas-navy); color: #fff; }
-.damas-modal-sep {
+.damas-fase-btn:hover { transform: translateY(-1px); filter: brightness(1.05); }
+.damas-fase-btn--wa { background: #25d366; color: #fff; }
+.damas-fase-btn--group { background: var(--damas-navy); color: #fff; }
+.damas-fase-sep {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin: 6px 0 16px;
+  max-width: 420px;
+  margin: 30px auto 16px;
   color: var(--damas-gold);
   font-family: 'Montserrat', sans-serif;
   font-size: 0.7rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
 }
-.damas-modal-sep::before,
-.damas-modal-sep::after { content: ''; flex: 1; height: 1px; background: var(--damas-line); }
-.damas-modal-local {
+.damas-fase-sep::before, .damas-fase-sep::after { content: ''; flex: 1; height: 1px; background: var(--damas-line); }
+.damas-fase-local {
   font-family: 'Lora', serif;
   font-size: 0.92rem;
   color: var(--damas-muted);
   line-height: 1.5;
   margin-bottom: 16px;
 }
-.damas-modal-local strong { color: var(--damas-navy); }
-.damas-modal-maps { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-.damas-modal-map {
+.damas-fase-local strong { color: var(--damas-navy); }
+.damas-fase-maps { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.damas-fase-map {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -467,8 +536,8 @@
   border-radius: 9px;
   transition: border-color 0.25s var(--ease);
 }
-.damas-modal-map:hover { border-color: var(--damas-gold); }
-.damas-modal-map-dot { width: 9px; height: 9px; border-radius: 50%; }
+.damas-fase-map:hover { border-color: var(--damas-gold); }
+.damas-fase-map-dot { width: 9px; height: 9px; border-radius: 50%; }
 
 /* ---------- Responsividade ---------- */
 @media (max-width: 768px) {
@@ -481,12 +550,7 @@
 }
 @media (max-width: 540px) {
   .damas-field-row { grid-template-columns: 1fr; gap: 0; }
-  .damas-modal-overlay { padding: 0; align-items: flex-end; }
-  .damas-modal {
-    max-width: 100%;
-    border-radius: 18px 18px 0 0;
-    max-height: 92vh;
-  }
-  .damas-modal-maps { flex-direction: column; }
-  .damas-modal-map { justify-content: center; }
+  .damas-check-group { grid-template-columns: 1fr; }
+  .damas-fase-maps { flex-direction: column; }
+  .damas-fase-map { justify-content: center; }
 }
