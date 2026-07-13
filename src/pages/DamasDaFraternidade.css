@@ -62,9 +62,11 @@
 
 /* ---------- Animação de letras ---------- */
 .letras-reveal { display: inline; }
+/* palavra inteira não quebra no meio — só entre palavras */
+.letras-reveal .letras-palavra { display: inline-block; white-space: nowrap; }
+.letras-reveal .letra-espaco { display: inline; white-space: normal; }
 .letras-reveal .letra {
   display: inline-block;
-  white-space: pre;
   opacity: 0;
   transform: translateY(0.5em);
   transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
@@ -110,20 +112,30 @@
     radial-gradient(120% 80% at 50% 0%, var(--damas-cream) 60%, var(--damas-cream-2) 100%);
 }
 .damas-hero-inner { max-width: 760px; margin: 0 auto; }
-.damas-logo {
-  width: clamp(150px, 34vw, 230px);
-  height: auto;
+.damas-logos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(14px, 4vw, 38px);
   margin: 0 auto 30px;
-  display: block;
-  mix-blend-mode: multiply; /* funde a "caixa" clara do JPG no fundo creme */
+  flex-wrap: nowrap;
 }
+.damas-logo {
+  height: clamp(96px, 22vw, 150px);
+  width: auto;
+  flex: 0 1 auto;
+}
+.damas-logo--damas { mix-blend-mode: multiply; } /* funde a "caixa" clara do JPG no creme */
 .damas-hero-titulo {
   font-family: 'Playfair Display', serif;
   font-weight: 600;
   color: var(--damas-navy);
-  font-size: clamp(2.6rem, 8vw, 4.6rem);
+  font-size: clamp(2.1rem, 8vw, 4.6rem);
   line-height: 1.04;
   margin: 0 0 12px;
+  overflow-wrap: normal;
+  word-break: keep-all;
+  hyphens: none;
 }
 .damas-hero-edicao {
   font-family: 'Montserrat', sans-serif;

@@ -93,6 +93,15 @@ export default function DamasDaFraternidade() {
     if (error) setError('');
   };
 
+  // Máscara de data digitada (DD/MM/AAAA) — sem calendário.
+  const handleNascimento = (e) => {
+    let v = e.target.value.replace(/\D/g, '').slice(0, 8);
+    if (v.length > 4) v = `${v.slice(0, 2)}/${v.slice(2, 4)}/${v.slice(4)}`;
+    else if (v.length > 2) v = `${v.slice(0, 2)}/${v.slice(2)}`;
+    setForm((prev) => ({ ...prev, 'data-nascimento': v }));
+    if (error) setError('');
+  };
+
   const toggleArea = (area) => {
     setAreas((prev) => (prev.includes(area) ? prev.filter((a) => a !== area) : [...prev, area]));
     if (error) setError('');
@@ -172,7 +181,10 @@ export default function DamasDaFraternidade() {
         {/* ===== HERO ===== */}
         <section className="damas-hero">
           <div className="damas-hero-inner">
-            <img className="damas-logo reveal" src="/damas-da-fraternidade.jpg" alt="Damas da Fraternidade" />
+            <div className="damas-logos reveal">
+              <img className="damas-logo damas-logo--damas" src="/damas-da-fraternidade.jpg" alt="Damas da Fraternidade" />
+              <img className="damas-logo damas-logo--glomam" src="/logo-glomam-original.svg" alt="GLOMAM — Grande Loja Maçônica do Amazonas" />
+            </div>
             <Losangos />
             <h1 className="damas-hero-titulo reveal">
               <LetrasReveal text={evento.titulo} />
@@ -271,7 +283,16 @@ export default function DamasDaFraternidade() {
                       <div className="damas-field-row">
                         <label className="damas-field">
                           <span>Data de nascimento</span>
-                          <input type="date" name="data-nascimento" value={form['data-nascimento']} onChange={handleChange} />
+                          <input
+                            type="text"
+                            name="data-nascimento"
+                            value={form['data-nascimento']}
+                            onChange={handleNascimento}
+                            inputMode="numeric"
+                            placeholder="DD/MM/AAAA"
+                            maxLength={10}
+                            autoComplete="bday"
+                          />
                         </label>
                         <label className="damas-field">
                           <span>Telefone / WhatsApp *</span>

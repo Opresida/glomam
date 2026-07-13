@@ -8,7 +8,7 @@ export const evento = {
 
   data: {
     extenso: '15 de agosto de 2026',
-    diaSemana: 'Sexta-feira',
+    diaSemana: 'Sábado',
     horario: '16h às 19h',
   },
 
