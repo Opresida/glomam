@@ -37,8 +37,8 @@ export const evento = {
 
   // Placeholders — trocar pelos valores reais (ver TODO.md)
   whatsapp: {
-    // Número para envio de comprovante (placeholder)
-    numeroComprovante: '559200000000',
+    // Número oficial (DDI 55 + DDD 92) — envio de comprovante e contato flutuante
+    numeroComprovante: '5592986475775',
     // Link de convite do grupo (placeholder)
     grupoUrl: 'https://chat.whatsapp.com/PLACEHOLDER',
   },

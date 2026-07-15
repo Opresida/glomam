@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 import Header from '../components/Header.jsx';
 import Footer from '../components/Footer.jsx';
+import WhatsAppBtn from '../components/WhatsAppBtn.jsx';
 import useReveal from '../hooks/useReveal.js';
 import DamasLoader from '../components/DamasLoader.jsx';
 import LetrasReveal from '../components/LetrasReveal.jsx';
@@ -134,6 +135,16 @@ export default function DamasDaFraternidade() {
     setStatus('sending');
     setError('');
 
+    // Avança para o pagamento (a confirmação real é o PIX + comprovante no WhatsApp).
+    const irParaPagamento = () => {
+      setStatus('idle');
+      setFase('pagamento');
+      window.scrollTo({ top: document.getElementById('inscricao')?.offsetTop - 80 || 0, behavior: 'smooth' });
+    };
+
+    // Captura do lead no Netlify Forms é melhor-esforço: o endpoint '/' só existe no
+    // site publicado (em dev local o Vite retorna 404), então nunca bloqueamos o
+    // avanço ao pagamento por causa dele.
     fetch('/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -144,16 +155,8 @@ export default function DamasDaFraternidade() {
         'areas-interesse': areas.join(', '),
       }),
     })
-      .then((res) => {
-        if (!res.ok) throw new Error('network');
-        setStatus('idle');
-        setFase('pagamento');
-        window.scrollTo({ top: document.getElementById('inscricao')?.offsetTop - 80 || 0, behavior: 'smooth' });
-      })
-      .catch(() => {
-        setStatus('error');
-        setError('Não foi possível enviar agora. Tente novamente em instantes.');
-      });
+      .catch(() => {})
+      .finally(irParaPagamento);
   };
 
   const [pixCopiado, setPixCopiado] = useState(false);
@@ -476,6 +479,10 @@ export default function DamasDaFraternidade() {
       </div>
 
       <Footer />
+      <WhatsAppBtn
+        href={`https://wa.me/${evento.whatsapp.numeroComprovante}`}
+        label="Falar no WhatsApp com as Damas da Fraternidade"
+      />
     </>
   );
 }
