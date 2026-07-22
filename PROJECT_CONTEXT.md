@@ -28,7 +28,7 @@ Site institucional e intranet administrativa da Grande Loja Maçônica do Amazon
 - Pasta `src/components/`: seções da página pública e elementos globais (Header, Footer, Loader)
 - Pasta `src/pages/`: páginas completas — Home, Imprensa, Brandbook, AdminLogin, AdminIntranet + 8 subpáginas da intranet
 - Pasta `src/hooks/`: `useReveal.js` (Intersection Observer para animações de scroll)
-- Pasta `src/data/`: dados estáticos — `noticias.js`, `lojas.js`, `lojasCoords.js`, `photoDirectory.js`
+- Pasta `src/data/`: dados estáticos — `noticias.js`, `noticiasInstitucionais.{json,js}` (acervo migrado), `lojas.js`, `lojasCoords.js`, `photoDirectory.js`
 - Pasta `public/`: assets estáticos — logos SVG, imagens do palácio, favicon
 - **Sem backend, sem banco de dados** — aplicação 100% estática
 - **Estilos:** `index.css` centraliza todo o design system público; intranet tem `AdminIntranet.css` separado
@@ -87,6 +87,7 @@ Site institucional e intranet administrativa da Grande Loja Maçônica do Amazon
 - [x] **Vídeo institucional no Hero** — `public/hero-glomam.mp4` substitui a imagem de fundo (autoplay/muted/loop/playsinline, poster como fallback, overlay diagonal preservado) ✓ *aprovado 2026-05-25*
 - [x] **Ordem paramaçônica "Abelhinhas"** — 5º card em `Familias.jsx` (logo Colmeia As Amazonas em `public/ordem-abelhinhas.png`, grade 4→5 colunas) + **Seção "Torne-se um Maçom"** (`Iniciacao.jsx`, antes do rodapé): FAQ exclusiva de 6 tópicos + formulário "Declaração de Interesse" via Netlify Forms (`iniciacao-macom`) → graomestre@glomam.org.br ✓ *aprovado 2026-06-03*
 - [x] **Landing "Chá das Acácias"** (`/damasdafraternidade`) — evento das Damas da Fraternidade. Página com Header/Footer do site + paleta e loader próprios do evento, animação de letras nos títulos, formulário de inscrição (nome, email, Instagram, telefone + É Acácia?, Oriente, Loja, Profissão, 1ª Dama?) via Netlify Forms (`inscricao-cha-acacias`), **QR Code PIX gerado no front** (BR Code EMV, sem API) e modal pós-inscrição (comprovante + grupo WhatsApp + como chegar). Dados centralizados em `src/data/chaDasAcacias.js`
+- [~] **Acervo "Notícias Institucionais"** *(em andamento — 2026-07-22)* — migração das notícias do site oficial antigo (`glomam.org.br/noticia`) para o novo site. Seção **Institucional** na Home (carrossel infinito navy), rota `/noticiasinstitucionais` (listagem) e rota por matéria `/noticiasinstitucionais/:id` (corpo + galeria com lightbox). Fotos baixadas local e convertidas p/ webp em `public/institucional/<id>/`. Componentes `Institucional.jsx`, `InstCard.jsx`, `NoticiasInstitucionais.jsx`, `NoticiaInstitucional.jsx`; dados `src/data/noticiasInstitucionais.{json,js}`; pipeline em `scripts/` (`merge`/`build`/`fetch-institucional`, idempotentes; requer `sharp`). **Páginas 1–6 prontas (120 matérias, 746 fotos); faltam 7–26.**
 
 ### Aguardando entrega do cliente
 - [ ] Confirmação de conta Business Instagram (pré-requisito para integração Graph API)

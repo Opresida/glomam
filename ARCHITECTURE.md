@@ -33,11 +33,12 @@ glomam/
 │   ├── palacio-masonico.png   # Imagem hero desktop (alta res)
 │   ├── palacio-masonico-mobile.png
 │   ├── amazonas-map.svg
+│   ├── institucional/<id>/    # Fotos do acervo migrado (capa.webp + NN.webp) por matéria
 │   └── favicon.*
 │
 ├── src/
 │   ├── main.jsx               # Entry point — monta <App /> no DOM
-│   ├── App.jsx                # BrowserRouter + Routes (5 rotas)
+│   ├── App.jsx                # BrowserRouter + Routes (13 rotas)
 │   ├── index.css              # Design system global: variáveis, reset, utilitários, estilos de todos os componentes públicos
 │   │
 │   ├── components/            # Seções e elementos reutilizáveis
@@ -48,11 +49,15 @@ glomam/
 │   │   ├── AlbumEventos.jsx   # Grade de álbuns → Modal → Lightbox + download
 │   │   ├── MapaLojas.jsx      # Leaflet + OSM — toggle Manaus/Interior + popup customizado
 │   │   ├── ComoChegarModal.jsx# Modal de navegação (Google Maps + Waze + Uber + Apple Maps)
+│   │   ├── Institucional.jsx  # Seção Home do acervo — carrossel infinito (navy)
+│   │   ├── InstCard.jsx       # Card de notícia institucional (carrossel + listagem)
 │   │   └── [demais seções]    # Hero, Pilares, Memorial, etc.
 │   │
 │   ├── pages/
 │   │   ├── Home.jsx           # Orquestra todos os componentes de seção em ordem
 │   │   ├── Imprensa.jsx       # Consome src/data/noticias.js
+│   │   ├── NoticiasInstitucionais.jsx  # /noticiasinstitucionais — listagem do acervo + "mostrar mais"
+│   │   ├── NoticiaInstitucional.jsx    # /noticiasinstitucionais/:id — matéria + galeria com lightbox
 │   │   ├── Brandbook.jsx      # Standalone, usa Brandbook.css
 │   │   ├── AdminLogin.jsx     # UI de login (sem auth real)
 │   │   └── AdminIntranet.jsx  # Layout da intranet + roteamento por aba state
@@ -69,13 +74,21 @@ glomam/
 │   │   └── useReveal.js       # Intersection Observer → adiciona .active em .reveal
 │   │
 │   └── data/
-│       ├── noticias.js        # Array de artigos — consumido por Imprensa.jsx e Novidades.jsx
-│       ├── lojas.js           # 48 Lojas filiadas com endereço, reuniões, contato
-│       ├── lojasCoords.js     # Coordenadas geográficas + helpers (getLojaCoords, lojasAgrupadasPorCoord)
-│       └── photoDirectory.js  # Diretório central de fotos com matching tolerante
+│       ├── noticias.js                 # Array de artigos — consumido por Imprensa.jsx e Novidades.jsx
+│       ├── noticiasInstitucionais.json # Acervo migrado do site oficial (dados brutos)
+│       ├── noticiasInstitucionais.js   # Helpers: lista ordenada, getById, formatarDataInst
+│       ├── lojas.js                    # 48 Lojas filiadas com endereço, reuniões, contato
+│       ├── lojasCoords.js              # Coordenadas geográficas + helpers
+│       └── photoDirectory.js           # Diretório central de fotos com matching tolerante
 │
 ├── scripts/
-│   └── recolor-logo.mjs       # Script Node para gerar variantes de cor do SVG do logo
+│   ├── recolor-logo.mjs                # Gera variantes de cor do SVG do logo
+│   ├── merge-institucional-raw.mjs     # raw-pages/*.json → institucional-raw.json (dedupe por id)
+│   ├── build-institucional-data.mjs    # institucional-raw.json → manifesto + noticiasInstitucionais.json
+│   ├── fetch-institucional-images.mjs  # baixa fotos do acervo + converte p/ webp (sharp), idempotente
+│   ├── institucional-raw.json          # Bruto consolidado de todas as páginas raspadas
+│   ├── institucional-manifest.json     # Mapa id → URLs remotas (usado pelo fetch)
+│   └── raw-pages/pageNN.json           # Bruto por página raspada
 │
 ├── README.md                  # Cartão de visitas — instalação e comandos
 ├── CONTEXT.md                 # Regras, stack e lógica de negócio
@@ -139,6 +152,35 @@ AlbumEventos.jsx
       │
       └── downloadFoto(src, legenda)
             └── fetch(src) → blob → URL.createObjectURL → <a download> → click
+```
+
+### Notícias Institucionais — pipeline de migração + fluxo
+
+Migração (offline, roda no dev/build — não em runtime):
+
+```
+[firecrawl scrape: glomam.org.br/noticia?page=N]  ← site oficial antigo
+        ↓ (subagente extrai título/data/corpo/créditos/capa/galeria)
+scripts/raw-pages/pageNN.json
+        ↓ node scripts/merge-institucional-raw.mjs      (dedupe por id, ordena)
+scripts/institucional-raw.json
+        ↓ node scripts/build-institucional-data.mjs
+        ├── scripts/institucional-manifest.json          (URLs remotas p/ download)
+        └── src/data/noticiasInstitucionais.json         (caminhos LOCAIS: /institucional/<id>/…)
+        ↓ node scripts/fetch-institucional-images.mjs     (sharp: webp, max 1600px, q80, idempotente)
+public/institucional/<id>/{capa.webp, 01.webp, …}
+```
+
+Runtime (React consome só dados locais):
+
+```
+src/data/noticiasInstitucionais.js  (ordena por data desc + helpers)
+│
+├── <Institucional /> (Home)  → carrossel infinito (rAF) de <InstCard>  → /noticiasinstitucionais/:id
+├── NoticiasInstitucionais.jsx (/noticiasinstitucionais) → grade de <InstCard> + "mostrar mais" (24/lote)
+└── NoticiaInstitucional.jsx (/noticiasinstitucionais/:id)
+      ├── getNoticiaInstitucional(id) → capa + linha-fina + corpo[] + créditos
+      └── galeria → <Lightbox> (estado index, teclado ←/→/Esc, contador)
 ```
 
 ### Mapa de Lojas — fluxo
@@ -213,6 +255,8 @@ AdminLogin.jsx
 | Three.js sem suspense | Componente detecta WebGL disponível e renderiza fallback se não houver |
 | Intranet por aba (state) | UX de painel sem criar rotas separadas para cada módulo |
 | React Router v7 | Versão mais recente com melhor performance e tipagem |
+| Fotos do acervo baixadas local (webp) | O site oficial antigo será desligado; hotlink quebraria. webp reduz o peso (~123 KB/foto) |
+| Acervo como JSON estático + scripts idempotentes | Sem backend; raspagem reproduzível página a página, merge sem race |
 
 ---
 

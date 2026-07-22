@@ -124,6 +124,30 @@ Sem as env vars o script aborta com warning, **sem quebrar o build**.
 
 ---
 
+## Notícias Institucionais (acervo migrado)
+
+A seção **Institucional** da Home (carrossel infinito) e a rota **`/noticiasinstitucionais`** exibem o acervo de notícias **migrado do site oficial antigo** (`glomam.org.br/noticia`, que será desligado). Cada matéria tem rota própria (`/noticiasinstitucionais/:id`) com corpo completo e galeria de fotos com lightbox.
+
+As fotos foram **baixadas localmente e convertidas para webp** (o site velho sai do ar), ficando em `public/institucional/<id>/` (`capa.webp` + `01.webp`, `02.webp`, …). Dados em `src/data/noticiasInstitucionais.json`.
+
+### Pipeline de migração (scripts reutilizáveis, idempotentes)
+
+```
+[raspar página N do site oficial via firecrawl]
+        ↓ escreve
+[scripts/raw-pages/pageNN.json]
+        ↓ node scripts/merge-institucional-raw.mjs   (junta todas as páginas → institucional-raw.json)
+        ↓ node scripts/build-institucional-data.mjs  (gera manifesto + noticiasInstitucionais.json com caminhos locais)
+        ↓ node scripts/fetch-institucional-images.mjs (baixa + converte p/ webp em public/institucional/<id>/)
+[pronto — HMR/rebuild reflete no site]
+```
+
+- **Status:** páginas **1 a 6 concluídas** (120 matérias, 746 fotos, ~89 MB). **Faltam páginas 7 a 26.**
+- **Retomar:** raspar `noticia?page=7..26` (uma por vez ou em lotes), gravar cada `scripts/raw-pages/pageNN.json`, depois rodar os 3 scripts na ordem acima (todos idempotentes — não rebaixam o que já existe).
+- Requer `sharp` (devDependency) para a conversão webp (`--max 1600px`, `q80`).
+
+---
+
 ## Rotas principais
 
 | Rota | Descrição |
@@ -135,6 +159,8 @@ Sem as env vars o script aborta com warning, **sem quebrar o build**.
 | `/lojas` | Lojas filiadas — 50 cadastradas com busca e filtro por Oriente |
 | `/dispensario/quem-somos` | Dispensário Maçônico — carta de apresentação |
 | `/damasdafraternidade` | Landing do evento "Chá das Acácias" (Damas da Fraternidade) — inscrição + PIX |
+| `/noticiasinstitucionais` | Acervo institucional — todas as notícias migradas do site oficial antigo (listagem) |
+| `/noticiasinstitucionais/:id` | Matéria individual do acervo — corpo completo + galeria de fotos com lightbox |
 | `/imprensa` | Portal de notícias |
 | `/brandbook` | Manual de identidade visual |
 | `/admin` | Login administrativo |
@@ -191,7 +217,7 @@ glomam/
 │
 ├── src/
 │   ├── main.jsx               # Entry point — monta <App /> no DOM
-│   ├── App.jsx                # BrowserRouter + Routes (5 rotas)
+│   ├── App.jsx                # BrowserRouter + Routes (13 rotas)
 │   ├── index.css              # Design system global: variáveis, reset, utilitários, estilos de todos os componentes públicos
 │   │
 │   ├── components/            # Seções e elementos reutilizáveis
@@ -226,13 +252,19 @@ glomam/
 │   │   └── useReveal.js       # Intersection Observer → adiciona .active em .reveal
 │   │
 │   └── data/
-│       ├── noticias.js        # Array de artigos — consumido por Imprensa.jsx e Novidades.jsx
-│       ├── lojas.js           # 50 Lojas filiadas à GLOMAM (dados completos)
-│       └── photoDirectory.js  # Diretório central de fotos de Irmãos + findPhoto(nome)
+│       ├── noticias.js                 # Array de artigos — consumido por Imprensa.jsx e Novidades.jsx
+│       ├── noticiasInstitucionais.json # Acervo migrado do site oficial (dados brutos)
+│       ├── noticiasInstitucionais.js   # Helpers (lista ordenada, getById, formatarData)
+│       ├── lojas.js                    # 50 Lojas filiadas à GLOMAM (dados completos)
+│       └── photoDirectory.js           # Diretório central de fotos de Irmãos + findPhoto(nome)
 │
 ├── scripts/
-│   ├── recolor-logo.mjs       # Script Node para gerar variantes de cor do SVG do logo
-│   └── generate-pdf.mjs       # Gera PDF com screenshots de todas as rotas (Playwright + pdf-lib)
+│   ├── recolor-logo.mjs                # Gera variantes de cor do SVG do logo
+│   ├── generate-pdf.mjs                # Gera PDF com screenshots de todas as rotas (Playwright + pdf-lib)
+│   ├── merge-institucional-raw.mjs     # Junta raw-pages/*.json → institucional-raw.json
+│   ├── build-institucional-data.mjs    # Gera manifesto + noticiasInstitucionais.json (caminhos locais)
+│   ├── fetch-institucional-images.mjs  # Baixa fotos do acervo e converte p/ webp (sharp)
+│   └── raw-pages/                       # Bruto por página raspada (pageNN.json)
 │
 ├── README.md                  # Este arquivo
 ├── CONTEXT.md                 # Regras, stack e lógica de negócio
@@ -392,6 +424,11 @@ AdminLogin.jsx
 - [x] **Logos oficiais das ordens paramaçônicas** integradas em `Familias.jsx` (DeMolay, Filhas de Jó, Estrela do Oriente, Escudeiros) — brasões em `public/ordem-*.png` *(aprovado 2026-05-25)*
 - [x] **Vídeo institucional no Hero** — `public/hero-glomam.mp4` (autoplay/muted/loop/playsinline + poster fallback) substitui a imagem de fundo *(aprovado 2026-05-25)*
 - [x] **Ordem paramaçônica "Abelhinhas" + seção "Torne-se um Maçom"** — 5º card em `Familias.jsx` (logo Colmeia As Amazonas, grade 4→5 col) e nova `Iniciacao.jsx` antes do rodapé: FAQ exclusiva (6 tópicos) + formulário "Declaração de Interesse" via Netlify Forms (`iniciacao-macom`) *(aprovado 2026-06-03)*
+
+### Atualização de 2026-07-22
+
+- [x] **Acervo "Notícias Institucionais"** — migração das notícias do site oficial antigo (`glomam.org.br/noticia`) para o novo site. Seção **Institucional** na Home (carrossel infinito, fundo navy), rota `/noticiasinstitucionais` (listagem com "mostrar mais") e rota por matéria `/noticiasinstitucionais/:id` (corpo completo + galeria com lightbox). Fotos baixadas local e convertidas p/ webp em `public/institucional/<id>/`. Pipeline reutilizável (scripts `merge`/`build`/`fetch` + `sharp`). Componentes: `Institucional.jsx`, `InstCard.jsx`, `NoticiasInstitucionais.jsx`, `NoticiaInstitucional.jsx`; dados em `src/data/noticiasInstitucionais.{json,js}`; CSS `.inst-*`.
+  - **Status: páginas 1–6 concluídas (120 matérias, 746 fotos). Faltam páginas 7–26** (ver seção "Notícias Institucionais" acima para retomar).
 
 ### Pendente
 - [ ] **Revisão visual dos pinos do mapa** — cliente confirma quais Lojas estão fora do endereço exato (coords ajustáveis em `src/data/lojasCoords.js`)

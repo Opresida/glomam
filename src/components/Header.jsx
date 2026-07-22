@@ -9,6 +9,7 @@ const menuItems = [
     label: 'GLOMAM',
     children: [
       { label: 'Nossa História', link: '#nossa-historia' },
+      { label: 'Notícias Institucionais', link: '/noticiasinstitucionais' },
       { label: 'Paramaçônicos', link: '#familias' },
     ],
   },
@@ -38,7 +39,8 @@ const menuItems = [
 
 export default function Header() {
   const location = useLocation();
-  const forcarSolido = ROTAS_HEADER_SOLIDO.includes(location.pathname);
+  const forcarSolido = ROTAS_HEADER_SOLIDO.includes(location.pathname)
+    || location.pathname.startsWith('/noticiasinstitucionais');
   const [scrollShrunk, setScrollShrunk] = useState(false);
   const [open, setOpen] = useState(false);
   const [openSubs, setOpenSubs] = useState({});

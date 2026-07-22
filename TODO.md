@@ -6,6 +6,16 @@ Lista de tarefas pendentes, melhorias planejadas e bugs conhecidos.
 
 ## Em andamento
 
+### 🔄 Acervo "Notícias Institucionais" — migração do site oficial antigo *(iniciado 2026-07-22)*
+Migrar TODAS as notícias de `glomam.org.br/noticia` (26 páginas, ~500 matérias) para o novo site antes do site velho sair do ar.
+
+- [x] **Piloto + infra completos** — seção **Institucional** na Home (carrossel infinito navy), rota `/noticiasinstitucionais` (listagem + "mostrar mais") e rota por matéria `/noticiasinstitucionais/:id` (corpo completo + galeria com lightbox). Fotos baixadas local + webp em `public/institucional/<id>/`.
+  - Componentes: `Institucional.jsx`, `InstCard.jsx`, `NoticiasInstitucionais.jsx`, `NoticiaInstitucional.jsx`. Dados: `src/data/noticiasInstitucionais.{json,js}`. CSS `.inst-*` em `index.css`. Rotas em `App.jsx`; link no Header (dropdown GLOMAM); `sharp` como devDependency.
+  - Pipeline reutilizável em `scripts/`: raspar via firecrawl → `raw-pages/pageNN.json` → `merge-institucional-raw.mjs` → `build-institucional-data.mjs` → `fetch-institucional-images.mjs` (todos idempotentes).
+- [x] **Páginas 1 a 6 concluídas** — 120 matérias, 746 fotos (~89 MB webp), validado no dev.
+- [ ] **Páginas 7 a 26 pendentes** — retomar raspando `noticia?page=7..26` (em lotes), gravar `raw-pages/pageNN.json`, rodar os 3 scripts na ordem. Projeção final: ~500 matérias, ~390 MB.
+- [ ] Após concluir: revisar peso total no repo/Netlify; avaliar `.gitattributes`/LFS ou reduzir qualidade se pesar demais.
+
 ### Concluído recentemente
 - [x] **Chá das Acácias — formulário em etapas + fluxo de pagamento em fases** ✓ *2026-07-13*
   - Formulário dividido em **2 etapas** (stepper): (1) dados pessoais — nome, data de nascimento, e-mail, telefone, endereço, Instagram; (2) sobre você — "Você é: Acácia / Amiga das Acácias" (radio), Oriente, Loja, Profissão, 1ª Dama, **áreas de interesse em ajudar** (checkboxes: Serviço Social, Medicina, Psicologia/Psiquiatria, Educação, Eventos, Outros + campo livre)

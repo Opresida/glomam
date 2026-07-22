@@ -5,6 +5,7 @@ import Loader from '../components/Loader.jsx';
 import ProgressBar from '../components/ProgressBar.jsx';
 import Hero from '../components/Hero.jsx';
 import NewsCards from '../components/NewsCards.jsx';
+import Institucional from '../components/Institucional.jsx';
 import WelcomeSection from '../components/WelcomeSection.jsx';
 import Objetivos from '../components/Objetivos.jsx';
 import VisitaVirtual from '../components/VisitaVirtual.jsx';
@@ -50,6 +51,7 @@ export default function Home() {
         <WelcomeSection />
         <VisitaVirtual />
         <NewsCards />
+        <Institucional />
         <NossaHistoria />
         <Objetivos />
         <Pilares />

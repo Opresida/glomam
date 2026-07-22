@@ -11,6 +11,8 @@ import Legislativo from './pages/Legislativo.jsx';
 import Lojas from './pages/Lojas.jsx';
 import DispensarioQuemSomos from './pages/DispensarioQuemSomos.jsx';
 import DamasDaFraternidade from './pages/DamasDaFraternidade.jsx';
+import NoticiasInstitucionais from './pages/NoticiasInstitucionais.jsx';
+import NoticiaInstitucional from './pages/NoticiaInstitucional.jsx';
 import ScrollToTop from './components/ScrollToTop.jsx';
 
 export default function App() {
@@ -29,6 +31,8 @@ export default function App() {
         <Route path="/lojas" element={<Lojas />} />
         <Route path="/dispensario/quem-somos" element={<DispensarioQuemSomos />} />
         <Route path="/damasdafraternidade" element={<DamasDaFraternidade />} />
+        <Route path="/noticiasinstitucionais" element={<NoticiasInstitucionais />} />
+        <Route path="/noticiasinstitucionais/:id" element={<NoticiaInstitucional />} />
       </Routes>
     </BrowserRouter>
   );
