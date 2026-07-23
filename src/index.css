@@ -1322,3 +1322,81 @@ a.disp-contato-valor:hover{color:var(--gold)}
   .inst-card--carousel{width:82vw;max-width:320px}
   .inst-lightbox{padding:16px}
 }
+
+/* ===================== FILTRO + VISÕES (Grade/Trilha) ===================== */
+.inst-controls{position:sticky;top:var(--nav-h);z-index:30;background:rgba(240,237,232,.94);backdrop-filter:blur(10px);border-bottom:1px solid rgba(22,29,52,.1);padding:14px 0}
+.inst-controls-inner{display:flex;flex-direction:column;gap:14px}
+
+/* Alternador de visão (segmentado) */
+.inst-view-toggle{display:inline-flex;align-self:flex-start;background:var(--ice);border:1px solid rgba(22,29,52,.12);border-radius:999px;padding:3px;gap:2px}
+.inst-view-toggle button{display:inline-flex;align-items:center;gap:7px;border:none;background:transparent;color:var(--slate-mid);font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.04em;padding:8px 18px;border-radius:999px;cursor:pointer;transition:background .3s var(--ease),color .3s}
+.inst-view-toggle button.ativo{background:var(--blue);color:var(--white);box-shadow:0 3px 10px rgba(0,0,0,.16)}
+.inst-view-toggle button svg{opacity:.85}
+
+/* Filtros */
+.inst-filtros{display:flex;flex-direction:column;gap:9px}
+.inst-filtro-grupo{display:flex;align-items:flex-start;gap:12px}
+.inst-filtro-label{flex:0 0 auto;width:32px;font-size:.55rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-dark);font-weight:700;padding-top:8px}
+.inst-chips{display:flex;flex-wrap:wrap;gap:6px}
+.inst-chip{border:1px solid rgba(22,29,52,.14);background:var(--white);color:var(--slate-mid);font-family:'Montserrat',sans-serif;font-size:.68rem;font-weight:600;letter-spacing:.02em;padding:6px 13px;border-radius:999px;cursor:pointer;transition:background .25s var(--ease),color .25s,border-color .25s,transform .2s}
+.inst-chip:hover:not(:disabled){border-color:var(--gold);color:var(--gold-dark);transform:translateY(-1px)}
+.inst-chip.ativo{background:var(--slate);color:var(--white);border-color:var(--slate)}
+.inst-chip:disabled{opacity:.3;cursor:default}
+.inst-result-count{font-size:.66rem;letter-spacing:.06em;color:#718096;font-weight:600}
+.inst-vazio{text-align:center;padding:60px 0;font-family:'Lora',serif;font-size:1.05rem;color:#718096}
+
+/* ===================== TRILHA (linha do tempo sinuosa) ===================== */
+.trilha{background:var(--bg);padding:clamp(28px,5vw,52px) 0 clamp(60px,8vw,100px)}
+.trilha-inner{position:relative;max-width:900px;margin:0 auto;padding:6px 0}
+.trilha-spine{position:absolute;top:0;bottom:0;left:50%;width:3px;transform:translateX(-50%);background:linear-gradient(var(--gold-light),var(--gold) 18%,var(--gold) 82%,var(--gold-dark));border-radius:3px}
+
+/* Marco de ano */
+.trilha-marco{position:relative;z-index:3;width:fit-content;margin:28px auto;display:flex;flex-direction:column;align-items:center;gap:3px;background:var(--slate);padding:11px 28px;border-radius:14px;border:1px solid var(--gold);box-shadow:0 8px 22px rgba(22,29,52,.3)}
+.trilha-marco-ano{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--gold-light);line-height:1}
+.trilha-marco-count{font-size:.5rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+
+/* Parada (uma matéria) — alterna esquerda/direita */
+.trilha-parada{position:relative;box-sizing:border-box;width:50%;padding:12px 46px;display:flex}
+.trilha-parada[data-side="left"]{left:0;justify-content:flex-end}
+.trilha-parada[data-side="right"]{margin-left:50%;justify-content:flex-start}
+/* nó na espinha */
+.trilha-no{position:absolute;top:27px;width:15px;height:15px;border-radius:50%;background:var(--white);border:3px solid var(--gold);box-shadow:0 0 0 4px var(--bg);z-index:2}
+.trilha-parada[data-side="left"] .trilha-no{right:-7.5px}
+.trilha-parada[data-side="right"] .trilha-no{left:-7.5px}
+/* conector curvo (dá o serpenteio) */
+.trilha-parada::before{content:'';position:absolute;top:33px;width:34px;height:30px;border:2px solid var(--gold);opacity:.5;pointer-events:none}
+.trilha-parada[data-side="left"]::before{right:6px;border-top:none;border-left:none;border-bottom-right-radius:22px}
+.trilha-parada[data-side="right"]::before{left:6px;border-top:none;border-right:none;border-bottom-left-radius:22px}
+
+/* Card da parada */
+.trilha-card{display:flex;gap:13px;align-items:center;width:100%;max-width:390px;background:var(--white);border-radius:10px;overflow:hidden;text-decoration:none;color:var(--slate);box-shadow:0 5px 18px rgba(0,0,0,.1);border:1px solid rgba(22,29,52,.06);transition:transform .35s var(--ease),box-shadow .35s;padding:10px 14px 10px 10px}
+.trilha-card:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.2)}
+.trilha-parada[data-side="left"] .trilha-card{flex-direction:row-reverse;text-align:right}
+.trilha-card-thumb{flex:0 0 auto;width:62px;height:62px;border-radius:8px;background-size:cover;background-position:center;background-color:var(--ice)}
+.trilha-card-thumb--vazio{background:linear-gradient(135deg,var(--slate-mid),var(--blue-dark))}
+.trilha-card-body{display:flex;flex-direction:column;gap:4px;min-width:0}
+.trilha-card-data{font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-dark);font-weight:700}
+.trilha-card-data strong{font-family:'Playfair Display',serif;font-size:.95rem;color:var(--blue);margin-right:3px}
+.trilha-card-titulo{font-family:'Playfair Display',serif;font-size:.86rem;line-height:1.3;color:var(--slate);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+/* Fim da trilha */
+.trilha-fim{position:relative;z-index:2;display:flex;justify-content:center;margin-top:22px}
+.trilha-fim-dot{width:17px;height:17px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 5px var(--bg),0 0 0 7px var(--gold-light)}
+
+/* Trilha responsiva — vira coluna única (espinha à esquerda) */
+@media(max-width:768px){
+  .trilha-spine{left:20px}
+  .trilha-marco{margin:22px 0;width:fit-content;flex-direction:row;align-items:baseline;gap:9px;padding:9px 18px 9px 40px;border-radius:0 12px 12px 0}
+  .trilha-marco-ano{font-size:1.25rem}
+  .trilha-parada,.trilha-parada[data-side="left"],.trilha-parada[data-side="right"]{width:100%;margin-left:0;left:0;justify-content:flex-start;padding:9px 0 9px 44px}
+  .trilha-parada[data-side="left"] .trilha-no,.trilha-parada[data-side="right"] .trilha-no{left:12.5px;right:auto}
+  .trilha-parada[data-side="left"] .trilha-card{flex-direction:row;text-align:left}
+  .trilha-parada[data-side="left"]::before,.trilha-parada[data-side="right"]::before{left:20px;right:auto;border-right:none;border-left:2px solid var(--gold);border-top:none;border-bottom-right-radius:0;border-bottom-left-radius:22px}
+  .trilha-card{max-width:none}
+  .trilha-fim{justify-content:flex-start;margin-left:12px}
+}
+@media(max-width:480px){
+  .inst-filtro-label{width:100%;padding-top:0}
+  .inst-filtro-grupo{flex-direction:column;gap:6px}
+  .trilha-card-thumb{width:54px;height:54px}
+}

@@ -128,6 +128,8 @@ Sem as env vars o script aborta com warning, **sem quebrar o build**.
 
 A seção **Institucional** da Home (carrossel infinito) e a rota **`/noticiasinstitucionais`** exibem o acervo de notícias **migrado do site oficial antigo** (`glomam.org.br/noticia`, que será desligado). Cada matéria tem rota própria (`/noticiasinstitucionais/:id`) com corpo completo e galeria de fotos com lightbox.
 
+A rota tem **filtro por ano/mês** e duas visões: **Grade** (cards + "mostrar mais") e **Trilha** — uma linha do tempo sinuosa (espinha dourada, marcos de ano, paradas alternando lados) que percorre da primeira à última publicação.
+
 As fotos foram **baixadas localmente e convertidas para webp** (o site velho sai do ar), ficando em `public/institucional/<id>/` (`capa.webp` + `01.webp`, `02.webp`, …). Dados em `src/data/noticiasInstitucionais.json`.
 
 ### Pipeline de migração (scripts reutilizáveis, idempotentes)

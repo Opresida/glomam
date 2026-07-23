@@ -51,6 +51,7 @@ glomam/
 │   │   ├── ComoChegarModal.jsx# Modal de navegação (Google Maps + Waze + Uber + Apple Maps)
 │   │   ├── Institucional.jsx  # Seção Home do acervo — carrossel infinito (navy)
 │   │   ├── InstCard.jsx       # Card de notícia institucional (carrossel + listagem)
+│   │   ├── TrilhaInstitucional.jsx # Linha do tempo sinuosa do acervo (espinha + marcos de ano)
 │   │   └── [demais seções]    # Hero, Pilares, Memorial, etc.
 │   │
 │   ├── pages/
@@ -177,7 +178,10 @@ Runtime (React consome só dados locais):
 src/data/noticiasInstitucionais.js  (ordena por data desc + helpers)
 │
 ├── <Institucional /> (Home)  → carrossel infinito (rAF) de <InstCard>  → /noticiasinstitucionais/:id
-├── NoticiasInstitucionais.jsx (/noticiasinstitucionais) → grade de <InstCard> + "mostrar mais" (24/lote)
+├── NoticiasInstitucionais.jsx (/noticiasinstitucionais)
+│     ├── filtro (ano/mês) + alternador de visão
+│     ├── Grade  → grade de <InstCard> + "mostrar mais" (24/lote)
+│     └── Trilha → <TrilhaInstitucional> (linha do tempo sinuosa: agrupa por ano asc, marcos + paradas alternando)
 └── NoticiaInstitucional.jsx (/noticiasinstitucionais/:id)
       ├── getNoticiaInstitucional(id) → capa + linha-fina + corpo[] + créditos
       └── galeria → <Lightbox> (estado index, teclado ←/→/Esc, contador)
