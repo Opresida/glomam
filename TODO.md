@@ -6,15 +6,15 @@ Lista de tarefas pendentes, melhorias planejadas e bugs conhecidos.
 
 ## Em andamento
 
-### 🔄 Acervo "Notícias Institucionais" — migração do site oficial antigo *(iniciado 2026-07-22)*
-Migrar TODAS as notícias de `glomam.org.br/noticia` (26 páginas, ~500 matérias) para o novo site antes do site velho sair do ar.
+### ✅ Acervo "Notícias Institucionais" — migração do site oficial antigo *(concluído 2026-07-23)*
+Migradas TODAS as notícias de `glomam.org.br/noticia` (26 páginas) para o novo site antes do site velho sair do ar.
 
 - [x] **Piloto + infra completos** — seção **Institucional** na Home (carrossel infinito navy), rota `/noticiasinstitucionais` (listagem + "mostrar mais") e rota por matéria `/noticiasinstitucionais/:id` (corpo completo + galeria com lightbox). Fotos baixadas local + webp em `public/institucional/<id>/`.
   - Componentes: `Institucional.jsx`, `InstCard.jsx`, `NoticiasInstitucionais.jsx`, `NoticiaInstitucional.jsx`. Dados: `src/data/noticiasInstitucionais.{json,js}`. CSS `.inst-*` em `index.css`. Rotas em `App.jsx`; link no Header (dropdown GLOMAM); `sharp` como devDependency.
   - Pipeline reutilizável em `scripts/`: raspar via firecrawl → `raw-pages/pageNN.json` → `merge-institucional-raw.mjs` → `build-institucional-data.mjs` → `fetch-institucional-images.mjs` (todos idempotentes).
-- [x] **Páginas 1 a 6 concluídas** — 120 matérias, 746 fotos (~89 MB webp), validado no dev.
-- [ ] **Páginas 7 a 26 pendentes** — retomar raspando `noticia?page=7..26` (em lotes), gravar `raw-pages/pageNN.json`, rodar os 3 scripts na ordem. Projeção final: ~500 matérias, ~390 MB.
-- [ ] Após concluir: revisar peso total no repo/Netlify; avaliar `.gitattributes`/LFS ou reduzir qualidade se pesar demais.
+- [x] **TODAS as 26 páginas concluídas** — 509 matérias, 2159 fotos (~220 MB webp), validado no dev (localhost:5010). Matérias de 2017-18 sem `og:image` usam a 1ª foto da galeria como capa (fallback no build).
+- [ ] (opcional) Limpar linhas mortas "CLIQUE AQUI pra ver mais fotos" no corpo de matérias antigas — apontavam pra galeria do site velho (`/galeria/NNN`), que não existirá.
+- [ ] (opcional) Revisar peso no repo/Netlify (~220 MB de webp); avaliar Git LFS se necessário.
 
 ### Concluído recentemente
 - [x] **Chá das Acácias — formulário em etapas + fluxo de pagamento em fases** ✓ *2026-07-13*

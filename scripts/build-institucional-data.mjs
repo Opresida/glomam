@@ -37,9 +37,10 @@ async function main() {
     manifest.push({ id, cover: a.cover || '', gallery: Array.isArray(a.gallery) ? a.gallery : [] });
 
     // Caminhos locais determinísticos (batem com o fetch script)
-    const capa = a.cover ? `${base}/capa.webp` : '';
     const galeria = (Array.isArray(a.gallery) ? a.gallery : [])
       .map((_, i) => `${base}/${String(i + 1).padStart(2, '0')}.webp`);
+    // Matérias antigas (2017-18) não têm og:image → usa a 1ª foto da galeria como capa
+    const capa = a.cover ? `${base}/capa.webp` : (galeria[0] || '');
 
     data.push({
       id,

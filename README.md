@@ -142,8 +142,8 @@ As fotos foram **baixadas localmente e convertidas para webp** (o site velho sai
 [pronto — HMR/rebuild reflete no site]
 ```
 
-- **Status:** páginas **1 a 6 concluídas** (120 matérias, 746 fotos, ~89 MB). **Faltam páginas 7 a 26.**
-- **Retomar:** raspar `noticia?page=7..26` (uma por vez ou em lotes), gravar cada `scripts/raw-pages/pageNN.json`, depois rodar os 3 scripts na ordem acima (todos idempotentes — não rebaixam o que já existe).
+- **Status:** ✅ **Acervo completo — todas as 26 páginas** (509 matérias, 2159 fotos, ~220 MB webp). Matérias antigas (2017-18) sem `og:image` usam a 1ª foto da galeria como capa.
+- **Re-raspar/atualizar:** raspar `noticia?page=N`, gravar `scripts/raw-pages/pageNN.json`, depois rodar os 3 scripts na ordem acima (todos idempotentes — não rebaixam o que já existe).
 - Requer `sharp` (devDependency) para a conversão webp (`--max 1600px`, `q80`).
 
 ---
@@ -428,7 +428,7 @@ AdminLogin.jsx
 ### Atualização de 2026-07-22
 
 - [x] **Acervo "Notícias Institucionais"** — migração das notícias do site oficial antigo (`glomam.org.br/noticia`) para o novo site. Seção **Institucional** na Home (carrossel infinito, fundo navy), rota `/noticiasinstitucionais` (listagem com "mostrar mais") e rota por matéria `/noticiasinstitucionais/:id` (corpo completo + galeria com lightbox). Fotos baixadas local e convertidas p/ webp em `public/institucional/<id>/`. Pipeline reutilizável (scripts `merge`/`build`/`fetch` + `sharp`). Componentes: `Institucional.jsx`, `InstCard.jsx`, `NoticiasInstitucionais.jsx`, `NoticiaInstitucional.jsx`; dados em `src/data/noticiasInstitucionais.{json,js}`; CSS `.inst-*`.
-  - **Status: páginas 1–6 concluídas (120 matérias, 746 fotos). Faltam páginas 7–26** (ver seção "Notícias Institucionais" acima para retomar).
+  - **Status: ✅ COMPLETO — 26 páginas, 509 matérias, 2159 fotos (~220 MB).** ✓ *2026-07-23*
 
 ### Pendente
 - [ ] **Revisão visual dos pinos do mapa** — cliente confirma quais Lojas estão fora do endereço exato (coords ajustáveis em `src/data/lojasCoords.js`)
