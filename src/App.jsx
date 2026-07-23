@@ -13,6 +13,7 @@ import DispensarioQuemSomos from './pages/DispensarioQuemSomos.jsx';
 import DamasDaFraternidade from './pages/DamasDaFraternidade.jsx';
 import NoticiasInstitucionais from './pages/NoticiasInstitucionais.jsx';
 import NoticiaInstitucional from './pages/NoticiaInstitucional.jsx';
+import Revistas from './pages/Revistas.jsx';
 import ScrollToTop from './components/ScrollToTop.jsx';
 
 export default function App() {
@@ -33,6 +34,7 @@ export default function App() {
         <Route path="/damasdafraternidade" element={<DamasDaFraternidade />} />
         <Route path="/noticiasinstitucionais" element={<NoticiasInstitucionais />} />
         <Route path="/noticiasinstitucionais/:id" element={<NoticiaInstitucional />} />
+        <Route path="/revistas" element={<Revistas />} />
       </Routes>
     </BrowserRouter>
   );

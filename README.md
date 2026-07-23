@@ -130,6 +130,13 @@ A seção **Institucional** da Home (carrossel infinito) e a rota **`/noticiasin
 
 A rota tem **filtro por ano/mês** e duas visões: **Grade** (cards + "mostrar mais") e **Trilha** — uma linha do tempo sinuosa (espinha dourada, marcos de ano, paradas alternando lados) que percorre da primeira à última publicação.
 
+## Revistas e Jornais (`/revistas`)
+
+Acervo editorial migrado de `glomam.org.br/jornal` (revista *Arte Real*, folhetim *O Balaústre*, edições comemorativas). As **capas** são webp locais (`public/revistas/`, leves, no git). Os **PDFs** são pesados (as Arte Real antigas têm 40–160 MB) e ficam **fora do git**, hospedados no **Cloudflare R2** (bucket público `glomam-revistas`), servidos de `https://pub-…r2.dev/<uid>.pdf`. A base é configurável via `VITE_REVISTAS_BASE` (default aponta pro r2.dev).
+
+- Captura/atualização: `node scripts/fetch-revistas.mjs` (`--covers` = capas→webp no repo; `--pdfs` = PDFs→staging `../glomam-revistas-staging`). Depois subir o staging pro R2 (rclone).
+- Dados em `src/data/revistas.{json,js}`.
+
 As fotos foram **baixadas localmente e convertidas para webp** (o site velho sai do ar), ficando em `public/institucional/<id>/` (`capa.webp` + `01.webp`, `02.webp`, …). Dados em `src/data/noticiasInstitucionais.json`.
 
 ### Pipeline de migração (scripts reutilizáveis, idempotentes)
@@ -163,6 +170,7 @@ As fotos foram **baixadas localmente e convertidas para webp** (o site velho sai
 | `/damasdafraternidade` | Landing do evento "Chá das Acácias" (Damas da Fraternidade) — inscrição + PIX |
 | `/noticiasinstitucionais` | Acervo institucional — todas as notícias migradas do site oficial antigo (listagem) |
 | `/noticiasinstitucionais/:id` | Matéria individual do acervo — corpo completo + galeria de fotos com lightbox |
+| `/revistas` | Revistas e Jornais (Arte Real, Balaústre) — capas + download dos PDFs (hospedados no Cloudflare R2) |
 | `/imprensa` | Portal de notícias |
 | `/brandbook` | Manual de identidade visual |
 | `/admin` | Login administrativo |

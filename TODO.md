@@ -6,6 +6,12 @@ Lista de tarefas pendentes, melhorias planejadas e bugs conhecidos.
 
 ## Em andamento
 
+### ✅ Menu "Institucional" + Revistas e Jornais *(concluído 2026-07-23)*
+- [x] **Menu Institucional** no Header (dropdown) → Notícias Institucionais + Revistas e Jornais. (Galeria entra quando construída — item comentado no `Header.jsx`.) "Notícias Institucionais" saiu do dropdown GLOMAM.
+- [x] **Rota `/revistas`** — 41 edições (Arte Real, Balaústre, comemorativas) migradas de `glomam.org.br/jornal`. Cards com capa (webp no repo), data, título e botão **Baixar PDF**. 4 edições sem PDF na origem = "Indisponível".
+- [x] **PDFs no Cloudflare R2** — 37 PDFs (~1,84 GB; Arte Real antigas têm 40–160 MB!) hospedados no bucket público `glomam-revistas` (reaproveita a conta R2 do Direito ao Ponto). Servidos de `https://pub-b42e196d31d44819a0ffed28e4075034.r2.dev/<uid>.pdf`. Bucket + acesso público criados via API Cloudflare; upload via rclone. Capas ficam no git (leves), PDFs fora (pesados). Dados: `src/data/revistas.{json,js}`; captura: `scripts/fetch-revistas.mjs`; staging local em `../glomam-revistas-staging`.
+- [ ] (opcional futuro) Domínio custom no bucket (ex.: revistas.glomam.org.br) em vez do r2.dev; hoje configurável via `VITE_REVISTAS_BASE`.
+
 ### ✅ Acervo "Notícias Institucionais" — migração do site oficial antigo *(concluído 2026-07-23)*
 Migradas TODAS as notícias de `glomam.org.br/noticia` (26 páginas) para o novo site antes do site velho sair do ar.
 

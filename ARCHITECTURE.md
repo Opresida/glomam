@@ -59,6 +59,7 @@ glomam/
 │   │   ├── Imprensa.jsx       # Consome src/data/noticias.js
 │   │   ├── NoticiasInstitucionais.jsx  # /noticiasinstitucionais — listagem do acervo + "mostrar mais"
 │   │   ├── NoticiaInstitucional.jsx    # /noticiasinstitucionais/:id — matéria + galeria com lightbox
+│   │   ├── Revistas.jsx       # /revistas — capas + download PDFs (PDFs no Cloudflare R2)
 │   │   ├── Brandbook.jsx      # Standalone, usa Brandbook.css
 │   │   ├── AdminLogin.jsx     # UI de login (sem auth real)
 │   │   └── AdminIntranet.jsx  # Layout da intranet + roteamento por aba state
@@ -78,6 +79,8 @@ glomam/
 │       ├── noticias.js                 # Array de artigos — consumido por Imprensa.jsx e Novidades.jsx
 │       ├── noticiasInstitucionais.json # Acervo migrado do site oficial (dados brutos)
 │       ├── noticiasInstitucionais.js   # Helpers: lista ordenada, getById, formatarDataInst
+│       ├── revistas.json               # Revistas/jornais (coverUid, pdfUid, data, título)
+│       ├── revistas.js                 # Helpers: capa local + pdfUrl (base R2 configurável)
 │       ├── lojas.js                    # 48 Lojas filiadas com endereço, reuniões, contato
 │       ├── lojasCoords.js              # Coordenadas geográficas + helpers
 │       └── photoDirectory.js           # Diretório central de fotos com matching tolerante
@@ -87,6 +90,7 @@ glomam/
 │   ├── merge-institucional-raw.mjs     # raw-pages/*.json → institucional-raw.json (dedupe por id)
 │   ├── build-institucional-data.mjs    # institucional-raw.json → manifesto + noticiasInstitucionais.json
 │   ├── fetch-institucional-images.mjs  # baixa fotos do acervo + converte p/ webp (sharp), idempotente
+│   ├── fetch-revistas.mjs              # baixa capas (webp→repo) + PDFs (→staging fora do git p/ R2)
 │   ├── institucional-raw.json          # Bruto consolidado de todas as páginas raspadas
 │   ├── institucional-manifest.json     # Mapa id → URLs remotas (usado pelo fetch)
 │   └── raw-pages/pageNN.json           # Bruto por página raspada

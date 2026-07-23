@@ -1400,3 +1400,22 @@ a.disp-contato-valor:hover{color:var(--gold)}
   .inst-filtro-grupo{flex-direction:column;gap:6px}
   .trilha-card-thumb{width:54px;height:54px}
 }
+
+/* ===================== REVISTAS E JORNAIS ===================== */
+.rev-list{padding:clamp(20px,4vw,40px) 0 clamp(60px,8vw,100px)}
+.rev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:clamp(20px,3vw,32px)}
+.rev-card{display:flex;flex-direction:column;background:var(--white);border-radius:10px;overflow:hidden;box-shadow:0 6px 22px rgba(0,0,0,.12);transition:transform .4s var(--ease),box-shadow .4s}
+.rev-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(0,0,0,.22)}
+.rev-card-link{display:block}
+.rev-card-capa{aspect-ratio:3/4;background-size:cover;background-position:center top;background-color:var(--ice);position:relative}
+.rev-card-badge{position:absolute;top:10px;right:10px;width:34px;height:34px;border-radius:50%;background:rgba(0,85,135,.92);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(0,0,0,.25);opacity:0;transform:translateY(-4px);transition:opacity .3s var(--ease),transform .3s}
+.rev-card:hover .rev-card-badge{opacity:1;transform:translateY(0)}
+.rev-card-body{padding:16px 16px 18px;display:flex;flex-direction:column;flex:1}
+.rev-card-data{font-size:.52rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-dark);font-weight:700;margin-bottom:7px}
+.rev-card-titulo{font-family:'Playfair Display',serif;font-size:.92rem;line-height:1.32;color:var(--slate);margin-bottom:14px;flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.rev-card-btn{align-self:flex-start;display:inline-flex;align-items:center;gap:7px;font-family:'Montserrat',sans-serif;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;font-weight:700;padding:9px 16px;border-radius:999px;text-decoration:none;background:var(--blue);color:#fff;border:none;cursor:pointer;transition:background .3s var(--ease),transform .3s}
+.rev-card-btn:hover{background:var(--gold-dark);transform:translateY(-1px)}
+.rev-card-btn--off{background:var(--ice);color:#94a3b8;cursor:default}
+.rev-card-btn--off:hover{background:var(--ice);transform:none}
+.rev-rodape{text-align:center;margin-top:46px;font-size:.72rem;letter-spacing:.08em;color:#718096;font-style:italic}
+@media(max-width:540px){ .rev-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px} }
