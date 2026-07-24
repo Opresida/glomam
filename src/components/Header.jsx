@@ -17,8 +17,7 @@ const menuItems = [
     children: [
       { label: 'Notícias Institucionais', link: '/noticiasinstitucionais' },
       { label: 'Revistas e Jornais', link: '/revistas' },
-      // Galeria entra aqui quando a rota /galeria for construída:
-      // { label: 'Galeria', link: '/galeria' },
+      { label: 'Galeria de Fotos', link: '/galeria' },
     ],
   },
   {
@@ -49,7 +48,8 @@ export default function Header() {
   const location = useLocation();
   const forcarSolido = ROTAS_HEADER_SOLIDO.includes(location.pathname)
     || location.pathname.startsWith('/noticiasinstitucionais')
-    || location.pathname === '/revistas';
+    || location.pathname === '/revistas'
+    || location.pathname.startsWith('/galeria');
   const [scrollShrunk, setScrollShrunk] = useState(false);
   const [open, setOpen] = useState(false);
   const [openSubs, setOpenSubs] = useState({});

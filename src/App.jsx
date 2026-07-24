@@ -14,6 +14,8 @@ import DamasDaFraternidade from './pages/DamasDaFraternidade.jsx';
 import NoticiasInstitucionais from './pages/NoticiasInstitucionais.jsx';
 import NoticiaInstitucional from './pages/NoticiaInstitucional.jsx';
 import Revistas from './pages/Revistas.jsx';
+import Galeria from './pages/Galeria.jsx';
+import AlbumGaleria from './pages/AlbumGaleria.jsx';
 import ScrollToTop from './components/ScrollToTop.jsx';
 
 export default function App() {
@@ -35,6 +37,8 @@ export default function App() {
         <Route path="/noticiasinstitucionais" element={<NoticiasInstitucionais />} />
         <Route path="/noticiasinstitucionais/:id" element={<NoticiaInstitucional />} />
         <Route path="/revistas" element={<Revistas />} />
+        <Route path="/galeria" element={<Galeria />} />
+        <Route path="/galeria/:id" element={<AlbumGaleria />} />
       </Routes>
     </BrowserRouter>
   );

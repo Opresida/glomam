@@ -60,6 +60,8 @@ glomam/
 │   │   ├── NoticiasInstitucionais.jsx  # /noticiasinstitucionais — listagem do acervo + "mostrar mais"
 │   │   ├── NoticiaInstitucional.jsx    # /noticiasinstitucionais/:id — matéria + galeria com lightbox
 │   │   ├── Revistas.jsx       # /revistas — capas + download PDFs (PDFs no Cloudflare R2)
+│   │   ├── Galeria.jsx        # /galeria — grade de álbuns (fotos no Cloudflare R2)
+│   │   ├── AlbumGaleria.jsx   # /galeria/:id — fotos do álbum + lightbox (lazy-load)
 │   │   ├── Brandbook.jsx      # Standalone, usa Brandbook.css
 │   │   ├── AdminLogin.jsx     # UI de login (sem auth real)
 │   │   └── AdminIntranet.jsx  # Layout da intranet + roteamento por aba state
@@ -81,6 +83,8 @@ glomam/
 │       ├── noticiasInstitucionais.js   # Helpers: lista ordenada, getById, formatarDataInst
 │       ├── revistas.json               # Revistas/jornais (coverUid, pdfUid, data, título)
 │       ├── revistas.js                 # Helpers: capa local + pdfUrl (base R2 configurável)
+│       ├── galeria.json                # Álbuns (id, título, data, nFotos) — sem URLs (geradas por padrão)
+│       ├── galeria.js                  # Helpers: fotoThumb/fotoFull/albumCapa (base R2)
 │       ├── lojas.js                    # 48 Lojas filiadas com endereço, reuniões, contato
 │       ├── lojasCoords.js              # Coordenadas geográficas + helpers
 │       └── photoDirectory.js           # Diretório central de fotos com matching tolerante
@@ -91,6 +95,9 @@ glomam/
 │   ├── build-institucional-data.mjs    # institucional-raw.json → manifesto + noticiasInstitucionais.json
 │   ├── fetch-institucional-images.mjs  # baixa fotos do acervo + converte p/ webp (sharp), idempotente
 │   ├── fetch-revistas.mjs              # baixa capas (webp→repo) + PDFs (→staging fora do git p/ R2)
+│   ├── galeria-scrape.mjs              # /galeria → manifesto (álbuns + URLs das fotos), via curl/fetch
+│   ├── galeria-download.mjs            # baixa fotos + webp (full+thumb) → staging fora do git p/ R2
+│   ├── build-galeria-data.mjs          # manifesto → src/data/galeria.json (metadados leves)
 │   ├── institucional-raw.json          # Bruto consolidado de todas as páginas raspadas
 │   ├── institucional-manifest.json     # Mapa id → URLs remotas (usado pelo fetch)
 │   └── raw-pages/pageNN.json           # Bruto por página raspada

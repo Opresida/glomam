@@ -137,6 +137,21 @@ Acervo editorial migrado de `glomam.org.br/jornal` (revista *Arte Real*, folheti
 - Captura/atualização: `node scripts/fetch-revistas.mjs` (`--covers` = capas→webp no repo; `--pdfs` = PDFs→staging `../glomam-revistas-staging`). Depois subir o staging pro R2 (rclone).
 - Dados em `src/data/revistas.{json,js}`.
 
+## Galeria de Fotos (`/galeria`)
+
+Galeria migrada de `glomam.org.br/galeria`: **372 álbuns, 28.665 fotos** (2015–2025). As fotos ficam no **Cloudflare R2** (bucket público `glomam-galeria`), cada uma em 2 tamanhos webp — `<id>/<n>.webp` (full ~880px) e `<id>/<n>_t.webp` (thumb). O acervo todo dá **~2 GB** (webp, compressão de 90%). Base configurável via `VITE_GALERIA_BASE` (default r2.dev).
+
+Como as fotos do site antigo eram **URLs diretas**, o scraping foi 100% `curl`+regex — sem firecrawl e sem IA. Pipeline:
+
+```
+node scripts/galeria-scrape.mjs      # lê /galeria → scripts/galeria-manifest.json (álbuns + URLs das fotos)
+node scripts/galeria-download.mjs    # baixa largura880 + converte p/ webp (full+thumb) → ../glomam-galeria-staging
+node scripts/build-galeria-data.mjs  # gera src/data/galeria.json (metadados leves: id, título, data, nFotos)
+# rclone copy ../glomam-galeria-staging r2:glomam-galeria   → sobe pro R2
+```
+
+O `galeria.json` guarda só metadados (64 KB); as URLs das fotos são geradas pelo padrão `<base>/<id>/<n>.webp` a partir de `nFotos`. Álbuns grandes usam lazy-load + "mostrar mais".
+
 As fotos foram **baixadas localmente e convertidas para webp** (o site velho sai do ar), ficando em `public/institucional/<id>/` (`capa.webp` + `01.webp`, `02.webp`, …). Dados em `src/data/noticiasInstitucionais.json`.
 
 ### Pipeline de migração (scripts reutilizáveis, idempotentes)
@@ -171,6 +186,8 @@ As fotos foram **baixadas localmente e convertidas para webp** (o site velho sai
 | `/noticiasinstitucionais` | Acervo institucional — todas as notícias migradas do site oficial antigo (listagem) |
 | `/noticiasinstitucionais/:id` | Matéria individual do acervo — corpo completo + galeria de fotos com lightbox |
 | `/revistas` | Revistas e Jornais (Arte Real, Balaústre) — capas + download dos PDFs (hospedados no Cloudflare R2) |
+| `/galeria` | Galeria de fotos — grade de álbuns (fotos no Cloudflare R2) |
+| `/galeria/:id` | Álbum — grade de fotos + lightbox |
 | `/imprensa` | Portal de notícias |
 | `/brandbook` | Manual de identidade visual |
 | `/admin` | Login administrativo |

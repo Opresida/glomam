@@ -6,6 +6,13 @@ Lista de tarefas pendentes, melhorias planejadas e bugs conhecidos.
 
 ## Em andamento
 
+### ✅ Galeria de Fotos *(concluído 2026-07-24)*
+- [x] **Rotas `/galeria` (grade de álbuns) + `/galeria/:id` (fotos + lightbox)** — migração da galeria de `glomam.org.br/galeria`: **372 álbuns, 28.665 fotos** (2015–2025). Item "Galeria de Fotos" no menu Institucional.
+- [x] **Filtro (ano/mês) + visão Trilha** na `/galeria` — espelha a rota de notícias (`TrilhaGaleria.jsx`, reusa CSS `.trilha-*`/`.inst-controls`); cada parada = um álbum (capa + data + nº de fotos + título).
+- [x] **Fotos no Cloudflare R2** (bucket público `glomam-galeria`) — cada foto em 2 tamanhos webp: full (~880px, ~62 KB) + thumb (~400px, ~17 KB). **Acervo só ~2 GB** (compressão de 90% sobre os ~16 GB de JPEG original). Servidas de `https://pub-8d285b7c895f47f39de90c14bfe058e4.r2.dev/<albumId>/<n>.webp`.
+- [x] **Economia**: scraping 100% via `curl`+regex (fotos são URLs diretas) — **zero crédito firecrawl, zero token de IA** no trabalho pesado. Álbum grande usa lazy-load + "mostrar mais".
+- Pipeline: `scripts/galeria-scrape.mjs` (manifesto) → `galeria-download.mjs` (baixa+webp→staging `../glomam-galeria-staging`) → `build-galeria-data.mjs` (`src/data/galeria.json` leve, 64 KB) → rclone p/ R2. Base configurável via `VITE_GALERIA_BASE`.
+
 ### ✅ Menu "Institucional" + Revistas e Jornais *(concluído 2026-07-23)*
 - [x] **Menu Institucional** no Header (dropdown) → Notícias Institucionais + Revistas e Jornais. (Galeria entra quando construída — item comentado no `Header.jsx`.) "Notícias Institucionais" saiu do dropdown GLOMAM.
 - [x] **Rota `/revistas`** — 41 edições (Arte Real, Balaústre, comemorativas) migradas de `glomam.org.br/jornal`. Cards com capa (webp no repo), data, título e botão **Baixar PDF**. 4 edições sem PDF na origem = "Indisponível".
