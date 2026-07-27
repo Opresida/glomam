@@ -1371,6 +1371,8 @@ a.disp-contato-valor:hover{color:var(--gold)}
 /* Card da parada */
 .trilha-card{display:flex;gap:13px;align-items:center;width:100%;max-width:390px;background:var(--white);border-radius:10px;overflow:hidden;text-decoration:none;color:var(--slate);box-shadow:0 5px 18px rgba(0,0,0,.1);border:1px solid rgba(22,29,52,.06);transition:transform .35s var(--ease),box-shadow .35s;padding:10px 14px 10px 10px}
 .trilha-card:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.2)}
+.trilha-card--off{cursor:default}
+.trilha-card--off:hover{transform:none;box-shadow:0 5px 18px rgba(0,0,0,.1)}
 .trilha-parada[data-side="left"] .trilha-card{flex-direction:row-reverse;text-align:right}
 .trilha-card-thumb{flex:0 0 auto;width:62px;height:62px;border-radius:8px;background-size:cover;background-position:center;background-color:var(--ice)}
 .trilha-card-thumb--vazio{background:linear-gradient(135deg,var(--slate-mid),var(--blue-dark))}

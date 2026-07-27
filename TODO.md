@@ -13,6 +13,9 @@ Lista de tarefas pendentes, melhorias planejadas e bugs conhecidos.
 - [x] **Economia**: scraping 100% via `curl`+regex (fotos são URLs diretas) — **zero crédito firecrawl, zero token de IA** no trabalho pesado. Álbum grande usa lazy-load + "mostrar mais".
 - Pipeline: `scripts/galeria-scrape.mjs` (manifesto) → `galeria-download.mjs` (baixa+webp→staging `../glomam-galeria-staging`) → `build-galeria-data.mjs` (`src/data/galeria.json` leve, 64 KB) → rclone p/ R2. Base configurável via `VITE_GALERIA_BASE`.
 
+### ✅ Filtro + Trilha na rota /revistas *(2026-07-25)*
+- [x] `/revistas` agora tem filtro (ano/mês) + alternador Grade | Trilha, espelhando /noticiasinstitucionais e /galeria. `TrilhaRevistas.jsx` (reusa CSS `.trilha-*`/`.inst-controls`); cada parada = uma edição (capa + data + título → abre o PDF; as 4 sem PDF ficam não-clicáveis).
+
 ### ✅ Menu "Institucional" + Revistas e Jornais *(concluído 2026-07-23)*
 - [x] **Menu Institucional** no Header (dropdown) → Notícias Institucionais + Revistas e Jornais. (Galeria entra quando construída — item comentado no `Header.jsx`.) "Notícias Institucionais" saiu do dropdown GLOMAM.
 - [x] **Rota `/revistas`** — 41 edições (Arte Real, Balaústre, comemorativas) migradas de `glomam.org.br/jornal`. Cards com capa (webp no repo), data, título e botão **Baixar PDF**. 4 edições sem PDF na origem = "Indisponível".
