@@ -181,7 +181,7 @@ export default function Header() {
               </svg>
             </a>
           </div>
-          <Link to="/admin" className="nav-cta">Login</Link>
+          <a href="https://glomam.org.br/login" className="nav-cta">Login</a>
         </div>
 
         {/* Hamburger */}
@@ -245,7 +245,7 @@ export default function Header() {
           </div>
         ))}
         <div className="nav-drawer-item">
-          <Link to="/admin" onClick={closeDrawer}>Login</Link>
+          <a href="https://glomam.org.br/login" onClick={closeDrawer}>Login</a>
         </div>
         <div className="nav-drawer-social">
           <a href="https://www.instagram.com/glomam_oficial/" target="_blank" rel="noopener noreferrer" aria-label="Instagram da GLOMAM" className="nav-social-link">
