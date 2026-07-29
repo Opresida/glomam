@@ -469,7 +469,7 @@ Revisão do backlog: vários itens que estavam em "Pendente" já haviam sido ent
 - [x] **Revistas e Jornais** (`/revistas`) — 41 edições; PDFs no Cloudflare R2 (ver seção acima).
 - [x] **Menu "Institucional"** no Header (dropdown) + rotas de acervo.
 - [x] **Landing "Chá das Acácias"** (`/damasdafraternidade`) — evento das Damas da Fraternidade: formulário em 2 etapas, QR Code PIX gerado no front (BR Code EMV, sem API), fluxo de pagamento em fases, loader/animações próprios.
-- [x] Botão **Login** do header aponta para `https://glomam.org.br/login`.
+- [x] **Autenticação delegada ao sistema próprio da GLOMAM** — o botão **Login** do header aponta para `https://glomam.org.br/login` (a GLOMAM já possui seu próprio sistema de autenticação). Não é mais responsabilidade deste projeto implementar auth.
 - [x] Card **"Repositório do Projeto"** no Brandbook com link do GitHub.
 - [x] **Menu desktop** com fonte maior/legível, acomodando o novo item "Institucional".
 
@@ -484,7 +484,6 @@ Revisão do backlog: vários itens que estavam em "Pendente" já haviam sido ent
 
 **Técnico (não implementado):**
 - [ ] Backend/API para persistência real da Intranet
-- [ ] Autenticação real em `/admin` (hoje o botão Login aponta para o domínio externo `glomam.org.br/login`)
 - [ ] Upload real de fotos no Álbum de Eventos
 - [ ] Integração real da Newsletter (Mailchimp/Resend) — `Newsletter.jsx` é só UI
 - [ ] Páginas de detalhe para cada Loja (`/lojas/:numero`)
