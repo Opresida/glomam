@@ -244,7 +244,7 @@ glomam/
 │
 ├── src/
 │   ├── main.jsx               # Entry point — monta <App /> no DOM
-│   ├── App.jsx                # BrowserRouter + Routes (13 rotas)
+│   ├── App.jsx                # BrowserRouter + Routes (16 rotas)
 │   ├── index.css              # Design system global: variáveis, reset, utilitários, estilos de todos os componentes públicos
 │   │
 │   ├── components/            # Seções e elementos reutilizáveis
@@ -457,23 +457,39 @@ AdminLogin.jsx
 - [x] **Acervo "Notícias Institucionais"** — migração das notícias do site oficial antigo (`glomam.org.br/noticia`) para o novo site. Seção **Institucional** na Home (carrossel infinito, fundo navy), rota `/noticiasinstitucionais` (listagem com "mostrar mais") e rota por matéria `/noticiasinstitucionais/:id` (corpo completo + galeria com lightbox). Fotos baixadas local e convertidas p/ webp em `public/institucional/<id>/`. Pipeline reutilizável (scripts `merge`/`build`/`fetch` + `sharp`). Componentes: `Institucional.jsx`, `InstCard.jsx`, `NoticiasInstitucionais.jsx`, `NoticiaInstitucional.jsx`; dados em `src/data/noticiasInstitucionais.{json,js}`; CSS `.inst-*`.
   - **Status: ✅ COMPLETO — 26 páginas, 509 matérias, 2159 fotos (~220 MB).** ✓ *2026-07-23*
 
+### Atualização de 2026-07-29 (revisão do backlog)
+
+Revisão do backlog: vários itens que estavam em "Pendente" já haviam sido entregues e não tinham sido marcados. Concluídos confirmados no código:
+
+- [x] **Integração Instagram → "Últimas Notícias"** — já funcionando desde 2026-05-26 (estava listada como pendente por engano). Fetch no build via `scripts/fetch-instagram.mjs` → `src/data/instagram.json` → `NewsCards.jsx`, com cron de 6h + botão "Atualizar agora" na intranet. Ver seção "Integração Instagram" acima.
+- [x] **Página de detalhe de notícia** — entregue via `/noticiasinstitucionais/:id` (`NoticiaInstitucional.jsx`): corpo completo + galeria com lightbox.
+- [x] **SEO — meta tags Open Graph por rota** — infra pronta: `scripts/gen-og-routes.mjs` gera HTML pré-renderizado por rota com OG/Twitter próprios (robôs de link não executam JS numa SPA); `netlify.toml` com redirect dedicado. Aplicada ao `/damasdafraternidade` (thumb exclusiva `public/og-cha-das-acacias.png`, 1200×630). Base pronta para novas rotas.
+- [x] **Otimização de imagens para `.webp`** — concluída nos acervos migrados (~2.200 imagens webp: Galeria, Notícias Institucionais, Revistas).
+- [x] **Galeria de Fotos** (`/galeria`, `/galeria/:id`) — 372 álbuns / 28.665 fotos no Cloudflare R2 (ver seção acima).
+- [x] **Revistas e Jornais** (`/revistas`) — 41 edições; PDFs no Cloudflare R2 (ver seção acima).
+- [x] **Menu "Institucional"** no Header (dropdown) + rotas de acervo.
+- [x] **Landing "Chá das Acácias"** (`/damasdafraternidade`) — evento das Damas da Fraternidade: formulário em 2 etapas, QR Code PIX gerado no front (BR Code EMV, sem API), fluxo de pagamento em fases, loader/animações próprios.
+- [x] Botão **Login** do header aponta para `https://glomam.org.br/login`.
+- [x] Card **"Repositório do Projeto"** no Brandbook com link do GitHub.
+- [x] **Menu desktop** com fonte maior/legível, acomodando o novo item "Institucional".
+
 ### Pendente
-- [ ] **Revisão visual dos pinos do mapa** — cliente confirma quais Lojas estão fora do endereço exato (coords ajustáveis em `src/data/lojasCoords.js`)
-- [ ] **Integração Instagram → seção "Últimas Notícias"** — Graph API + Netlify Function (aguardando confirmação de conta Business + Página Facebook do cliente)
-- [ ] Substituir fotos placeholder do Álbum de Eventos por fotos reais
+
+**Aguardando dados/confirmação do cliente:**
+- [ ] **Revisão visual dos pinos do mapa** — cliente confirma quais Lojas estão fora do endereço exato (coords em `src/data/lojasCoords.js`)
+- [ ] Substituir fotos placeholder do Álbum de Eventos por fotos reais (ainda usa `picsum.photos`)
 - [ ] Adicionar fotos dos Irmãos do Legislativo (27 cards hoje usam iniciais)
 - [ ] Cadastrar Lojas Nº 25 e Nº 32 (faltantes na sequência)
-- [ ] Confirmar número oficial do WhatsApp (atualmente placeholder)
+- [ ] Confirmar número oficial do WhatsApp (`WhatsAppBtn.jsx` ainda usa placeholder `559236220034`)
+
+**Técnico (não implementado):**
 - [ ] Backend/API para persistência real da Intranet
-- [ ] Autenticação real em `/admin`
+- [ ] Autenticação real em `/admin` (hoje o botão Login aponta para o domínio externo `glomam.org.br/login`)
 - [ ] Upload real de fotos no Álbum de Eventos
-- [ ] Integração real da Newsletter (Mailchimp/Resend)
-- [ ] Página de detalhe de notícia (`/imprensa/:slug`)
+- [ ] Integração real da Newsletter (Mailchimp/Resend) — `Newsletter.jsx` é só UI
 - [ ] Páginas de detalhe para cada Loja (`/lojas/:numero`)
-- [ ] SEO — meta tags Open Graph dinâmicas por rota
-- [ ] Lazy loading dos componentes pesados (Three.js)
-- [ ] Otimização de imagens para `.webp`
-- [ ] Otimizar SVG oficial da logo (atualmente ~17MB — rodar SVGO)
+- [ ] Lazy loading dos componentes pesados (Three.js) via `React.lazy`
+- [ ] Otimizar SVG oficial da logo (`GLOMAM SVG EM ALTA.svg` ~17MB — rodar SVGO). Já existem PNGs leves derivados para usos pontuais (`public/logo-glomam-original-alta.png`)
 
 ---
 
