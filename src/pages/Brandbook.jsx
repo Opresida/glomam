@@ -1115,9 +1115,9 @@ section { padding: clamp(60px, 8vw, 100px) 0 }`}</pre>
                 <p>Acesse o código-fonte completo da GLOMAM no GitHub.</p>
               </div>
             </div>
-            <span className="bb-gh-btn disabled" aria-disabled="true">
-              <span>Link em breve</span>
-            </span>
+            <a className="bb-gh-btn" href="https://github.com/Opresida/glomam" target="_blank" rel="noreferrer noopener">
+              <span>Acessar no GitHub</span>
+            </a>
           </div>
         </div>
       </section>
