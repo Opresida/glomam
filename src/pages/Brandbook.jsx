@@ -7,7 +7,7 @@ import deploySecret from '../data/deploySecret.json';
 import './Brandbook.css';
 
 /* ── Logos oficiais ── */
-const LOGO_LIGHT = 'https://raw.githubusercontent.com/Opresida/glomam/main/GLOMAM%20SVG%20EM%20ALTA.svg'; // usar em fundos claros (creme, branco, gold)
+const LOGO_LIGHT = '/logo-glomam-original.svg'; // local (public/) — funciona com repo privado; ~207 KB otimizado (era raw.githubusercontent de 17 MB)
 const LOGO_DARK = 'https://i.imgur.com/XVkyVtV.png'; // usar em fundos escuros (navy, gradiente dark)
 const LOGO_SVG = LOGO_LIGHT;
 const LOGO_NAVY = LOGO_LIGHT;
