@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import RevealSecret from '../components/RevealSecret.jsx';
+import deploySecret from '../data/deploySecret.json';
 import './Brandbook.css';
 
 /* ── Logos oficiais ── */
@@ -153,6 +155,7 @@ export default function Brandbook() {
     { id: 'ui', label: 'UI System' },
     { id: 'materiais', label: 'Materiais' },
     { id: 'guidelines', label: 'Diretrizes' },
+    { id: 'deploy', label: 'Deploy' },
   ];
 
   return (
@@ -1097,6 +1100,61 @@ section { padding: clamp(60px, 8vw, 100px) 0 }`}</pre>
                 <strong>Elegante</strong>
                 <p>Minimalismo visual e textual. Menos é mais. Cada palavra, cada espaçamento e cada elemento gráfico carrega propósito e simbolismo.</p>
               </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {activeTab === 'deploy' && (
+        <section className="bb-section">
+          <div className="bb-section-inner">
+            <div className="bb-section-head">
+              <span className="bb-label">06 — Deploy & Configuração</span>
+              <h2>Variáveis de Ambiente & Deploy</h2>
+              <p className="bb-desc">Guia técnico para publicar ou migrar o site. Hospedagem: <strong>Netlify</strong> (deploy automático a cada push na branch <code>main</code>). SPA estática, sem backend nem banco de dados.</p>
+            </div>
+
+            <h3 className="bb-h3">Variáveis de Ambiente (Netlify)</h3>
+            <div className="bb-env-list">
+              <div className="bb-env-item">
+                <code className="bb-env-key">IG_USER_ID</code>
+                <div className="bb-env-info">
+                  <p className="bb-env-purpose">ID da conta Instagram Business do feed “Novidades” (usado no build).</p>
+                  <p className="bb-env-val">Valor: <code>17841421232942920</code></p>
+                </div>
+              </div>
+              <div className="bb-env-item">
+                <code className="bb-env-key">IG_ACCESS_TOKEN</code>
+                <div className="bb-env-info">
+                  <p className="bb-env-purpose">Token long-lived da API do Instagram (build). Auto-renova a cada build bem-sucedido; atualizar no painel a cada ~50 dias.</p>
+                  <div className="bb-env-val bb-env-secret">
+                    <span className="bb-reveal-label">🔒 Credencial protegida (AES-256). Informe a senha de acesso — enviada em separado por canal seguro — para revelar:</span>
+                    <RevealSecret blob={deploySecret.igAccessToken} />
+                  </div>
+                </div>
+              </div>
+              <div className="bb-env-item">
+                <code className="bb-env-key">VITE_NETLIFY_BUILD_HOOK_URL</code>
+                <div className="bb-env-info">
+                  <p className="bb-env-purpose">Build Hook do Netlify — usado pelo botão “Atualizar agora” (intranet) e pelo CRON de atualização do feed.</p>
+                  <p className="bb-env-val bb-env-secret">🔒 É por-site — <strong>gerar um NOVO</strong> no Netlify de destino (o antigo morre junto com o site antigo). Formato: <code>https://api.netlify.com/build_hooks/&lt;id&gt;</code></p>
+                </div>
+              </div>
+            </div>
+            <p className="bb-env-note">Sem essas variáveis o build <strong>não quebra</strong>: a seção “Novidades” cai no conteúdo estático. O acervo <strong>Notícias Institucionais · Revistas · Galeria</strong> funciona sem configurar nada (servido do Cloudflare R2, com URLs públicas fixas no código).</p>
+
+            <h3 className="bb-h3">Migrar para outra conta Netlify</h3>
+            <ol className="bb-steps">
+              <li>Conectar o Netlify de destino ao repositório GitHub do projeto (é preciso ter acesso ao repo).</li>
+              <li>No site novo: <strong>Site settings → Build &amp; deploy → Build hooks → Add build hook</strong> → copiar a <strong>URL nova</strong>.</li>
+              <li>Em <strong>Environment variables</strong>, definir <code>IG_USER_ID</code>, <code>IG_ACCESS_TOKEN</code> e <code>VITE_NETLIFY_BUILD_HOOK_URL</code> (= o hook novo).</li>
+              <li>Disparar um deploy (push na <code>main</code> ou “Trigger deploy”).</li>
+            </ol>
+
+            <h3 className="bb-h3">CRON — atualização automática do feed (a cada 6h)</h3>
+            <div className="bb-cron-card">
+              <p>O CRON <strong>não fica no Netlify</strong> — é um serviço externo (<a href="https://cron-job.org" target="_blank" rel="noopener noreferrer">cron-job.org</a>) que faz um <code>POST</code> no Build Hook a cada 6 horas, disparando um rebuild que puxa os posts novos do Instagram.</p>
+              <p className="bb-cron-warn"><strong>Ao migrar:</strong> no cron-job.org, apontar o job (método <code>POST</code>, a cada 6h) para a <strong>URL do Build Hook novo</strong>. Sem esse passo, o feed para de se atualizar sozinho (o resto do site continua normal).</p>
             </div>
           </div>
         </section>

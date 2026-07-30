@@ -6,6 +6,10 @@ Lista de tarefas pendentes, melhorias planejadas e bugs conhecidos.
 
 ## Em andamento
 
+### ✅ Aba "Deploy" no Brandbook *(2026-07-30)*
+- [x] Nova aba **Deploy** em `/brandbook` (`Brandbook.jsx`/`Brandbook.css`, classes `.bb-env-*`/`.bb-cron-card`) documentando as variáveis de ambiente (IG_USER_ID / IG_ACCESS_TOKEN / VITE_NETLIFY_BUILD_HOOK_URL), o passo-a-passo de migração pra outra conta Netlify e a orientação do CRON (cron-job.org → POST no build hook a cada 6h).
+- [x] **Revelação cifrada do IG_ACCESS_TOKEN** — `RevealSecret.jsx` + `src/data/deploySecret.json`. O token é cifrado (AES-256-GCM + PBKDF2 250k) e só o texto cifrado fica no bundle (inútil sem a senha). Na aba, o cliente digita a **senha** (compartilhada por fora) → descriptografa no navegador → copia. Como o site é estático e o gate do brandbook é client-side, essa é a forma segura de "entregar o segredo pela própria aba". A senha NÃO fica no repo; o IG_USER_ID (não-segredo) aparece direto; o build hook fica como "gerar novo".
+
 ### ✅ Galeria de Fotos *(concluído 2026-07-24)*
 - [x] **Rotas `/galeria` (grade de álbuns) + `/galeria/:id` (fotos + lightbox)** — migração da galeria de `glomam.org.br/galeria`: **372 álbuns, 28.665 fotos** (2015–2025). Item "Galeria de Fotos" no menu Institucional.
 - [x] **Filtro (ano/mês) + visão Trilha** na `/galeria` — espelha a rota de notícias (`TrilhaGaleria.jsx`, reusa CSS `.trilha-*`/`.inst-controls`); cada parada = um álbum (capa + data + nº de fotos + título).

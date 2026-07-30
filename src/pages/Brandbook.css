@@ -1063,3 +1063,72 @@
   .bb-tab { padding: 14px 16px; font-size: .52rem; }
   .bb-ui-row { grid-template-columns: 1fr; }
 }
+
+/* ══════════════════════ Aba Deploy & Configuração ══════════════════════ */
+.bb-env-list { display: flex; flex-direction: column; gap: 12px; margin: 4px 0 10px; }
+.bb-env-item {
+  display: grid; grid-template-columns: 250px 1fr; gap: 18px; align-items: start;
+  background: var(--white); border: 1px solid rgba(22,29,52,.08);
+  border-left: 3px solid var(--gold); border-radius: 8px; padding: 16px 18px;
+}
+.bb-env-key {
+  font-family: 'Courier New', monospace; font-size: .8rem; font-weight: 700;
+  color: var(--blue); background: var(--ice); padding: 6px 10px; border-radius: 5px;
+  word-break: break-all;
+}
+.bb-env-info { min-width: 0; }
+.bb-env-purpose { font-size: .86rem; line-height: 1.6; color: var(--slate-mid); margin: 0 0 6px; }
+.bb-env-val { font-size: .8rem; color: var(--slate); margin: 0; }
+.bb-env-val code, .bb-env-purpose code, .bb-steps code {
+  font-family: 'Courier New', monospace; background: var(--ice); padding: 2px 6px;
+  border-radius: 4px; font-size: .76rem; color: var(--blue); word-break: break-all;
+}
+.bb-env-secret { color: var(--gold-dark); font-weight: 600; }
+.bb-env-secret code { color: var(--gold-dark); }
+.bb-env-note {
+  font-size: .82rem; line-height: 1.65; color: var(--slate-mid);
+  background: rgba(211,165,76,.09); border: 1px dashed var(--gold);
+  border-radius: 8px; padding: 12px 16px; margin: 8px 0 10px;
+}
+.bb-steps { margin: 4px 0 10px; padding-left: 22px; }
+.bb-steps li { font-size: .88rem; line-height: 1.7; color: var(--slate-mid); margin-bottom: 8px; }
+.bb-cron-card {
+  background: var(--slate); color: rgba(255,255,255,.9); border-radius: 10px;
+  padding: 20px 22px; border: 1px solid var(--gold); margin-top: 4px;
+}
+.bb-cron-card p { font-size: .88rem; line-height: 1.7; margin: 0 0 10px; }
+.bb-cron-card p:last-child { margin-bottom: 0; }
+.bb-cron-card a { color: var(--gold-light); text-decoration: underline; }
+.bb-cron-card code {
+  font-family: 'Courier New', monospace; background: rgba(255,255,255,.12);
+  padding: 2px 6px; border-radius: 4px; font-size: .8rem; color: var(--gold-light);
+}
+.bb-cron-warn { color: var(--gold-light); }
+@media (max-width: 640px) { .bb-env-item { grid-template-columns: 1fr; gap: 10px; } }
+
+/* Revelação de credencial cifrada (aba Deploy) */
+.bb-reveal-label { display: block; font-size: .78rem; line-height: 1.5; color: var(--gold-dark); font-weight: 600; margin-bottom: 8px; }
+.bb-reveal { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.bb-reveal-input {
+  font-family: 'Montserrat', sans-serif; font-size: .8rem; padding: 8px 12px;
+  border: 1px solid rgba(22,29,52,.18); border-radius: 6px; background: var(--white);
+  color: var(--slate); min-width: 180px; outline: none;
+}
+.bb-reveal-input:focus { border-color: var(--gold); }
+.bb-reveal-btn {
+  font-family: 'Montserrat', sans-serif; font-size: .66rem; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; padding: 9px 16px; border: none; border-radius: 6px; cursor: pointer;
+  background: var(--blue); color: #fff; transition: background .3s var(--ease);
+}
+.bb-reveal-btn:hover:not(:disabled) { background: var(--gold-dark); }
+.bb-reveal-btn:disabled { opacity: .5; cursor: default; }
+.bb-reveal-btn--ghost { background: transparent; color: var(--slate-mid); border: 1px solid rgba(22,29,52,.18); }
+.bb-reveal-btn--ghost:hover { background: var(--ice); color: var(--slate); }
+.bb-reveal-erro { font-size: .75rem; color: #c0392b; font-weight: 600; width: 100%; }
+.bb-reveal--open { flex-direction: column; align-items: stretch; gap: 10px; }
+.bb-reveal-val {
+  display: block; font-family: 'Courier New', monospace; font-size: .72rem; line-height: 1.5;
+  color: var(--blue); background: var(--ice); border: 1px solid rgba(22,29,52,.1);
+  padding: 10px 12px; border-radius: 6px; word-break: break-all; user-select: all;
+}
+.bb-reveal-actions { display: flex; gap: 8px; }
